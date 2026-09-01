@@ -1,0 +1,3 @@
+§6.4 scalability  [###########################-] 59/60 ( 98.3%)
+current: full_attn seed=8888 N=128
+last:    

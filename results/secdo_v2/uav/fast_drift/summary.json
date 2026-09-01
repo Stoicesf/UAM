@@ -1,0 +1,62 @@
+[
+  {
+    "regime": "fast_drift",
+    "method": "ac_dsgf",
+    "n_seeds": 5,
+    "gap": 0.000494412629495855,
+    "violation": 0.011252640482659141,
+    "delta": 0.15492402627132834,
+    "rho": 0.15492402627132834,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.0,
+    "mean_eps_plus_delta": 0.15492402627132834
+  },
+  {
+    "regime": "fast_drift",
+    "method": "dsgf",
+    "n_seeds": 5,
+    "gap": 0.0005356718848209614,
+    "violation": 0.012362537913334866,
+    "delta": 0.15265616785424452,
+    "rho": 0.15265616785424452,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.0,
+    "mean_eps_plus_delta": 0.15265616785424452
+  },
+  {
+    "regime": "fast_drift",
+    "method": "oracle",
+    "n_seeds": 5,
+    "gap": 0.00020327151410034125,
+    "violation": 0.0028423637733794747,
+    "delta": 0.04201003379809359,
+    "rho": 0.13785732069906467,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.9895833333333334,
+    "mean_eps_plus_delta": 0.04201003379809359
+  },
+  {
+    "regime": "fast_drift",
+    "method": "reactive",
+    "n_seeds": 5,
+    "gap": 0.0005486631425204298,
+    "violation": 0.012236676400061697,
+    "delta": 0.1599706706784976,
+    "rho": 0.1599706706784976,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.0,
+    "mean_eps_plus_delta": 0.1599706706784976
+  },
+  {
+    "regime": "fast_drift",
+    "method": "secdo",
+    "n_seeds": 5,
+    "gap": 0.00045419496913533903,
+    "violation": 0.01464744603727013,
+    "delta": 0.1309743476876368,
+    "rho": 0.13139164992996183,
+    "epsilon": 8.517125500241916,
+    "frac_delta_lt_rho": 0.5625,
+    "mean_eps_plus_delta": 8.648099847929553
+  }
+]

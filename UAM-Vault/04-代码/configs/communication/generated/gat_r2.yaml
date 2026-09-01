@@ -1,0 +1,62 @@
+experiment:
+  id: comm_gat_r2
+  stage: 2
+  name: GAT @ R=2 (16 UAV)
+train:
+  seed: 42
+  algorithm: guided_mappo
+  total_frames: 102400
+  frames_per_batch: 2048
+  num_epochs: 5
+  minibatch_size: 512
+  learning_rate: 0.0003
+  max_grad_norm: 0.5
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  entropy_coef: 0.01
+  critic_coef: 1.0
+  hidden_dim: 128
+  share_params_policy: true
+  share_params_critic: true
+  use_guidance: false
+  use_guidance_reward: false
+  log_dir: logs
+  checkpoint_dir: checkpoints
+  save_interval: 10000
+  log_interval: 1
+  eval_episodes: 200
+  lock_total_frames: true
+  lock_eval_episodes: true
+env:
+  scenario: navigation
+  num_envs: 8
+  num_agents: 16
+  device: cuda
+  continuous_actions: true
+  max_steps: 128
+  comm_radius: 2.0
+  obs_dim: 18
+  action_dim: 2
+  guidance_dim: 4
+guidance:
+  mode: gat
+  guidance_dim: 4
+  hidden_dim: 128
+  comm_radius: 2.0
+  num_gat_layers: 1
+  use_guidance_reward: true
+  guidance_reward_coef: 0.03
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.3
+  guidance_schedule: adaptive_align
+  guidance_coef_min: 0.005
+  guidance_decay_k: 3.0
+output:
+  category: communication
+  results_dir: results
+comm_sweep:
+  method: gat
+  radius_key: '2'
+  radius_label: '2'
+  comm_radius: 2.0

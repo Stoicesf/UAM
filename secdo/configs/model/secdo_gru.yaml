@@ -1,0 +1,10 @@
+# SECDO model — GRU constraint dynamics
+name: secdo_gru
+feat_dim: null  # inferred from dataset
+n_agents: 8
+latent_dim: 32
+hidden: 64
+eta: 0.25
+residual_capacity_head: true
+projection: anticipatory
+stop_gradient_projection: true

@@ -1,0 +1,11 @@
+{
+  "experiment_id": "comm_dsgf_r2",
+  "stage": 4,
+  "name": "DSGF @ R=2 (16 UAV)",
+  "run_name": "smoke_dsgf_r2",
+  "seed": 42,
+  "started_at": "2026-07-13T21:03:52",
+  "config_path": "F:\\UAM\\configs\\communication\\generated\\smoke_dsgf_r2.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

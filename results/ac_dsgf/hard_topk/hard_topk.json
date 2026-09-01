@@ -1,0 +1,33 @@
+{
+  "seed": 42,
+  "ckpt": "F:\\UAM\\results\\ac_dsgf\\uav16\\s42\\checkpoints\\final.pt",
+  "rows": [
+    {
+      "method": "random",
+      "K": 2,
+      "success_mean": 0.2509765625,
+      "success_std": 0.12955197526257017,
+      "hard_edges_mean": 26.7432861328125,
+      "hard_edges_std": 1.9622637112928583,
+      "n_episodes": 64
+    },
+    {
+      "method": "distance",
+      "K": 2,
+      "success_mean": 0.291015625,
+      "success_std": 0.12656189718220637,
+      "hard_edges_mean": 26.6007080078125,
+      "hard_edges_std": 1.5077777868435598,
+      "n_episodes": 64
+    },
+    {
+      "method": "ac",
+      "K": 2,
+      "success_mean": 0.2822265625,
+      "success_std": 0.11692271518265214,
+      "hard_edges_mean": 26.3223876953125,
+      "hard_edges_std": 2.019561586576418,
+      "n_episodes": 64
+    }
+  ]
+}

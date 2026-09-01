@@ -1,0 +1,26 @@
+# C3+ — adaptive decay × (1 - alignment) for over-guidance control
+experiment:
+  id: ablation_c3_align
+  stage: 1
+  name: "C3+: adaptive decay + alignment scaling"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+guidance:
+  mode: mlp
+  guidance_dim: 4
+  hidden_dim: 128
+  use_guidance_reward: true
+  guidance_reward_coef: 0.05
+  guidance_coef_min: 0.02
+  guidance_decay_k: 3.0
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.2
+  guidance_schedule: adaptive_align
+
+output:
+  category: guide
+  results_dir: results

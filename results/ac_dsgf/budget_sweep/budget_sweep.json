@@ -1,0 +1,137 @@
+[
+  {
+    "method": "gat",
+    "success": 0.2734,
+    "collision": 0.1094,
+    "reward": 1.8855,
+    "comm_cost": 2.1338,
+    "ce": 0.128146,
+    "budget_ratio": 1.0
+  },
+  {
+    "method": "gat",
+    "success": 0.3359,
+    "collision": 0.0156,
+    "reward": 2.2406,
+    "comm_cost": 2.3154,
+    "ce": 0.145086,
+    "budget_ratio": 0.75
+  },
+  {
+    "method": "gat",
+    "success": 0.2578,
+    "collision": 0.0469,
+    "reward": 1.9131,
+    "comm_cost": 2.1567,
+    "ce": 0.119538,
+    "budget_ratio": 0.5
+  },
+  {
+    "method": "gat",
+    "success": 0.25,
+    "collision": 0.0391,
+    "reward": 2.0753,
+    "comm_cost": 1.8999,
+    "ce": 0.131586,
+    "budget_ratio": 0.25
+  },
+  {
+    "method": "gat",
+    "success": 0.3281,
+    "collision": 0.0312,
+    "reward": 2.4274,
+    "comm_cost": 2.0496,
+    "ce": 0.160095,
+    "budget_ratio": 0.1
+  },
+  {
+    "method": "dsgf",
+    "success": 0.4844,
+    "collision": 0.125,
+    "reward": 1.7262,
+    "comm_cost": 1.8257,
+    "ce": 0.265312,
+    "budget_ratio": 1.0
+  },
+  {
+    "method": "dsgf",
+    "success": 0.4844,
+    "collision": 0.0781,
+    "reward": 2.4343,
+    "comm_cost": 1.4272,
+    "ce": 0.339377,
+    "budget_ratio": 0.75
+  },
+  {
+    "method": "dsgf",
+    "success": 0.5078,
+    "collision": 0.1094,
+    "reward": 1.9585,
+    "comm_cost": 1.5544,
+    "ce": 0.326684,
+    "budget_ratio": 0.5
+  },
+  {
+    "method": "dsgf",
+    "success": 0.5156,
+    "collision": 0.0938,
+    "reward": 2.6512,
+    "comm_cost": 1.29,
+    "ce": 0.399697,
+    "budget_ratio": 0.25
+  },
+  {
+    "method": "dsgf",
+    "success": 0.5078,
+    "collision": 0.0781,
+    "reward": 2.3037,
+    "comm_cost": 1.3347,
+    "ce": 0.380465,
+    "budget_ratio": 0.1
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.5391,
+    "collision": 0.1406,
+    "reward": 1.6495,
+    "comm_cost": 0.0772,
+    "ce": 6.982061,
+    "budget_ratio": 1.0
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.5547,
+    "collision": 0.1562,
+    "reward": 2.5304,
+    "comm_cost": 0.0725,
+    "ce": 7.649204,
+    "budget_ratio": 0.75
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.5469,
+    "collision": 0.1328,
+    "reward": 2.4755,
+    "comm_cost": 0.072,
+    "ce": 7.599484,
+    "budget_ratio": 0.5
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.4766,
+    "collision": 0.1562,
+    "reward": 1.2639,
+    "comm_cost": 0.0681,
+    "ce": 6.999174,
+    "budget_ratio": 0.25
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.5391,
+    "collision": 0.1094,
+    "reward": 1.7261,
+    "comm_cost": 0.061,
+    "ce": 8.833043,
+    "budget_ratio": 0.1
+  }
+]

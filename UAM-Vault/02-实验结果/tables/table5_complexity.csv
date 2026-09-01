@@ -1,0 +1,5 @@
+Method,Spatial,Temporal,Complexity,Notes
+MAPPO,—,—,"O(Nd)",Actor MLP only
+GAT,dense / radius adjacency,—,"O(N^2 d)",Binary A_ij; attention over all in-radius neighbors
+Transformer,full self-attention,—,"O(N^2 d)",All-pair keys/queries
+DSGF,"quality-weighted sparse Ã_ij",GRU,"O(Nkd+Nd)","k≪N under sparse R_c; message passing linear in degree"

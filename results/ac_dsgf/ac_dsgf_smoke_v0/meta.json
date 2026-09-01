@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ac_dsgf_smoke_v0",
+  "stage": 5,
+  "name": "AC-DSGF Smoke 4 UAV 20k",
+  "run_name": "ac_dsgf_smoke_v0",
+  "seed": 42,
+  "started_at": "2026-07-15T11:42:12",
+  "config_path": "F:\\UAM\\configs\\ac_dsgf\\ac_dsgf_smoke_v0.yaml",
+  "guidance_mode": "ac_dsgf",
+  "extra": {}
+}

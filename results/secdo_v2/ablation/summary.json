@@ -1,0 +1,61 @@
+{
+  "uav_fast_drift": {
+    "full_secdo": {
+      "n_seeds": 5,
+      "Reg_T_mean": 0.04406534662848571,
+      "Reg_T_std": 0.005580263842702133,
+      "violation_mean": 0.014503520191647112,
+      "violation_std": 0.001189505936688504,
+      "mean_alpha": 0.9086417388170958
+    },
+    "A1_reactive": {
+      "n_seeds": 5,
+      "Reg_T_mean": 0.052082352494471705,
+      "Reg_T_std": 0.006255151664339057,
+      "violation_mean": 0.012595547805540263,
+      "violation_std": 0.0010582698401158674,
+      "mean_alpha": null
+    },
+    "A2_no_anticipatory": {
+      "n_seeds": 5,
+      "Reg_T_mean": 0.052082352494471705,
+      "Reg_T_std": 0.006255151664339057,
+      "violation_mean": 0.012595547805540263,
+      "violation_std": 0.0010582698401158674,
+      "mean_alpha": 0.0
+    },
+    "A3_fixed_alpha1": {
+      "n_seeds": 5,
+      "Reg_T_mean": 0.04275267486373195,
+      "Reg_T_std": 0.005359401966312376,
+      "violation_mean": 0.014870099944528193,
+      "violation_std": 0.0012405212266505064,
+      "mean_alpha": 1.0
+    }
+  },
+  "crash_recovery": {
+    "full_secdo": {
+      "sum_violation": 0.6971408678218722,
+      "cum_window_rise": 0.18516015354543924,
+      "mean_alpha": 0.6331083134101937
+    },
+    "A1_reactive": {
+      "sum_violation": 0.6180357905104756,
+      "cum_window_rise": 0.14212810434401035,
+      "mean_alpha": 0.0
+    },
+    "A3_fixed_alpha1": {
+      "sum_violation": 0.9600962270051241,
+      "cum_window_rise": 0.5594274401664734,
+      "mean_alpha": 1.0
+    },
+    "A2_no_anticipatory": {
+      "sum_violation": 0.6180357905104756,
+      "cum_window_rise": 0.14212810434401035,
+      "mean_alpha": 0.0,
+      "note": "crash-synth has no learned \u0109; A2 operationally equals A1 (\u03a0_B(c_t))"
+    }
+  },
+  "ckpt": "checkpoints/secdo_v2/online/last.pt",
+  "device": "cuda:0"
+}

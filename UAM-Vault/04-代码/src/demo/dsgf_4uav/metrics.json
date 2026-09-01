@@ -1,0 +1,64 @@
+{
+  "method": "dsgf",
+  "checkpoint": "results\\dsgf\\dsfg_v2_102k\\checkpoints\\checkpoint_20k.pt",
+  "seed": 42,
+  "best_episode": 1,
+  "final_success": 0.75,
+  "mean_edges": 0.43410852551460266,
+  "steps": 129,
+  "comm_radius": 0.5,
+  "success_threshold": 0.3,
+  "history": [
+    {
+      "episode": 0,
+      "final_success": 0.25,
+      "mean_edges": 1.5193798542022705,
+      "steps": 129
+    },
+    {
+      "episode": 1,
+      "final_success": 0.75,
+      "mean_edges": 0.43410852551460266,
+      "steps": 129
+    },
+    {
+      "episode": 2,
+      "final_success": 0.75,
+      "mean_edges": 2.7441861629486084,
+      "steps": 129
+    },
+    {
+      "episode": 3,
+      "final_success": 0.75,
+      "mean_edges": 1.2248061895370483,
+      "steps": 129
+    },
+    {
+      "episode": 4,
+      "final_success": 0.5,
+      "mean_edges": 0.27906978130340576,
+      "steps": 129
+    },
+    {
+      "episode": 5,
+      "final_success": 0.5,
+      "mean_edges": 1.4573643207550049,
+      "steps": 129
+    },
+    {
+      "episode": 6,
+      "final_success": 0.5,
+      "mean_edges": 3.0852713584899902,
+      "steps": 129
+    },
+    {
+      "episode": 7,
+      "final_success": 0.75,
+      "mean_edges": 2.65116286277771,
+      "steps": 129
+    }
+  ],
+  "trajectory": "F:\\UAM\\demo\\figures\\trajectory_dsgf.png",
+  "graph": "F:\\UAM\\demo\\figures\\graph_attention_dsgf.png",
+  "video": "F:\\UAM\\demo\\videos\\dsgf_4uav.mp4"
+}

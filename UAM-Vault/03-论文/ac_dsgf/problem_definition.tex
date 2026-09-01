@@ -1,0 +1,109 @@
+% =============================================================================
+% III-A. Problem Formulation — AC-DSGF
+% Locked claim: communication-efficient cooperation under budget constraints
+% =============================================================================
+
+\section{Problem Formulation}
+\label{sec:problem}
+
+\subsection{Multi-UAV Cooperative Navigation}
+Consider a team of $N$ UAVs performing cooperative navigation in a continuous
+2D workspace under partial observability.
+At discrete time $t$, agent $i\in\{1,\ldots,N\}$ receives a local observation
+\begin{equation}
+o_i^{t}
+=
+\bigl[
+p_i^{t},\;
+v_i^{t},\;
+g_i^{t},\;
+\ell_i^{t}
+\bigr]
+\in \mathbb{R}^{d_o},
+\label{eq:obs}
+\end{equation}
+where $p_i^{t},v_i^{t}\in\mathbb{R}^{2}$ are position and velocity,
+$g_i^{t}$ is the goal-relative vector, and $\ell_i^{t}$ denotes onboard
+range sensing.
+Each agent executes a continuous action $a_i^{t}\in\mathcal{A}$ under a
+decentralized policy with centralized training (CTDE).
+
+The team seeks to maximize expected cumulative reward under communication cost,
+\begin{equation}
+\max_{\theta}
+\;
+\mathbb{E}\!\Biggl[
+\sum_{t=0}^{H}
+r_t
+\Biggr]
+-
+\lambda_c\,
+\mathbb{E}\!\Biggl[
+\sum_{t=0}^{H}
+C_t
+\Biggr],
+\qquad
+r_t=\sum_{i=1}^{N} r_i^{t},
+\label{eq:obj-reward}
+\end{equation}
+where $r_i^{t}=r_i^{\mathrm{goal}}(t)+r_i^{\mathrm{coll}}(t)$ and $C_t$ is
+defined below.
+When $\lambda_c{=}0$, Eq.~\eqref{eq:obj-reward} reduces to standard return
+maximization (baselines).
+For AC-DSGF, $\lambda_c{>}0$ makes communication a first-class training signal.
+
+\subsection{Communication Constraint}
+Airborne links are range-limited and capacity-constrained.
+Two agents may exchange messages only if
+$\|p_i^{t}-p_j^{t}\|<R_c$, inducing a feasible mask
+$A^{t}\in\{0,1\}^{N\times N}$.
+We further impose a soft communication budget through a learnable gate
+$g_{ij}^{t}\in[0,1]$.
+Unless stated otherwise, tables report \emph{Soft Communication Activation Mass}
+\begin{equation}
+C_t
+=
+\sum_{i\neq j}
+g_{ij}^{t},
+\qquad
+C
+=
+C_{\mathrm{comm}}
+=
+\frac{1}{T}
+\sum_{t=1}^{T}
+C_t
+=
+\frac{1}{T}
+\sum_{t=1}^{T}
+\sum_{i\neq j}
+g_{ij}^{t}.
+\label{eq:comm-cost}
+\end{equation}
+$C$ is a soft activation-intensity proxy for communication demand---\textbf{not}
+a demodulated radio packet count.
+For un-gated baselines (GAT/DSGF), we report the analogous average geometric
+(or quality-weighted) edge intensity so columns are comparable as message
+intensity.
+Hard budgets additionally restrict support via
+$A_t^{\mathrm{AC}}=A^{t}\odot E_t^{K}$ (Sec.~\ref{sec:budget}).
+Normalized density $\eta_N=C/(N(N-1))$ is used for scaling analysis
+(Sec.~\ref{sec:scale-deploy}).
+
+\subsection{Metric: Communication Efficiency Index}
+To compare methods under different messaging intensities, we report
+\begin{equation}
+\mathrm{CEI}
+=
+\frac{S}{C_{\mathrm{comm}}+\varepsilon},
+\qquad
+\varepsilon=10^{-6},
+\label{eq:cei}
+\end{equation}
+where $S$ is the evaluation success rate.
+MAPPO has no explicit graph messaging ($C_{\mathrm{comm}}{=}0$) and CEI is
+marked as not applicable.
+Our primary claim is \emph{not} that AC-DSGF maximizes $S$ unconditionally,
+but that it learns a \textbf{selective sparse topology} that preserves
+task effectiveness while substantially reducing Soft Comm.\ Mass relative to
+fixed-topology guidance.

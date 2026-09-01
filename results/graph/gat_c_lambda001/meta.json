@@ -1,0 +1,11 @@
+{
+  "experiment_id": "gat_c",
+  "stage": 2,
+  "name": "GAT-C lambda=0.01",
+  "run_name": "gat_c_lambda001",
+  "seed": 42,
+  "started_at": "2026-07-09T17:40:34",
+  "config_path": "F:\\UAM\\configs\\gat\\gat_c_lambda001.yaml",
+  "guidance_mode": "gat",
+  "extra": {}
+}

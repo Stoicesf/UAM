@@ -1,0 +1,11 @@
+{
+  "experiment_id": "scalability_uav8",
+  "stage": 5,
+  "name": "DSGF v2 Scalability — 8 UAV",
+  "run_name": "uav8",
+  "seed": 42,
+  "started_at": "2026-07-10T13:43:05",
+  "config_path": "F:\\UAM\\configs\\scalability\\uav8.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

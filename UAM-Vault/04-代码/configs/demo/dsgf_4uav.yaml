@@ -1,0 +1,40 @@
+# Paper-level Demo — DSGF v2 @ 4 UAV (num_envs=1 for rendering)
+experiment:
+  id: demo_dsgf_4uav
+  stage: 4
+  name: "Demo DSGF v2 4 UAV"
+
+train:
+  seed: 42
+  total_frames: 2048
+  frames_per_batch: 2048
+  algorithm: guided_mappo
+  eval_episodes: 5
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 1
+  device: cpu
+  max_steps: 128
+  comm_radius: 0.5
+
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_dynamic_quality: true
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+
+output:
+  category: demo
+  results_dir: demo

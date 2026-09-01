@@ -1,0 +1,33 @@
+# DSGF-HRL — 102k long-horizon validation (Week 1 priority)
+experiment:
+  id: exp4_dsfg
+  stage: 4
+  name: "MAPPO + DSGF-HRL 102k"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+env:
+  comm_radius: 0.5
+
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_guidance_reward: true
+  guidance_reward_coef: 0.03
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.3
+  guidance_schedule: adaptive_align
+  guidance_coef_min: 0.005
+  guidance_decay_k: 3.0
+
+output:
+  category: dsgf
+  results_dir: results
+  figures_dir: figures

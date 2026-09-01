@@ -1,0 +1,35 @@
+\section{Algorithm}
+\label{sec:algo}
+
+\begin{algorithm}[t]
+\caption{SECDO with Predictively Adaptive Projection (implementation uses a continuous relaxation of the theoretical binary regimes $\alpha\in\{0,1\}$).}
+\label{alg:secdo}
+\begin{algorithmic}[1]
+\Require step-size $\eta$; predictor $\mathcal{F}_\phi$; encoder/GRU; objective $F$
+\State initialize $x_0\in\mathcal{B}(c_0)$, $h_{-1}=0$
+\For{$t=0,1,\ldots,T-1$}
+  \State $z_t\leftarrow\mathrm{Enc}(s_t)$,\; $h_t\leftarrow\mathrm{GRU}(z_t,h_{t-1})$
+  \State $\hat s_{t+1}\leftarrow\mathrm{Dec}(h_t)$,\; $\hat c_{t+1}\leftarrow\mathcal{F}_\phi(h_t)$
+  \State $y_t\leftarrow x_t-\eta\nabla F(x_t)$
+  \State estimate $\hat\delta_t,\hat\chi_t$;\; $\widehat{\mathrm{PI}}_t\leftarrow\hat\delta_t/(\hat\chi_t+\varepsilon)$
+  \State $\alpha_t\leftarrow 1/(1+\widehat{\mathrm{PI}}_t^2)$
+  \State $c^{\mathrm{mix}}_t\leftarrow\alpha_t\hat c_{t+1}+(1-\alpha_t)c_t$
+  \State $x_{t+1}\leftarrow\Pi_{\mathcal{B}(c^{\mathrm{mix}}_t)}(y_t)$
+  \State observe $s_{t+1},c_{t+1}$; optional online update of $\phi$ with $\|\Delta\theta\|\le\zeta$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\begin{remark}[Theory vs.\ implementation]
+\label{rem:alpha}
+The ideal anticipatory analysis in Theorems~\ref{thm:2}--\ref{thm:3} compares projections onto $\hat{\mathcal{B}}_{t+1}$ and $\mathcal{B}_t$ (extremes corresponding to $\alpha=1$ and $\alpha=0$).
+The deployed Algorithm~\ref{alg:secdo} uses \emph{budget mixing} $c^{\mathrm{mix}}$ with $0<\alpha_t\le 1$, which continuously interpolates those extremes and enables Corollary~\ref{cor:4}.
+The mixed feasible region preserves a \emph{single} projection operation, avoiding additional optimization overhead from combining two projected points.
+Adaptive $\alpha$ is an implementation-level robustness mechanism; the core certificates characterize ideal anticipatory vs.\ reactive projection.
+\end{remark}
+
+\textbf{Training $\neq$ online algorithm.}
+Offline, we minimize $L=\lambda_s L_s+\lambda_c L_c+\lambda_u L_u$ with $(\lambda_s,\lambda_c,\lambda_u)=(0.5,1.0,0.1)$.
+Minimizing $L_c$ contracts $\delta$ via Lemma~\ref{lem:surrogate} but does not directly minimize $\mathrm{Reg}_T$.
+During training, $\hat c$ is stop-grad through $\Pi$.
+Details: Appendix~\ref{app:impl}.

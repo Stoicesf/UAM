@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ablation_c3_align",
+  "stage": 1,
+  "name": "C3+: adaptive decay + alignment scaling",
+  "run_name": "adaptive_10k_c3_align",
+  "seed": 42,
+  "started_at": "2026-07-09T17:00:10",
+  "config_path": "F:\\UAM\\configs\\experiments\\ablation_c3_adaptive_align.yaml",
+  "guidance_mode": "mlp",
+  "extra": {}
+}

@@ -1,0 +1,29 @@
+# MAPPO Baseline - DSGF OFF
+seed: 42
+algorithm: mappo
+
+total_frames: 102_400
+frames_per_batch: 2048
+num_epochs: 5
+minibatch_size: 512
+learning_rate: 3.0e-4
+max_grad_norm: 0.5
+
+gamma: 0.99
+gae_lambda: 0.95
+clip_epsilon: 0.2
+entropy_coef: 0.01
+critic_coef: 1.0
+
+hidden_dim: 128
+share_params_policy: true
+share_params_critic: true
+
+use_guidance: false
+use_guidance_reward: false
+
+log_dir: logs
+checkpoint_dir: checkpoints
+save_interval: 10_000
+log_interval: 1
+eval_episodes: 200

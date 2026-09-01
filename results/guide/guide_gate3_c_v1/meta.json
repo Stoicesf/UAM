@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ablation_c",
+  "stage": 1,
+  "name": "Ablation C: lambda=0.05 + warmup",
+  "run_name": "guide_gate3_c_v1",
+  "seed": 42,
+  "started_at": "2026-07-09T16:45:25",
+  "config_path": "configs/experiments/ablation_c_warmup.yaml",
+  "guidance_mode": "mlp",
+  "extra": {}
+}

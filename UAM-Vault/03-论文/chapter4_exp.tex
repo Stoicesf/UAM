@@ -1,0 +1,166 @@
+% =============================================================================
+% IV–V. Experimental Setup / Results and Discussion
+% Status: P2 draft — numbers frozen in paper/experiment_freeze.json
+% IMPORTANT: Do NOT mix Table I (16 UAV, 5-seed) with Ablation (4 UAV).
+% =============================================================================
+
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Environment}
+All experiments use the VMAS continuous multi-agent \texttt{navigation} scenario
+(obstacle generalizations use \texttt{navigation\_obstacle}).
+Unless noted, training uses $102{,}400$ environment frames, seed $42$ for single
+runs, and five seeds $\{42,43,44,45,46\}$ for Table~\ref{tab:main}.
+Episode horizon is $H{=}128$ steps; success requires goal proximity below a
+fixed threshold ($0.3$ world units).
+Communication radius $R_c$ controls graph construction for GAT/DSGF; MAPPO does
+not use explicit inter-agent messaging (reported communication cost $=0$).
+
+\subsection{Baselines}
+We compare:
+\begin{itemize}
+  \item \textbf{MAPPO}: CTDE PPO without guidance.
+  \item \textbf{GAT-MAPPO}: binary radius graph + GAT guide with alignment reward.
+  \item \textbf{Transformer / Full Attention}: dense $O(N^{2})$ attention guide.
+  \item \textbf{DSGF v2 (Ours)}: quality-weighted sparse graph + temporal GRU +
+        residual policy (\emph{frozen}; no further hyperparameter search).
+\end{itemize}
+Hyperparameters for 16-UAV comparisons follow
+\texttt{configs/baseline16/};
+DSGF settings match \texttt{configs/dsgf/dsgf\_v2\_frozen.yaml}.
+
+\subsection{Metrics}
+\begin{itemize}
+  \item \textbf{Success rate} $S$: fraction of agents within the goal threshold
+        at evaluation (200 episodes unless stated).
+  \item \textbf{Collision rate}: fraction of episodes with collisions.
+  \item \textbf{Communication cost}
+        $C=\frac{1}{T}\sum_t |E_t|$ (directed edges per timestep).
+  \item \textbf{Efficiency} $\eta=S/C$ (communication Pareto analysis).
+  \item \textbf{AULC}: area under the training reward curve (stability proxy).
+\end{itemize}
+
+\subsection{Evaluation Protocol}
+\begin{enumerate}
+  \item \textbf{Main comparison (Table~\ref{tab:main})}: $N{=}16$, 5 seeds.
+  \item \textbf{Ablation (Table~\ref{tab:ablation})}: $N{=}4$, seed $42$;
+        remove Dynamic Graph / Temporal / Residual independently.
+  \item \textbf{Generalization (Table~\ref{tab:gen})}: train at obstacle count
+        $4$; zero-shot evaluate $\{0,2,4,6,8\}$.
+  \item \textbf{Communication (Table~\ref{tab:comm})}: $N{=}16$,
+        $R_c\in\{1,2,\mathrm{full}\}$; retrain GAT/DSGF per radius.
+  \item \textbf{Scalability}: DSGF at $N\in\{4,8,16,32\}$.
+\end{enumerate}
+
+
+\section{Results and Discussion}
+\label{sec:results}
+
+\subsection{Main Comparison}
+\label{sec:main-results}
+Table~\ref{tab:main} reports mean$\pm$std success over five seeds at $N{=}16$.
+DSGF achieves $4.01\%\pm1.68\%$ versus MAPPO $2.40\%\pm0.90\%$ and GAT
+$2.04\%\pm0.90\%$; Transformer remains weakest ($0.70\%\pm0.16\%$).
+Paired Wilcoxon / $t$-tests against MAPPO yield $p{=}0.063$ / $0.107$
+(borderline; limited seed budget), so we claim a consistent numerical
+advantage rather than strong statistical superiority.
+Dense attention does not help under this swarm navigation regime, supporting
+the sparsity premise of DSGF.
+
+% Auto-include CSV commentary:
+% Method Success_mean±std AULC_mean±std
+% MAPPO 2.40±0.90  4.9995±0.2206
+% GAT   2.04±0.90  4.4421±0.2935
+% Trans 0.70±0.16  4.7599±0.2866
+% DSGF  4.01±1.68  4.0307±0.9969
+
+\paragraph{Learning stability.}
+AULC (normalized reward AUC) remains comparable across methods, while eval
+success diverges---consistent with the motivation that \emph{training reward
+alone} is a poor proxy for coordination success under long horizons.
+GAT exhibits classic over-specialization in smaller-$N$ pilots
+(early peak then collapse); residual decoupling in DSGF mitigates this failure
+mode (Sec.~\ref{sec:ablation-results}).
+
+\subsection{Ablation Study}
+\label{sec:ablation-results}
+On the controlled 4-UAV setting (Table~\ref{tab:ablation}), Full DSGF reaches
+$9.27\%$ success.
+Removing Residual collapses performance to $0.22\%$ ($\sim$42$\times$ drop),
+dominating other ablations (w/o Dynamic Graph $0.28\%$; w/o Temporal $0.86\%$).
+This isolates residual policy decoupling as the primary mechanism behind
+long-horizon robustness, rather than graph or memory alone.
+
+\subsection{Generalization to Obstacle Density}
+\label{sec:gen-results}
+Policies trained at obstacle count $4$ are zero-shot evaluated at
+$\{0,2,4,6,8\}$ (Table~\ref{tab:gen}).
+All methods remain in a low absolute success regime, reflecting the difficulty
+of 4-UAV navigation with randomized obstacles.
+Importantly, we do \emph{not} observe catastrophic degradation for DSGF as
+obstacle count increases beyond the training density; MAPPO/GAT remain
+competitive on some bins.
+We therefore claim \textbf{robust transfer under density shift}, not absolute
+superiority on every obstacle level.
+
+\subsection{Communication Efficiency}
+\label{sec:comm-results}
+Table~\ref{tab:comm} and Fig.~\ref{fig:comm} compare success versus communication
+cost under radius constraints ($N{=}16$).
+Under \textbf{restricted} radii, DSGF outperforms GAT:
+$R_c{=}1$ yields $2.22\%$ vs.\ $1.88\%$;
+$R_c{=}2$ yields $4.07\%$ vs.\ $1.28\%$.
+Under full connectivity, GAT can achieve higher success ($3.19\%$ vs.\ DSGF
+$2.41\%$), so we do \textbf{not} claim unconditional communication dominance.
+The intended narrative is:
+\begin{quote}
+DSGF maintains competitive success under restricted communication budgets,
+demonstrating robustness to sparse connectivity.
+\end{quote}
+
+\subsection{Scalability}
+\label{sec:scale-results}
+Fig.~\ref{fig:scale} shows DSGF success for $N\in\{4,8,16,32\}$.
+Absolute rates remain low as team size grows (all methods $<5\%$ at $N{=}16$
+in Table~\ref{tab:main}), highlighting that large-scale continuous coordination
+is still an open challenge.
+DSGF remains trainable up to $32$ UAVs with the frozen recipe after spawn-density
+fixes, providing a scalable experimental protocol rather than saturating
+performance claims.
+
+\subsection{Complexity}
+\label{sec:complexity-disc}
+As summarized in Table~\ref{tab:complexity}, dense GAT/Transformer attention
+scales as $O(N^{2}d)$, whereas DSGF message passing is $O(Nkd)$ with an
+additional $O(Nd)$ temporal update.
+When $k\ll N$, the guidance stack approaches linear scaling in $N$, aligning
+with the empirical communication study under small $R_c$.
+
+
+\section*{Limitations and Discussion}
+\label{sec:limitations}
+
+\begin{enumerate}
+  \item \textbf{Absolute success remains low} at $N{=}16$ (single-digit \%).
+        The contribution is comparative evidence under a hard continuous MARL
+        benchmark, not claimed real-world flight readiness.
+  \item \textbf{Seed variance} on Table~\ref{tab:main} is non-negligible
+        (DSGF std $1.68\%$); five seeds are modest for strict significance.
+  \item \textbf{Full-graph regimes}: GAT may outperform DSGF when communication
+        is unconstrained; DSGF's advantage concentrates on sparse budgets.
+  \item \textbf{Cross-table mixing}: Ablation (4 UAV) and main results (16 UAV)
+        use different scales and must not be compared numerically in text.
+\end{enumerate}
+
+% Suggested table/figure labels for the master .tex:
+% \label{tab:main}        <- table1_main.csv
+% \label{tab:ablation}    <- table2_ablation.csv
+% \label{tab:gen}         <- table3_generalization.csv
+% \label{tab:comm}        <- table4_communication.csv
+% \label{tab:complexity}  <- table5_complexity.tex
+% \label{fig:comm}        <- fig6_communication.png
+% \label{fig:scale}       <- fig3_scalability.png
+% \label{fig:ablation}    <- fig4_ablation.png
+% \label{fig:gen}         <- fig5_generalization.png
+% \label{fig:curve}       <- fig2_learning_curve_5seed.png

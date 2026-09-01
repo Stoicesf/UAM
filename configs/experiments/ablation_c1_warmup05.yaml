@@ -1,0 +1,24 @@
+# C1 — static λ=0.05 + 20% warmup (102k baseline reproduction)
+experiment:
+  id: ablation_c1
+  stage: 1
+  name: "C1: lambda=0.05 warmup20% 102k"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+guidance:
+  mode: mlp
+  guidance_dim: 4
+  hidden_dim: 128
+  use_guidance_reward: true
+  guidance_reward_coef: 0.05
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.2
+  guidance_schedule: warmup_ramp
+
+output:
+  category: guide
+  results_dir: results

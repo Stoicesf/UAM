@@ -1,0 +1,31 @@
+# Week 2 — Full Attention (dense) @ 16 UAV
+experiment:
+  id: baseline16_full_attn
+  stage: 2
+  name: "Full Attention MAPPO 16 UAV"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 200
+
+env:
+  scenario: navigation
+  num_agents: 16
+  num_envs: 8
+  comm_radius: 0.5
+
+guidance:
+  mode: sparse
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  use_guidance_reward: false
+  residual_policy: false
+
+output:
+  category: baseline16
+  results_dir: results

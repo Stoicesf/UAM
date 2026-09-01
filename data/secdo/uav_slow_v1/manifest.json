@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "trajectories": 1000,
+  "length": 200,
+  "seed": 42,
+  "regime": "slow_drift",
+  "n_agents": 8,
+  "dt": 0.12,
+  "box": 3.0,
+  "vel_scale": 0.4,
+  "teacher": "c_t = W log2(1 + SINR_bar)",
+  "teacher_module": "secdo.datasets.uav.teacher.capacity_teacher",
+  "n_written": 1000
+}

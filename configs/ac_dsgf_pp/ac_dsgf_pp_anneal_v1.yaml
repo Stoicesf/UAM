@@ -1,0 +1,67 @@
+# AC-DSGF++ Budget Annealing — formal 16UAV / 102k schedule (locked design)
+#
+# Stage 1  0–20k:   λ_b=0, free exploration (utility learns U*)
+# Stage 2 20–70k:   target 2.0→1.0, λ_b 0→0.02  (soft compression)
+# Stage 3 70–102k:  target=1.0, λ_b=0.02         (do NOT push to 0.5)
+#
+# Smoke uses configs/ac_dsgf_pp/ac_dsgf_pp_anneal_smoke.yaml (scaled steps).
+experiment:
+  id: ac_dsgf_pp_anneal_v1
+  stage: 6
+  name: "AC-DSGF++ Budget Annealing v1 16UAV 102k"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 64
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 16
+  num_envs: 32
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+  utility_warmup_steps: 5000
+  lambda_comm: 0.0
+  # Fallback if anneal disabled
+  lambda_budget: 0.02
+  target_comm: 1.0
+  lambda_u: 0.5
+  lambda_rank: 0.1
+  ranking_mode: hinge
+  use_utility_in_gate: true
+  use_utility_in_policy: true
+  gate_residual: true
+  gate_residual_alpha: 0.5
+  gate_residual_alpha_after: 0.8
+  budget:
+    enabled: true
+    schedule: linear
+    start_step: 20000
+    end_step: 70000
+    start_target: 2.0
+    end_target: 1.0
+    lambda_start: 0.0
+    lambda_end: 0.02
+
+output:
+  category: ac_dsgf_pp
+  results_dir: results
+  tag: AC_DSGF_PP_ANNEAL_V1

@@ -1,0 +1,11 @@
+{
+  "experiment_id": "gen_mappo_obs4",
+  "stage": 0,
+  "name": "MAPPO Generalization Train obs=4",
+  "run_name": "mappo_obs4",
+  "seed": 42,
+  "started_at": "2026-07-13T11:08:06",
+  "config_path": "F:\\UAM\\configs\\generalization\\methods\\mappo_obs4.yaml",
+  "guidance_mode": "none",
+  "extra": {}
+}

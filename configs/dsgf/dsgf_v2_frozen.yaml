@@ -1,0 +1,39 @@
+# DSGF v2 FROZEN — do not modify structure / beta / residual policy
+# Canonical reference for all paper experiments (seed=42, 102k baseline: 9.27% success)
+experiment:
+  id: exp4_dsfg_v2
+  stage: 4
+  name: "DSGF v2 FROZEN"
+  frozen: true
+  frozen_at: "2026-07-10"
+  baseline_success_102k: 0.0927
+  baseline_success_20k: 0.2627
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+env:
+  comm_radius: 0.5
+
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_dynamic_quality: true
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+
+output:
+  category: dsgf
+  results_dir: results
+  tag: DSGF_v2_FROZEN

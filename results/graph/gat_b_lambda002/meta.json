@@ -1,0 +1,11 @@
+{
+  "experiment_id": "gat_b",
+  "stage": 2,
+  "name": "GAT-B lambda=0.02",
+  "run_name": "gat_b_lambda002",
+  "seed": 42,
+  "started_at": "2026-07-09T17:38:53",
+  "config_path": "F:\\UAM\\configs\\gat\\gat_b_lambda002.yaml",
+  "guidance_mode": "gat",
+  "extra": {}
+}

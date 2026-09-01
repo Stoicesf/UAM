@@ -1,0 +1,11 @@
+{
+  "experiment_id": "baseline16_full_attn",
+  "stage": 2,
+  "name": "Full Attention MAPPO 16 UAV",
+  "run_name": "s2026",
+  "seed": 2026,
+  "started_at": "2026-07-12T20:47:01",
+  "config_path": "F:\\UAM\\configs\\baseline16\\full_attention.yaml",
+  "guidance_mode": "sparse",
+  "extra": {}
+}

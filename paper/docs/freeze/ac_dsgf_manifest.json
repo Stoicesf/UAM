@@ -1,0 +1,71 @@
+{
+  "project": "AC-DSGF",
+  "full_name": "Adaptive Communication-aware Dynamic Sparse Graph Fusion",
+  "status": "planned_scaffold",
+  "created_at": "2026-07-15",
+  "dsgf_v2_frozen": true,
+  "roadmap": "paper/ac_dsgf_roadmap.md",
+  "phases": [
+    {
+      "id": "P0_smoke",
+      "weeks": "W1-W2",
+      "goal": "Controller + loss + 4UAV 20k; edges down >=30% vs DSGF",
+      "status": "done",
+      "result": {
+        "run": "results/ac_dsgf/ac_dsgf_smoke_v0",
+        "success": 0.3252,
+        "soft_edges": 0.2746,
+        "dsgf_ref_edges": 6.0,
+        "edge_drop_ratio": 0.95,
+        "pass_edges_ge_30pct": true,
+        "note": "Watch over-sparsity; tune lambda_comm if needed"
+      },
+      "acceptance": ["trainable", "edges_drop_ge_30pct", "no_silence_collapse"]
+    },
+    {
+      "id": "P1_core",
+      "weeks": "W3-W5",
+      "goal": "Budget curve (core sell) + packet loss + 16UAV table + ablation",
+      "status": "in_progress",
+      "experiments": [
+        "main_16uav",
+        "comm_budget_100_to_20",
+        "packet_loss_0_to_80",
+        "scalability_ac_curve",
+        "ablation_controller"
+      ],
+      "budget_sweep_4uav": {
+        "status": "done",
+        "csv": "results/ac_dsgf/budget_sweep/budget_sweep.csv",
+        "figure": "paper/figures/fig_comm_budget.png",
+        "note": "4UAV smoke-scale; scale to 16UAV next"
+      }
+    },
+    {
+      "id": "P2_demo",
+      "weeks": "W6",
+      "goal": "Triple-panel Demo under comm failure",
+      "status": "pending",
+      "outputs": ["demo_ac_dsgf/videos", "communication_graph.gif"]
+    },
+    {
+      "id": "P3_write",
+      "weeks": "W7-W12",
+      "goal": "IEEE draft + submission packaging",
+      "status": "pending",
+      "venues": ["RA-L", "TASE", "TNNLS"]
+    }
+  ],
+  "code_scaffold": [
+    "models/communication/controller.py",
+    "models/communication/cost.py",
+    "models/communication/scheduler.py",
+    "models/ac_dsgf.py",
+    "models/uncertainty.py"
+  ],
+  "do_not_touch": [
+    "configs/dsgf/dsgf_v2_frozen.yaml",
+    "paper/tables/table1_main.csv",
+    "paper/tables/table2_ablation.csv"
+  ]
+}

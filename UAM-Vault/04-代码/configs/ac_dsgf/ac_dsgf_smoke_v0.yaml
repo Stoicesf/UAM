@@ -1,0 +1,42 @@
+# AC-DSGF Phase-0 Smoke — 4 UAV · 20k frames
+# Do NOT modify DSGF v2 frozen configs.
+experiment:
+  id: ac_dsgf_smoke_v0
+  stage: 5
+  name: "AC-DSGF Smoke 4 UAV 20k"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 32
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+  # Communication regularizer — start mild for smoke
+  lambda_comm: 0.001
+
+output:
+  category: ac_dsgf
+  results_dir: results
+  tag: AC_DSGF_SMOKE_V0

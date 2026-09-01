@@ -1,0 +1,40 @@
+﻿{
+    "main":  {
+                 "direction":  "vertical",
+                 "id":  "root",
+                 "type":  "split",
+                 "children":  [
+                                  {
+                                      "id":  "leaf",
+                                      "type":  "leaf",
+                                      "state":  {
+                                                    "state":  {
+                                                                  "file":  "00-首页.md",
+                                                                  "mode":  "source"
+                                                              },
+                                                    "type":  "markdown"
+                                                }
+                                  }
+                              ]
+             },
+    "left":  {
+                 "id":  "left",
+                 "type":  "side",
+                 "children":  [
+                                  {
+                                      "id":  "files",
+                                      "type":  "leaf",
+                                      "state":  {
+                                                    "state":  {
+
+                                                              },
+                                                    "type":  "file-explorer"
+                                                }
+                                  }
+                              ]
+             },
+    "active":  "leaf",
+    "lastOpenFiles":  [
+                          "00-首页.md"
+                      ]
+}

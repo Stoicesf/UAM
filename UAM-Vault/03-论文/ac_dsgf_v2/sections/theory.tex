@@ -1,0 +1,119 @@
+\section{Theoretical Analysis}
+\label{sec:theory}
+
+We chain five objects: constraint identifiability $\rightarrow$ projection perturbation $\rightarrow$ dynamic regret $\rightarrow$ predictability-conditioned advantage $\rightarrow$ failure-safe recovery.
+Assumptions are collected in Appendix~\ref{app:impl} (cf.\ Assumps.~1--4 in the supplement markdown freeze).
+
+\paragraph{Notation freeze.}
+$\delta_t:=d_H(\hat{\mathcal{B}}_{t+1},\mathcal{B}_{t+1})$ (feasible-set mismatch);
+$\chi_t:=d_H(\mathcal{B}_{t+1},\mathcal{B}_t)$ (constraint drift);
+$\epsilon_t:=\|s_{t+1}-\hat s_{t+1}\|$ (state prediction error).
+Capacity residual $\lvert\hat c_{t+1}-c_{t+1}\rvert$ upper-bounds $\delta_t$ for scalar budgets (Theorem~\ref{thm:1}) and is \emph{not} denoted $\delta_t$.
+
+\subsection{Constraint Evolution Identifiability}
+\begin{theorem}[Constraint evolution stability]
+\label{thm:1}
+For scalar budgets $\mathcal{B}(c)=\{x\ge 0:\mathbf{1}^\top x\le c\}$,
+\begin{equation}
+\delta_t
+\;=\;
+d_H\bigl(\mathcal{B}(c_{t+1}),\mathcal{B}(\hat c_{t+1})\bigr)
+\;\le\;
+\lvert c_{t+1}-\hat c_{t+1}\rvert.
+\end{equation}
+If $c=T(s)$ is $L_g$-Lipschitz and $\hat c_{t+1}=T(\hat s_{t+1})$, then
+$\delta_t\le L_g\epsilon_t$.
+\end{theorem}
+Theorem~\ref{thm:1} establishes a controllable relationship between capacity / state residuals and feasible-set mismatch $\delta_t$, not that the predictor recovers the true future constraint.
+Proof: Appendix~\ref{app:thm1}.
+
+\begin{lemma}[Surrogate consistency]
+\label{lem:surrogate}
+Let $L_c=\lvert\hat c-c\rvert^2$ be the constraint regression loss and assume the scalar-budget geometry of Theorem~\ref{thm:1}.
+Then
+\begin{equation}
+\mathbb{E}[\delta_t]
+\;\le\;
+\mathbb{E}\lvert\hat c_t-c_t\rvert
+\;\le\;
+\sqrt{\mathbb{E}[L_c]}.
+\end{equation}
+Hence minimizing the constraint prediction loss contracts the theoretical set-mismatch term appearing in Theorems~\ref{thm:1}--\ref{thm:2}.
+This does \emph{not} claim that minimizing $L_c$ minimizes $\mathrm{Reg}_T$.
+\end{lemma}
+Proof: Appendix~\ref{app:surrogate}.
+
+\subsection{Projection Error Propagation}
+\begin{lemma}[Projection perturbation]
+\label{lem:2}
+Under bounded projection sensitivity, for any $y$,
+\begin{equation}
+\bigl\|\Pi_{\hat{\mathcal{B}}}(y)-\Pi_{\mathcal{B}}(y)\bigr\|
+\;\le\;
+C_\Pi\, d_H(\hat{\mathcal{B}},\mathcal{B}).
+\end{equation}
+Consequently, with $x_{t+1}=\Pi_{\hat{\mathcal{B}}_{t+1}}(y_t)$ and $x_{t+1}^\circ=\Pi_{\mathcal{B}_{t+1}}(y_t)$,
+$\|x_{t+1}-x_{t+1}^\circ\|\le C_\Pi\delta_t$.
+Under $\mu$-strong convexity,
+$\|x_{t+1}^\star-x_t^\star\|\le\mu^{-1}(\omega_t+L_g\chi_t)$.
+\end{lemma}
+\begin{remark}
+\label{rem:Cpi}
+The constant $C_\Pi$ characterizes the sensitivity of the projection operator rather than a universal property of arbitrary convex sets.
+This assumption is not required for arbitrary convex sets, but holds for the polyhedral feasible regions considered in this work; boundedness then follows from standard Hoffman-type error bounds, and often $C_\Pi=O(1)$.
+\end{remark}
+Proof: Appendix~\ref{app:lem2}.
+
+\subsection{Dynamic Variational Regret}
+Define $\mathrm{Reg}_T=\sum_{t=0}^{T-1}\bigl(F_t(x_t)-F_t(x_t^\star)\bigr)$ and
+$P_T=\sum_{t}\|x_{t+1}^\star-x_t^\star\|$.
+\begin{theorem}[Dynamic regret upper bound]
+\label{thm:2}
+SECDO admits a dynamic regret upper bound governed by objective drift, constraint evolution, and feasible-set mismatch:
+\begin{equation}
+\mathrm{Reg}_T
+\;\le\;
+O\Bigl(\sqrt{T(1+P_T)}\Bigr)
+\;+\;
+O\Bigl(\sum_t(\epsilon_t+\delta_t)\Bigr),
+\end{equation}
+with
+\begin{equation}
+P_T
+\;\le\;
+\frac1\mu\sum_t\bigl(\omega_t+L_g\chi_t\bigr).
+\end{equation}
+\end{theorem}
+We do \emph{not} claim that SECDO achieves optimal regret.
+Proof: Appendix~\ref{app:thm2}.
+
+\subsection{Predictability-Conditioned Feasibility Improvement}
+Let $V_R(t)\le\chi_t$ and $V_A(t)\le\delta_t$ be reactive / anticipatory future-violation certificates, and $\mathrm{PI}_t=\delta_t/(\chi_t+\varepsilon)$.
+\begin{theorem}[Predictability-conditioned feasibility improvement]
+\label{thm:3}
+If $\mathrm{PI}_t<1$ (i.e., $\delta_t<\chi_t$), anticipatory projection provides a tighter \emph{constraint-violation certificate} when set mismatch is smaller than constraint drift:
+\begin{equation}
+\delta_t<\chi_t
+\quad\Rightarrow\quad
+\text{anticipatory feasibility certificate strictly tighter than reactive}.
+\end{equation}
+\end{theorem}
+This is a statement about feasibility certificates, not about objective superiority, and not a claim that SECDO is always better.
+Proof: Appendix~\ref{app:thm3}.
+
+\subsection{Failure-Safe Recovery}
+\begin{corollary}[Graceful degradation]
+\label{cor:4}
+With $\alpha_t=1/(1+\mathrm{PI}_t^2)$ and $c^{\mathrm{mix}}_t=\alpha_t\hat c_{t+1}+(1-\alpha_t)c_t$,
+when $\mathrm{PI}_t\gg 1$ one has $\alpha_t\to 0$ and SECDO gracefully degrades toward reactive behavior.
+Writing $I_t^{\mathrm{fail}}=\mathbf{1}\{\mathrm{PI}_t>1\}$,
+\begin{equation}
+\mathrm{Reg}_{\mathrm{SECDO}}
+\;\le\;
+\mathrm{Reg}_{\mathrm{Reactive}}
+\;+\;
+O\Bigl(\sum_t I_t^{\mathrm{fail}}\delta_t\Bigr).
+\end{equation}
+\end{corollary}
+We do not claim full recovery to a failure-free trajectory.
+Proof: Appendix~\ref{app:cor4}.

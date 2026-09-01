@@ -1,0 +1,22 @@
+# Ablation B — obs+Phi, lambda=0.1
+experiment:
+  id: ablation_b
+  stage: 1
+  name: "Ablation B: lambda=0.1"
+
+train:
+  seed: 42
+  total_frames: 10_240
+  algorithm: guided_mappo
+
+guidance:
+  mode: mlp
+  guidance_dim: 4
+  hidden_dim: 128
+  use_guidance_reward: true
+  guidance_reward_coef: 0.1
+  guidance_warmup: false
+
+output:
+  category: guide
+  results_dir: results

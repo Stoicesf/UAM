@@ -1,0 +1,27 @@
+# Exp6 — Scalability (32 agents)
+experiment:
+  id: exp6_scalability
+  stage: 6
+  name: "DSGF Scalability 32 agents"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+env:
+  num_agents: 32
+  num_envs: 8
+
+guidance:
+  mode: full
+  guidance_dim: 4
+  hidden_dim: 128
+  num_heads: 4
+  comm_radius: 0.5
+  use_guidance_reward: true
+  guidance_reward_coef: 0.1
+
+output:
+  results_dir: results
+  figures_dir: figures

@@ -1,0 +1,59 @@
+{
+  "description": "P1-3 Communication radius sweep @ 16 UAV, seed=42, 102k frames",
+  "fixed": {
+    "num_agents": 16,
+    "seed": 42,
+    "total_frames": 102400,
+    "scenario": "navigation"
+  },
+  "radius_configs": {
+    "0": "configs/communication/radius0.yaml",
+    "1": "configs/communication/radius1.yaml",
+    "2": "configs/communication/radius2.yaml",
+    "3": "configs/communication/radius3.yaml",
+    "full": "configs/communication/radius_full.yaml"
+  },
+  "methods": {
+    "mappo": {
+      "exp_config": "configs/communication/methods/mappo.yaml",
+      "implicit_comm_cost": 0.0
+    },
+    "gat": {
+      "exp_config": "configs/communication/methods/gat.yaml"
+    },
+    "dsgf": {
+      "exp_config": "configs/communication/methods/dsgf.yaml"
+    }
+  },
+  "profiles": {
+    "full": [
+      {"method": "mappo", "radius": "0", "run_name": "mappo_r0"},
+      {"method": "mappo", "radius": "2", "run_name": "mappo_r2"},
+      {"method": "mappo", "radius": "full", "run_name": "mappo_rfull"},
+      {"method": "gat", "radius": "0", "run_name": "gat_r0"},
+      {"method": "gat", "radius": "1", "run_name": "gat_r1"},
+      {"method": "gat", "radius": "2", "run_name": "gat_r2"},
+      {"method": "gat", "radius": "full", "run_name": "gat_rfull"},
+      {"method": "dsgf", "radius": "0", "run_name": "dsgf_r0"},
+      {"method": "dsgf", "radius": "1", "run_name": "dsgf_r1"},
+      {"method": "dsgf", "radius": "2", "run_name": "dsgf_r2"},
+      {"method": "dsgf", "radius": "full", "run_name": "dsgf_rfull"}
+    ],
+    "fast": [
+      {"method": "mappo", "radius": "1", "run_name": "mappo_r1"},
+      {"method": "mappo", "radius": "2", "run_name": "mappo_r2"},
+      {"method": "mappo", "radius": "full", "run_name": "mappo_rfull"},
+      {"method": "gat", "radius": "1", "run_name": "gat_r1"},
+      {"method": "gat", "radius": "2", "run_name": "gat_r2"},
+      {"method": "gat", "radius": "full", "run_name": "gat_rfull"},
+      {"method": "dsgf", "radius": "1", "run_name": "dsgf_r1"},
+      {"method": "dsgf", "radius": "2", "run_name": "dsgf_r2"},
+      {"method": "dsgf", "radius": "full", "run_name": "dsgf_rfull"}
+    ],
+    "smoke": [
+      {"method": "gat", "radius": "1", "run_name": "smoke_gat_r1"},
+      {"method": "dsgf", "radius": "2", "run_name": "smoke_dsgf_r2"}
+    ]
+  },
+  "note": "GAT/DSGF must retrain per radius (graph structure in forward pass). MAPPO success is radius-invariant; comm_cost=0."
+}

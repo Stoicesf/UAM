@@ -1,0 +1,18 @@
+{
+  "frozen": true,
+  "algorithm": "DSGF v2",
+  "residual_policy": true,
+  "use_guidance_reward": false,
+  "frames": 102400,
+  "seed": 42,
+  "note": "Do not modify residual structure, beta decay, or policy input after freeze.",
+  "paper_metrics": {
+    "reward": -6.1276,
+    "success": 0.0927,
+    "collision": 0.1468,
+    "path_length": 77.4583,
+    "alignment": -0.4606,
+    "max_reward": 3.5373,
+    "num_iterations": 50
+  }
+}

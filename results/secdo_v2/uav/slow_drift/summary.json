@@ -1,0 +1,62 @@
+[
+  {
+    "regime": "slow_drift",
+    "method": "ac_dsgf",
+    "n_seeds": 5,
+    "gap": 2.8739368347885373e-05,
+    "violation": 0.0007006767516334852,
+    "delta": 0.011247765071069202,
+    "rho": 0.011247765071069202,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.0,
+    "mean_eps_plus_delta": 0.011247765071069202
+  },
+  {
+    "regime": "slow_drift",
+    "method": "dsgf",
+    "n_seeds": 5,
+    "gap": 2.4061668204287033e-05,
+    "violation": 0.0005735416663810611,
+    "delta": 0.013156052570169172,
+    "rho": 0.013156052570169172,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.0,
+    "mean_eps_plus_delta": 0.013156052570169172
+  },
+  {
+    "regime": "slow_drift",
+    "method": "oracle",
+    "n_seeds": 5,
+    "gap": 9.182915277487305e-06,
+    "violation": 0.00020535571966320276,
+    "delta": 0.0027981486714755495,
+    "rho": 0.009879998315591365,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.9770833333333334,
+    "mean_eps_plus_delta": 0.0027981486714755495
+  },
+  {
+    "regime": "slow_drift",
+    "method": "reactive",
+    "n_seeds": 5,
+    "gap": 2.621876578435452e-05,
+    "violation": 0.0006900683743879199,
+    "delta": 0.013951266506531584,
+    "rho": 0.013951266506531584,
+    "epsilon": 0.0,
+    "frac_delta_lt_rho": 0.0,
+    "mean_eps_plus_delta": 0.013951266506531584
+  },
+  {
+    "regime": "slow_drift",
+    "method": "secdo",
+    "n_seeds": 5,
+    "gap": 8.012720764679054e-06,
+    "violation": 0.0033174974222977952,
+    "delta": 0.014029283627557256,
+    "rho": 0.010125217660485457,
+    "epsilon": 13.290225332975387,
+    "frac_delta_lt_rho": 0.03125,
+    "mean_eps_plus_delta": 13.304254616602943
+  }
+]

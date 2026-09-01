@@ -1,0 +1,244 @@
+﻿device=cuda | run=F:\UAM\runs\tro_evidence_6_2_budget_20260719_200624
+sizes=[8, 16, 32, 64] K=[1, 2, 4, 6, 8] ratios=[0.05, 0.1, 0.2, 0.4] ep=8 env_max_n=16
+=== Phase synthetic ===
+  [PASS] synthetic N=8 fixed_k K=1 Vmax=0.0
+  [PASS] synthetic N=8 fixed_k K=2 Vmax=0.0
+  [PASS] synthetic N=8 fixed_k K=4 Vmax=0.0
+  [PASS] synthetic N=8 fixed_k K=6 Vmax=0.0
+  [PASS] synthetic N=8 fixed_k K=8 Vmax=0.0
+  [PASS] synthetic N=8 ratio rho=0.05 Vmax=0.0
+  [PASS] synthetic N=8 ratio rho=0.1 Vmax=0.0
+  [PASS] synthetic N=8 ratio rho=0.2 Vmax=0.0
+  [PASS] synthetic N=8 ratio rho=0.4 Vmax=0.0
+  [PASS] synthetic N=16 fixed_k K=1 Vmax=0.0
+  [PASS] synthetic N=16 fixed_k K=2 Vmax=0.0
+  [PASS] synthetic N=16 fixed_k K=4 Vmax=0.0
+  [PASS] synthetic N=16 fixed_k K=6 Vmax=0.0
+  [PASS] synthetic N=16 fixed_k K=8 Vmax=0.0
+  [PASS] synthetic N=16 ratio rho=0.05 Vmax=0.0
+  [PASS] synthetic N=16 ratio rho=0.1 Vmax=0.0
+  [PASS] synthetic N=16 ratio rho=0.2 Vmax=0.0
+  [PASS] synthetic N=16 ratio rho=0.4 Vmax=0.0
+  [PASS] synthetic N=32 fixed_k K=1 Vmax=0.0
+  [PASS] synthetic N=32 fixed_k K=2 Vmax=0.0
+  [PASS] synthetic N=32 fixed_k K=4 Vmax=0.0
+  [PASS] synthetic N=32 fixed_k K=6 Vmax=0.0
+  [PASS] synthetic N=32 fixed_k K=8 Vmax=0.0
+  [PASS] synthetic N=32 ratio rho=0.05 Vmax=0.0
+  [PASS] synthetic N=32 ratio rho=0.1 Vmax=0.0
+  [PASS] synthetic N=32 ratio rho=0.2 Vmax=0.0
+  [PASS] synthetic N=32 ratio rho=0.4 Vmax=0.0
+  [PASS] synthetic N=64 fixed_k K=1 Vmax=0.0
+  [PASS] synthetic N=64 fixed_k K=2 Vmax=0.0
+  [PASS] synthetic N=64 fixed_k K=4 Vmax=0.0
+  [PASS] synthetic N=64 fixed_k K=6 Vmax=0.0
+  [PASS] synthetic N=64 fixed_k K=8 Vmax=0.0
+  [PASS] synthetic N=64 ratio rho=0.05 Vmax=0.0
+  [PASS] synthetic N=64 ratio rho=0.1 Vmax=0.0
+  [PASS] synthetic N=64 ratio rho=0.2 Vmax=0.0
+  [PASS] synthetic N=64 ratio rho=0.4 Vmax=0.0
+=== Phase encoder (frozen uav16) ===
+[encoder] seed=1234 loading backbone N=16…
+[encoder] seed=1234 N=8 env loading…
+  [PASS] env N=8 fixed_k K=1 seed=1234  Vmax=0 VR=0  d=0.759 rho=0.1084
+  [PASS] env N=8 fixed_k K=2 seed=1234  Vmax=0 VR=0  d=1.208 rho=0.1725
+  [PASS] env N=8 fixed_k K=4 seed=1234  Vmax=0 VR=0  d=1.248 rho=0.1782
+  [PASS] env N=8 fixed_k K=6 seed=1234  Vmax=0 VR=0  d=1.310 rho=0.1871
+  [PASS] env N=8 fixed_k K=8 seed=1234  Vmax=0 VR=0  d=1.288 rho=0.1839
+  [PASS] env N=8 ratio rho_B=0.05 seed=1234  Vmax=0 VR=0  d=0.784 rho=0.1120
+  [PASS] env N=8 ratio rho_B=0.1 seed=1234  Vmax=0 VR=0  d=0.761 rho=0.1087
+  [PASS] env N=8 ratio rho_B=0.2 seed=1234  Vmax=0 VR=0  d=0.686 rho=0.0980
+  [PASS] env N=8 ratio rho_B=0.4 seed=1234  Vmax=0 VR=0  d=0.845 rho=0.1207
+  [PASS] env N=16 fixed_k K=1 seed=1234  Vmax=0 VR=0  d=0.776 rho=0.0517
+  [PASS] env N=16 fixed_k K=2 seed=1234  Vmax=0 VR=0  d=1.182 rho=0.0788
+  [PASS] env N=16 fixed_k K=4 seed=1234  Vmax=0 VR=0  d=1.356 rho=0.0904
+  [PASS] env N=16 fixed_k K=6 seed=1234  Vmax=0 VR=0  d=1.507 rho=0.1005
+  [PASS] env N=16 fixed_k K=8 seed=1234  Vmax=0 VR=0  d=1.358 rho=0.0906
+  [PASS] env N=16 ratio rho_B=0.05 seed=1234  Vmax=0 VR=0  d=0.734 rho=0.0489
+  [PASS] env N=16 ratio rho_B=0.1 seed=1234  Vmax=0 VR=0  d=0.748 rho=0.0498
+  [PASS] env N=16 ratio rho_B=0.2 seed=1234  Vmax=0 VR=0  d=0.765 rho=0.0510
+  [PASS] env N=16 ratio rho_B=0.4 seed=1234  Vmax=0 VR=0  d=0.856 rho=0.0571
+[encoder] seed=1234 N=32 geom steps=400…
+  [PASS] geom N=32 fixed_k K=1 seed=1234  Vmax=0 VR=0  d=0.743 rho=0.0240
+  [PASS] geom N=32 fixed_k K=2 seed=1234  Vmax=0 VR=0  d=1.140 rho=0.0368
+  [PASS] geom N=32 fixed_k K=4 seed=1234  Vmax=0 VR=0  d=1.343 rho=0.0433
+  [PASS] geom N=32 fixed_k K=6 seed=1234  Vmax=0 VR=0  d=1.360 rho=0.0439
+  [PASS] geom N=32 fixed_k K=8 seed=1234  Vmax=0 VR=0  d=1.361 rho=0.0439
+  [PASS] geom N=32 ratio rho_B=0.05 seed=1234  Vmax=0 VR=0  d=0.747 rho=0.0241
+  [PASS] geom N=32 ratio rho_B=0.1 seed=1234  Vmax=0 VR=0  d=0.747 rho=0.0241
+  [PASS] geom N=32 ratio rho_B=0.2 seed=1234  Vmax=0 VR=0  d=0.742 rho=0.0239
+  [PASS] geom N=32 ratio rho_B=0.4 seed=1234  Vmax=0 VR=0  d=0.907 rho=0.0293
+[encoder] seed=1234 N=64 geom steps=400…
+  [PASS] geom N=64 fixed_k K=1 seed=1234  Vmax=0 VR=0  d=0.719 rho=0.0114
+  [PASS] geom N=64 fixed_k K=2 seed=1234  Vmax=0 VR=0  d=1.086 rho=0.0172
+  [PASS] geom N=64 fixed_k K=4 seed=1234  Vmax=0 VR=0  d=1.266 rho=0.0201
+  [PASS] geom N=64 fixed_k K=6 seed=1234  Vmax=0 VR=0  d=1.271 rho=0.0202
+  [PASS] geom N=64 fixed_k K=8 seed=1234  Vmax=0 VR=0  d=1.296 rho=0.0206
+  [PASS] geom N=64 ratio rho_B=0.05 seed=1234  Vmax=0 VR=0  d=0.724 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.1 seed=1234  Vmax=0 VR=0  d=0.718 rho=0.0114
+  [PASS] geom N=64 ratio rho_B=0.2 seed=1234  Vmax=0 VR=0  d=0.721 rho=0.0114
+  [PASS] geom N=64 ratio rho_B=0.4 seed=1234  Vmax=0 VR=0  d=0.869 rho=0.0138
+[encoder] seed=2026 loading backbone N=16…
+[encoder] seed=2026 N=8 env loading…
+  [PASS] env N=8 fixed_k K=1 seed=2026  Vmax=0 VR=0  d=0.710 rho=0.1014
+  [PASS] env N=8 fixed_k K=2 seed=2026  Vmax=0 VR=0  d=1.054 rho=0.1506
+  [PASS] env N=8 fixed_k K=4 seed=2026  Vmax=0 VR=0  d=1.256 rho=0.1794
+  [PASS] env N=8 fixed_k K=6 seed=2026  Vmax=0 VR=0  d=1.231 rho=0.1758
+  [PASS] env N=8 fixed_k K=8 seed=2026  Vmax=0 VR=0  d=1.434 rho=0.2048
+  [PASS] env N=8 ratio rho_B=0.05 seed=2026  Vmax=0 VR=0  d=0.710 rho=0.1014
+  [PASS] env N=8 ratio rho_B=0.1 seed=2026  Vmax=0 VR=0  d=0.711 rho=0.1015
+  [PASS] env N=8 ratio rho_B=0.2 seed=2026  Vmax=0 VR=0  d=0.787 rho=0.1125
+  [PASS] env N=8 ratio rho_B=0.4 seed=2026  Vmax=0 VR=0  d=0.892 rho=0.1274
+  [PASS] env N=16 fixed_k K=1 seed=2026  Vmax=0 VR=0  d=0.778 rho=0.0519
+  [PASS] env N=16 fixed_k K=2 seed=2026  Vmax=0 VR=0  d=1.102 rho=0.0734
+  [PASS] env N=16 fixed_k K=4 seed=2026  Vmax=0 VR=0  d=1.252 rho=0.0835
+  [PASS] env N=16 fixed_k K=6 seed=2026  Vmax=0 VR=0  d=1.262 rho=0.0841
+  [PASS] env N=16 fixed_k K=8 seed=2026  Vmax=0 VR=0  d=1.380 rho=0.0920
+  [PASS] env N=16 ratio rho_B=0.05 seed=2026  Vmax=0 VR=0  d=0.681 rho=0.0454
+  [PASS] env N=16 ratio rho_B=0.1 seed=2026  Vmax=0 VR=0  d=0.743 rho=0.0495
+  [PASS] env N=16 ratio rho_B=0.2 seed=2026  Vmax=0 VR=0  d=0.762 rho=0.0508
+  [PASS] env N=16 ratio rho_B=0.4 seed=2026  Vmax=0 VR=0  d=0.812 rho=0.0541
+[encoder] seed=2026 N=32 geom steps=400…
+  [PASS] geom N=32 fixed_k K=1 seed=2026  Vmax=0 VR=0  d=0.739 rho=0.0238
+  [PASS] geom N=32 fixed_k K=2 seed=2026  Vmax=0 VR=0  d=1.149 rho=0.0371
+  [PASS] geom N=32 fixed_k K=4 seed=2026  Vmax=0 VR=0  d=1.331 rho=0.0429
+  [PASS] geom N=32 fixed_k K=6 seed=2026  Vmax=0 VR=0  d=1.345 rho=0.0434
+  [PASS] geom N=32 fixed_k K=8 seed=2026  Vmax=0 VR=0  d=1.394 rho=0.0450
+  [PASS] geom N=32 ratio rho_B=0.05 seed=2026  Vmax=0 VR=0  d=0.746 rho=0.0241
+  [PASS] geom N=32 ratio rho_B=0.1 seed=2026  Vmax=0 VR=0  d=0.748 rho=0.0241
+  [PASS] geom N=32 ratio rho_B=0.2 seed=2026  Vmax=0 VR=0  d=0.745 rho=0.0240
+  [PASS] geom N=32 ratio rho_B=0.4 seed=2026  Vmax=0 VR=0  d=0.906 rho=0.0292
+[encoder] seed=2026 N=64 geom steps=400…
+  [PASS] geom N=64 fixed_k K=1 seed=2026  Vmax=0 VR=0  d=0.722 rho=0.0115
+  [PASS] geom N=64 fixed_k K=2 seed=2026  Vmax=0 VR=0  d=1.092 rho=0.0173
+  [PASS] geom N=64 fixed_k K=4 seed=2026  Vmax=0 VR=0  d=1.262 rho=0.0200
+  [PASS] geom N=64 fixed_k K=6 seed=2026  Vmax=0 VR=0  d=1.278 rho=0.0203
+  [PASS] geom N=64 fixed_k K=8 seed=2026  Vmax=0 VR=0  d=1.288 rho=0.0204
+  [PASS] geom N=64 ratio rho_B=0.05 seed=2026  Vmax=0 VR=0  d=0.725 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.1 seed=2026  Vmax=0 VR=0  d=0.723 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.2 seed=2026  Vmax=0 VR=0  d=0.723 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.4 seed=2026  Vmax=0 VR=0  d=0.871 rho=0.0138
+[encoder] seed=3407 loading backbone N=16…
+[encoder] seed=3407 N=8 env loading…
+  [PASS] env N=8 fixed_k K=1 seed=3407  Vmax=0 VR=0  d=0.784 rho=0.1120
+  [PASS] env N=8 fixed_k K=2 seed=3407  Vmax=0 VR=0  d=0.854 rho=0.1220
+  [PASS] env N=8 fixed_k K=4 seed=3407  Vmax=0 VR=0  d=1.202 rho=0.1718
+  [PASS] env N=8 fixed_k K=6 seed=3407  Vmax=0 VR=0  d=1.224 rho=0.1749
+  [PASS] env N=8 fixed_k K=8 seed=3407  Vmax=0 VR=0  d=1.021 rho=0.1458
+  [PASS] env N=8 ratio rho_B=0.05 seed=3407  Vmax=0 VR=0  d=0.818 rho=0.1169
+  [PASS] env N=8 ratio rho_B=0.1 seed=3407  Vmax=0 VR=0  d=0.828 rho=0.1183
+  [PASS] env N=8 ratio rho_B=0.2 seed=3407  Vmax=0 VR=0  d=0.693 rho=0.0990
+  [PASS] env N=8 ratio rho_B=0.4 seed=3407  Vmax=0 VR=0  d=0.829 rho=0.1185
+  [PASS] env N=16 fixed_k K=1 seed=3407  Vmax=0 VR=0  d=0.756 rho=0.0504
+  [PASS] env N=16 fixed_k K=2 seed=3407  Vmax=0 VR=0  d=1.042 rho=0.0694
+  [PASS] env N=16 fixed_k K=4 seed=3407  Vmax=0 VR=0  d=1.156 rho=0.0771
+  [PASS] env N=16 fixed_k K=6 seed=3407  Vmax=0 VR=0  d=1.383 rho=0.0922
+  [PASS] env N=16 fixed_k K=8 seed=3407  Vmax=0 VR=0  d=1.333 rho=0.0889
+  [PASS] env N=16 ratio rho_B=0.05 seed=3407  Vmax=0 VR=0  d=0.746 rho=0.0498
+  [PASS] env N=16 ratio rho_B=0.1 seed=3407  Vmax=0 VR=0  d=0.749 rho=0.0499
+  [PASS] env N=16 ratio rho_B=0.2 seed=3407  Vmax=0 VR=0  d=0.758 rho=0.0506
+  [PASS] env N=16 ratio rho_B=0.4 seed=3407  Vmax=0 VR=0  d=0.875 rho=0.0583
+[encoder] seed=3407 N=32 geom steps=400…
+  [PASS] geom N=32 fixed_k K=1 seed=3407  Vmax=0 VR=0  d=0.751 rho=0.0242
+  [PASS] geom N=32 fixed_k K=2 seed=3407  Vmax=0 VR=0  d=1.148 rho=0.0370
+  [PASS] geom N=32 fixed_k K=4 seed=3407  Vmax=0 VR=0  d=1.360 rho=0.0439
+  [PASS] geom N=32 fixed_k K=6 seed=3407  Vmax=0 VR=0  d=1.341 rho=0.0433
+  [PASS] geom N=32 fixed_k K=8 seed=3407  Vmax=0 VR=0  d=1.369 rho=0.0441
+  [PASS] geom N=32 ratio rho_B=0.05 seed=3407  Vmax=0 VR=0  d=0.740 rho=0.0239
+  [PASS] geom N=32 ratio rho_B=0.1 seed=3407  Vmax=0 VR=0  d=0.743 rho=0.0240
+  [PASS] geom N=32 ratio rho_B=0.2 seed=3407  Vmax=0 VR=0  d=0.741 rho=0.0239
+  [PASS] geom N=32 ratio rho_B=0.4 seed=3407  Vmax=0 VR=0  d=0.916 rho=0.0295
+[encoder] seed=3407 N=64 geom steps=400…
+  [PASS] geom N=64 fixed_k K=1 seed=3407  Vmax=0 VR=0  d=0.718 rho=0.0114
+  [PASS] geom N=64 fixed_k K=2 seed=3407  Vmax=0 VR=0  d=1.094 rho=0.0174
+  [PASS] geom N=64 fixed_k K=4 seed=3407  Vmax=0 VR=0  d=1.259 rho=0.0200
+  [PASS] geom N=64 fixed_k K=6 seed=3407  Vmax=0 VR=0  d=1.275 rho=0.0202
+  [PASS] geom N=64 fixed_k K=8 seed=3407  Vmax=0 VR=0  d=1.278 rho=0.0203
+  [PASS] geom N=64 ratio rho_B=0.05 seed=3407  Vmax=0 VR=0  d=0.722 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.1 seed=3407  Vmax=0 VR=0  d=0.725 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.2 seed=3407  Vmax=0 VR=0  d=0.722 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.4 seed=3407  Vmax=0 VR=0  d=0.858 rho=0.0136
+[encoder] seed=42 loading backbone N=16…
+[encoder] seed=42 N=8 env loading…
+  [PASS] env N=8 fixed_k K=1 seed=42  Vmax=0 VR=0  d=0.724 rho=0.1034
+  [PASS] env N=8 fixed_k K=2 seed=42  Vmax=0 VR=0  d=0.965 rho=0.1379
+  [PASS] env N=8 fixed_k K=4 seed=42  Vmax=0 VR=0  d=1.377 rho=0.1967
+  [PASS] env N=8 fixed_k K=6 seed=42  Vmax=0 VR=0  d=1.164 rho=0.1663
+  [PASS] env N=8 fixed_k K=8 seed=42  Vmax=0 VR=0  d=1.286 rho=0.1837
+  [PASS] env N=8 ratio rho_B=0.05 seed=42  Vmax=0 VR=0  d=0.715 rho=0.1021
+  [PASS] env N=8 ratio rho_B=0.1 seed=42  Vmax=0 VR=0  d=0.808 rho=0.1154
+  [PASS] env N=8 ratio rho_B=0.2 seed=42  Vmax=0 VR=0  d=0.714 rho=0.1020
+  [PASS] env N=8 ratio rho_B=0.4 seed=42  Vmax=0 VR=0  d=0.818 rho=0.1169
+  [PASS] env N=16 fixed_k K=1 seed=42  Vmax=0 VR=0  d=0.715 rho=0.0476
+  [PASS] env N=16 fixed_k K=2 seed=42  Vmax=0 VR=0  d=1.182 rho=0.0788
+  [PASS] env N=16 fixed_k K=4 seed=42  Vmax=0 VR=0  d=1.267 rho=0.0845
+  [PASS] env N=16 fixed_k K=6 seed=42  Vmax=0 VR=0  d=1.290 rho=0.0860
+  [PASS] env N=16 fixed_k K=8 seed=42  Vmax=0 VR=0  d=1.228 rho=0.0818
+  [PASS] env N=16 ratio rho_B=0.05 seed=42  Vmax=0 VR=0  d=0.723 rho=0.0482
+  [PASS] env N=16 ratio rho_B=0.1 seed=42  Vmax=0 VR=0  d=0.739 rho=0.0493
+  [PASS] env N=16 ratio rho_B=0.2 seed=42  Vmax=0 VR=0  d=0.722 rho=0.0481
+  [PASS] env N=16 ratio rho_B=0.4 seed=42  Vmax=0 VR=0  d=0.944 rho=0.0629
+[encoder] seed=42 N=32 geom steps=400…
+  [PASS] geom N=32 fixed_k K=1 seed=42  Vmax=0 VR=0  d=0.738 rho=0.0238
+  [PASS] geom N=32 fixed_k K=2 seed=42  Vmax=0 VR=0  d=1.146 rho=0.0370
+  [PASS] geom N=32 fixed_k K=4 seed=42  Vmax=0 VR=0  d=1.352 rho=0.0436
+  [PASS] geom N=32 fixed_k K=6 seed=42  Vmax=0 VR=0  d=1.364 rho=0.0440
+  [PASS] geom N=32 fixed_k K=8 seed=42  Vmax=0 VR=0  d=1.366 rho=0.0441
+  [PASS] geom N=32 ratio rho_B=0.05 seed=42  Vmax=0 VR=0  d=0.744 rho=0.0240
+  [PASS] geom N=32 ratio rho_B=0.1 seed=42  Vmax=0 VR=0  d=0.742 rho=0.0239
+  [PASS] geom N=32 ratio rho_B=0.2 seed=42  Vmax=0 VR=0  d=0.749 rho=0.0242
+  [PASS] geom N=32 ratio rho_B=0.4 seed=42  Vmax=0 VR=0  d=0.903 rho=0.0291
+[encoder] seed=42 N=64 geom steps=400…
+  [PASS] geom N=64 fixed_k K=1 seed=42  Vmax=0 VR=0  d=0.720 rho=0.0114
+  [PASS] geom N=64 fixed_k K=2 seed=42  Vmax=0 VR=0  d=1.079 rho=0.0171
+  [PASS] geom N=64 fixed_k K=4 seed=42  Vmax=0 VR=0  d=1.282 rho=0.0203
+  [PASS] geom N=64 fixed_k K=6 seed=42  Vmax=0 VR=0  d=1.270 rho=0.0202
+  [PASS] geom N=64 fixed_k K=8 seed=42  Vmax=0 VR=0  d=1.281 rho=0.0203
+  [PASS] geom N=64 ratio rho_B=0.05 seed=42  Vmax=0 VR=0  d=0.717 rho=0.0114
+  [PASS] geom N=64 ratio rho_B=0.1 seed=42  Vmax=0 VR=0  d=0.719 rho=0.0114
+  [PASS] geom N=64 ratio rho_B=0.2 seed=42  Vmax=0 VR=0  d=0.726 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.4 seed=42  Vmax=0 VR=0  d=0.859 rho=0.0136
+[encoder] seed=8888 loading backbone N=16…
+[encoder] seed=8888 N=8 env loading…
+  [PASS] env N=8 fixed_k K=1 seed=8888  Vmax=0 VR=0  d=0.712 rho=0.1017
+  [PASS] env N=8 fixed_k K=2 seed=8888  Vmax=0 VR=0  d=1.031 rho=0.1473
+  [PASS] env N=8 fixed_k K=4 seed=8888  Vmax=0 VR=0  d=1.589 rho=0.2270
+  [PASS] env N=8 fixed_k K=6 seed=8888  Vmax=0 VR=0  d=1.459 rho=0.2085
+  [PASS] env N=8 fixed_k K=8 seed=8888  Vmax=0 VR=0  d=1.007 rho=0.1438
+  [PASS] env N=8 ratio rho_B=0.05 seed=8888  Vmax=0 VR=0  d=0.802 rho=0.1146
+  [PASS] env N=8 ratio rho_B=0.1 seed=8888  Vmax=0 VR=0  d=0.742 rho=0.1059
+  [PASS] env N=8 ratio rho_B=0.2 seed=8888  Vmax=0 VR=0  d=0.699 rho=0.0999
+  [PASS] env N=8 ratio rho_B=0.4 seed=8888  Vmax=0 VR=0  d=0.807 rho=0.1154
+  [PASS] env N=16 fixed_k K=1 seed=8888  Vmax=0 VR=0  d=0.780 rho=0.0520
+  [PASS] env N=16 fixed_k K=2 seed=8888  Vmax=0 VR=0  d=1.057 rho=0.0704
+  [PASS] env N=16 fixed_k K=4 seed=8888  Vmax=0 VR=0  d=1.013 rho=0.0675
+  [PASS] env N=16 fixed_k K=6 seed=8888  Vmax=0 VR=0  d=1.335 rho=0.0890
+  [PASS] env N=16 fixed_k K=8 seed=8888  Vmax=0 VR=0  d=1.447 rho=0.0964
+  [PASS] env N=16 ratio rho_B=0.05 seed=8888  Vmax=0 VR=0  d=0.751 rho=0.0501
+  [PASS] env N=16 ratio rho_B=0.1 seed=8888  Vmax=0 VR=0  d=0.745 rho=0.0497
+  [PASS] env N=16 ratio rho_B=0.2 seed=8888  Vmax=0 VR=0  d=0.759 rho=0.0506
+  [PASS] env N=16 ratio rho_B=0.4 seed=8888  Vmax=0 VR=0  d=0.875 rho=0.0583
+[encoder] seed=8888 N=32 geom steps=400…
+  [PASS] geom N=32 fixed_k K=1 seed=8888  Vmax=0 VR=0  d=0.743 rho=0.0240
+  [PASS] geom N=32 fixed_k K=2 seed=8888  Vmax=0 VR=0  d=1.134 rho=0.0366
+  [PASS] geom N=32 fixed_k K=4 seed=8888  Vmax=0 VR=0  d=1.335 rho=0.0431
+  [PASS] geom N=32 fixed_k K=6 seed=8888  Vmax=0 VR=0  d=1.351 rho=0.0436
+  [PASS] geom N=32 fixed_k K=8 seed=8888  Vmax=0 VR=0  d=1.348 rho=0.0435
+  [PASS] geom N=32 ratio rho_B=0.05 seed=8888  Vmax=0 VR=0  d=0.739 rho=0.0238
+  [PASS] geom N=32 ratio rho_B=0.1 seed=8888  Vmax=0 VR=0  d=0.746 rho=0.0241
+  [PASS] geom N=32 ratio rho_B=0.2 seed=8888  Vmax=0 VR=0  d=0.747 rho=0.0241
+  [PASS] geom N=32 ratio rho_B=0.4 seed=8888  Vmax=0 VR=0  d=0.904 rho=0.0292
+[encoder] seed=8888 N=64 geom steps=400…
+  [PASS] geom N=64 fixed_k K=1 seed=8888  Vmax=0 VR=0  d=0.714 rho=0.0113
+  [PASS] geom N=64 fixed_k K=2 seed=8888  Vmax=0 VR=0  d=1.093 rho=0.0173
+  [PASS] geom N=64 fixed_k K=4 seed=8888  Vmax=0 VR=0  d=1.257 rho=0.0200
+  [PASS] geom N=64 fixed_k K=6 seed=8888  Vmax=0 VR=0  d=1.289 rho=0.0205
+  [PASS] geom N=64 fixed_k K=8 seed=8888  Vmax=0 VR=0  d=1.280 rho=0.0203
+  [PASS] geom N=64 ratio rho_B=0.05 seed=8888  Vmax=0 VR=0  d=0.717 rho=0.0114
+  [PASS] geom N=64 ratio rho_B=0.1 seed=8888  Vmax=0 VR=0  d=0.723 rho=0.0115
+  [PASS] geom N=64 ratio rho_B=0.2 seed=8888  Vmax=0 VR=0  d=0.721 rho=0.0114
+  [PASS] geom N=64 ratio rho_B=0.4 seed=8888  Vmax=0 VR=0  d=0.863 rho=0.0137
+=== §6.2 gate: PASS ===
+Wrote F:\UAM\paper\ac_dsgf_tro\experiments\evidence_6_2_budget\budget_statistics.csv
+Wrote F:\UAM\paper\ac_dsgf_tro\experiments\evidence_6_2_budget\evidence_6_2_report.json
+Wrote F:\UAM\paper\ac_dsgf_tro\figures\Fig4_communication_scaling.png

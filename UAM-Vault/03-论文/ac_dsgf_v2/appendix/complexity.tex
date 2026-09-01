@@ -1,0 +1,24 @@
+\section{Computational Complexity}
+\label{app:complexity}
+
+Let $O(P)$ denote one Euclidean projection onto a scalar-budget simplex / polytope (sorting-based, $O(n\log n)$ typical), and $O(d)$ a cheap first-order update (gradient step in allocation dimension $n$).
+Let $O(C_\phi)$ be one forward pass of the constraint predictor $\mathcal{F}_\phi$.
+
+\begin{table}[h]
+\centering
+\caption{Per-iteration complexity (schematic).}
+\label{tab:complexity}
+\begin{tabular}{lccc}
+\toprule
+Method & Prediction & Projection & Update \\
+\midrule
+Reactive & --- & $O(P)$ & $O(d)$ \\
+Oracle & future $c_{t+1}$ known & $O(P)$ & $O(d)$ \\
+SECDO & $O(C_\phi)$ inference & $O(P)$ (single) & $O(d)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Relative to reactive projection, SECDO adds predictor inference $O(C_\phi)$ and scalar $\mathrm{PI}/\alpha$ arithmetic.
+It does \emph{not} increase the number of projections: the mixed budget $c^{\mathrm{mix}}$ induces one set $\mathcal{B}(c^{\mathrm{mix}})$ and a single $\Pi$.
+Thus prediction does not make the optimization subproblem asymptotically more expensive than reactive / oracle projection under the same geometry.

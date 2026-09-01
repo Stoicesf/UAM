@@ -1,0 +1,11 @@
+{
+  "experiment_id": "demo_mappo_4uav_train",
+  "stage": 0,
+  "name": "Demo MAPPO 4 UAV Train",
+  "run_name": "mappo_4uav",
+  "seed": 42,
+  "started_at": "2026-07-14T20:19:21",
+  "config_path": "configs/demo/mappo_4uav_train.yaml",
+  "guidance_mode": "none",
+  "extra": {}
+}

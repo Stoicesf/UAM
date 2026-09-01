@@ -1,0 +1,152 @@
+{
+  "checkpoint": "F:\\UAM\\results\\ac_dsgf\\uav16\\s1234\\checkpoints\\final.pt",
+  "seed": 1234,
+  "phase": "AB",
+  "note": "Consistent with Lemma2/Thm2 trends; does not prove theorems. Fig2 uses shared-state action-gap \u0394J_act=\u03a3\u03b3^t||a*-a|| (Thm2 intermediate); navigation reward is largely state-based so twin task-\u0394J is not primary.",
+  "spearman_D_G_epsilon": 0.9620842367292043,
+  "phaseA_summary": [
+    {
+      "K": 1,
+      "mean_D_G": 5.451827879995108,
+      "mean_epsilon_G": 2.822635638527572,
+      "mean_delta_a": 0.14285786065738648,
+      "mean_Delta_J_act": 5.474054204645238,
+      "mean_closed_loop_reward": 5.566647840198129
+    },
+    {
+      "K": 2,
+      "mean_D_G": 3.439532298594713,
+      "mean_epsilon_G": 1.0662988411107412,
+      "mean_delta_a": 0.07703695903243593,
+      "mean_Delta_J_act": 2.899634336270104,
+      "mean_closed_loop_reward": 5.716861848719418
+    },
+    {
+      "K": 4,
+      "mean_D_G": 1.2737805945798755,
+      "mean_epsilon_G": 0.18863883094551664,
+      "mean_delta_a": 0.008688654140314611,
+      "mean_Delta_J_act": 0.30920832454584346,
+      "mean_closed_loop_reward": 5.737290924647823
+    },
+    {
+      "K": 8,
+      "mean_D_G": 0.0,
+      "mean_epsilon_G": 0.0,
+      "mean_delta_a": 0.0,
+      "mean_Delta_J_act": 0.0,
+      "mean_closed_loop_reward": 5.512140372302383
+    },
+    {
+      "K": 16,
+      "mean_D_G": 0.0,
+      "mean_epsilon_G": 0.0,
+      "mean_delta_a": 0.0,
+      "mean_Delta_J_act": 0.0,
+      "mean_closed_loop_reward": 5.9918538690544665
+    }
+  ],
+  "phaseC_summary": [
+    {
+      "mode": "full",
+      "K": "",
+      "fraction": "1.0",
+      "reward_mean": "6.140439313836396",
+      "reward_std": "0.7792581311284064",
+      "success_mean": "0.1015625",
+      "comm_cost_mean": "43.885416666666664"
+    },
+    {
+      "mode": "fixed_k",
+      "K": "1",
+      "fraction": "0.3467244244006646",
+      "reward_mean": "6.2535963067784905",
+      "reward_std": "0.6156158473157042",
+      "success_mean": "0.09375",
+      "comm_cost_mean": "15.216145833333332"
+    },
+    {
+      "mode": "fixed_k",
+      "K": "2",
+      "fraction": "0.6443745549489676",
+      "reward_mean": "5.563146802131087",
+      "reward_std": "0.48341812353733843",
+      "success_mean": "0.09375",
+      "comm_cost_mean": "28.278645833333336"
+    },
+    {
+      "mode": "fixed_k",
+      "K": "4",
+      "fraction": "0.8933064324709233",
+      "reward_mean": "5.733245615847409",
+      "reward_std": "0.2980119327378845",
+      "success_mean": "0.15625",
+      "comm_cost_mean": "39.203125"
+    },
+    {
+      "mode": "fixed_k",
+      "K": "8",
+      "fraction": "0.9259435081889391",
+      "reward_mean": "5.866781848482788",
+      "reward_std": "0.9089871670708093",
+      "success_mean": "0.1015625",
+      "comm_cost_mean": "40.63541666666667"
+    },
+    {
+      "mode": "fixed_k",
+      "K": "16",
+      "fraction": "0.9622596724424403",
+      "reward_mean": "5.688634828664362",
+      "reward_std": "0.5536948933458785",
+      "success_mean": "0.1171875",
+      "comm_cost_mean": "42.22916666666667"
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": "0.1",
+      "reward_mean": "5.22848164732568",
+      "reward_std": "0.5127252593218343",
+      "success_mean": "0.1171875",
+      "comm_cost_mean": "15.317708333333332"
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": "0.2",
+      "reward_mean": "5.578699565958232",
+      "reward_std": "0.7879388367483114",
+      "success_mean": "0.125",
+      "comm_cost_mean": "16.234375"
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": "0.4",
+      "reward_mean": "5.8815430123358965",
+      "reward_std": "0.9501235766699696",
+      "success_mean": "0.1328125",
+      "comm_cost_mean": "22.7265625"
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": "0.6",
+      "reward_mean": "5.557881741086021",
+      "reward_std": "0.5711778194108049",
+      "success_mean": "0.0703125",
+      "comm_cost_mean": "33.802083333333336"
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": "0.8",
+      "reward_mean": "5.3823625929653645",
+      "reward_std": "1.0083436104822474",
+      "success_mean": "0.1171875",
+      "comm_cost_mean": "39.97916666666667"
+    }
+  ],
+  "phaseC_run": "tro_evidence_6_3_20260718_214912",
+  "phaseAB_run": "tro_evidence_6_3_20260718_215248"
+}

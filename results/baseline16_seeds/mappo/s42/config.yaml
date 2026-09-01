@@ -1,0 +1,26 @@
+# Week 2 — MAPPO baseline @ 16 UAV
+experiment:
+  id: baseline16_mappo
+  stage: 0
+  name: "MAPPO Baseline 16 UAV"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: mappo
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 200
+
+env:
+  num_agents: 16
+  num_envs: 8
+  comm_radius: 0.5
+
+guidance:
+  mode: none
+  use_guidance_reward: false
+
+output:
+  category: baseline16
+  results_dir: results

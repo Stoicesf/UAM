@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ac_dsgf_pp_ablation_detach_utility",
+  "stage": 6,
+  "name": "AC-DSGF++ Ablation Detach Utility Backbone 4UAV 20k",
+  "run_name": "ac_dsgf_pp_ablation_detach_u",
+  "seed": 42,
+  "started_at": "2026-07-17T18:21:56",
+  "config_path": "configs/ac_dsgf_pp/ablation_detach_utility.yaml",
+  "guidance_mode": "ac_dsgf_pp",
+  "extra": {}
+}

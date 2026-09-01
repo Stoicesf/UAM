@@ -1,0 +1,75 @@
+% AC-DSGF — IEEE RA-L submission master
+% Official RA-L uses journal option of IEEEtran (not conference).
+% Compile from paper/ac_dsgf/:
+%   pdflatex ac_dsgf_main && bibtex ac_dsgf_main && pdflatex ac_dsgf_main && pdflatex ac_dsgf_main
+% Markdown source of truth: AC_DSGF_EN.md (narrative freeze). This .tex is the camera PDF shell.
+
+\documentclass[letterpaper,10pt,journal]{IEEEtran}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{cite}
+
+\pdfminorversion=7
+
+\title{Learning Adaptive Communication Topologies for Communication-Constrained UAV Swarm Coordination}
+
+\author{%
+  % Anonymous for double-blind / fill for final
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Existing multi-UAV swarm policies often treat communication topology as fixed
+infrastructure (fully connected, radius, or $k$-nearest graphs).
+Attention weights improve message aggregation but do not decide whether a link
+should be activated under bandwidth limits---messages may still be transmitted
+before weighting.
+We study \emph{when and with whom} UAVs should communicate under soft budget
+constraints, and propose \textbf{AC-DSGF}, which learns adaptive communication
+sparsity patterns via Candidate Edge Scoring, Budget-Constrained Edge Selection,
+and Residual Recovery.
+A degree-constrained scaling bound shows $\eta_N=\mathcal{O}(1/N)$.
+Under identical communication budgets, AC-DSGF achieves competitive coordination
+while inducing substantially lower Soft Communication Activation Mass (SCAM)
+across swarm scales.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Adaptive communication topology, soft budget constraints, UAV swarm
+coordination, communication activation, multi-agent reinforcement learning.
+\end{IEEEkeywords}
+
+\input{intro}
+\input{related_work}
+\input{problem_definition}
+\input{notation_table}
+\input{method}
+\input{experiments}
+
+\section{Conclusion}
+\label{sec:conclusion}
+We present AC-DSGF for learning adaptive communication sparsity patterns under
+soft budgets for multi-UAV swarms.
+Topology is treated as a decision variable and constructed via Candidate Edge
+Scoring, Budget-Constrained Edge Selection, and Residual Recovery.
+We provide a degree-constrained communication scaling bound
+($\eta_N=\mathcal{O}(1/N)$), a residual \emph{action-stability} analysis, and an
+\emph{interpretive} view of learned gates as an approximate induced budgeted
+edge selection (not an explicit combinatorial solver).
+Under identical communication budgets, AC-DSGF achieves competitive task
+effectiveness with scalable and robust topology adaptation, with SCAM---not
+brute-force Success---as the primary efficiency signal.
+Current evaluation focuses on simulation-based multi-agent navigation;
+packet-level radio metrics and hardware deployment remain future work.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

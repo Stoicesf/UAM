@@ -1,0 +1,5 @@
+device,inference_ms_per_step,iters,method,num_agents,soft_edges_last
+cpu,1.66,50,gat,16,
+cpu,1.686,50,transformer,16,
+cpu,3.352,50,dsgf,16,
+cpu,3.937,50,ac_dsgf,16,0.005708509124815464

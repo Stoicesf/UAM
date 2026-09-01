@@ -1,0 +1,9 @@
+\section{Proof of Lemma~\ref{lem:2}}
+\label{app:lem2}
+
+By Assump.~3 (bounded projection sensitivity), for fixed $y$,
+$\|\Pi_{\hat{\mathcal{B}}}(y)-\Pi_{\mathcal{B}}(y)\|\le C_\Pi d_H(\hat{\mathcal{B}},\mathcal{B})$.
+Applying this at $y=y_t$ with $\hat{\mathcal{B}}=\hat{\mathcal{B}}_{t+1}$ and $\mathcal{B}=\mathcal{B}_{t+1}$ yields
+$\|x_{t+1}-x_{t+1}^\circ\|\le C_\Pi\delta_t$.
+The comparator motion bound follows from $\mu$-strong convexity of $F_t$ and Assump.~4 (bounded $\omega_t,\chi_t$), as in standard gradual-variation arguments for strongly convex problems.
+As noted in Remark~\ref{rem:Cpi}, Assump.~3 is not claimed for arbitrary convex sets; it is used here for the polyhedral (scalar-budget) regions studied in this paper.

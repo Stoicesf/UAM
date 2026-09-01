@@ -1,0 +1,57 @@
+# AC-DSGF++ v2d — Budget-aware causal utility (Version A, recommended)
+#
+# Phase 6 (v2c @ 16UAV) failed claim check:
+#   corr=0.34, Comm=2.56 ≫ AC 0.43, CEI collapse
+# Fix: replace λ_comm pressure with soft budget L_b=(C/C_t−1)²
+#      + logistic ranking (already λ_rank). Architecture unchanged.
+#
+# Loss: L = L_PPO + λ_u L_u + λ_b L_b   (λ_comm = 0)
+experiment:
+  id: ac_dsgf_pp_smoke_v2d
+  stage: 6
+  name: "AC-DSGF++ Smoke v2d Budget-aware 4UAV 20k"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 32
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+  utility_warmup_steps: 5000
+  # --- v2d: soft budget replaces λ_comm ---
+  lambda_comm: 0.0
+  lambda_budget: 0.05
+  target_comm: 0.5
+  lambda_u: 0.5
+  lambda_rank: 0.1
+  ranking_mode: logistic   # failed isolation — see v2d_ap (hinge)
+  gate_residual: true
+  gate_residual_alpha: 0.5
+  gate_residual_alpha_after: 0.8
+
+output:
+  category: ac_dsgf_pp
+  results_dir: results
+  tag: AC_DSGF_PP_SMOKE_V2D

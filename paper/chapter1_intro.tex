@@ -1,0 +1,51 @@
+% =============================================================================
+% I. Introduction — IEEE-style skeleton (P2 draft)
+% =============================================================================
+
+\section{Introduction}
+\label{sec:intro}
+
+Multi-UAV cooperative navigation under partial observability and limited
+communication is a core challenge for intelligent transportation and
+urban air mobility.
+Centralized training with decentralized execution (CTDE) methods such as MAPPO
+provide stable local control, yet struggle to encode dynamic swarm interaction
+structure when agents must coordinate through an evolving communication graph.
+
+Graph neural networks and attention mechanisms have been widely adopted to
+inject relational inductive bias into multi-agent reinforcement learning
+(MARL).
+In particular, GAT-style guidance can improve early coordination.
+However, our empirical study shows a critical failure mode:
+under prolonged training, graph-guided policies may \emph{increase training
+reward while decreasing evaluation success}, indicating over-specialization to
+surrogate alignment objectives rather than task-level generalization.
+Dense Transformers further raise $O(N^{2})$ communication and compute costs,
+which are poorly matched to range-limited airborne networks.
+
+We therefore ask:
+\begin{enumerate}
+  \item Can spatiotemporal guidance improve long-horizon coordination without
+        reward--success divergence?
+  \item Can quality-aware sparse graphs retain performance under restricted
+        communication budgets while controlling complexity?
+\end{enumerate}
+
+\paragraph{Contributions.}
+This paper presents Dynamic Sparse Graph Fusion (DSGF) with the following
+contributions:
+\begin{itemize}
+  \item A quality-weighted dynamic graph and sparse attention module for
+        communication-aware UAV guidance, with per-step complexity
+        $O(Nkd+Nd)$ when average degree $k\ll N$.
+  \item A temporal residual policy interface that decouples guidance from
+        surrogate reward shaping, mitigating long-horizon success collapse.
+  \item A systematic IEEE-oriented evaluation covering main comparison,
+        ablation, obstacle generalization, communication Pareto analysis, and
+        scalability up to $32$ UAVs.
+\end{itemize}
+
+% Claim safety notes for writing:
+% - Prefer "competitive under restricted communication" over "always lowest cost".
+% - Never mix 4-UAV ablation percentages with 16-UAV Table I numbers.
+% - Absolute success at N=16 is low for ALL methods; emphasize relative gains.

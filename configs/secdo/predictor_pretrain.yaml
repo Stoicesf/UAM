@@ -1,0 +1,39 @@
+# Stage I — only train F_φ  (L_pred = 0.5 L_s + 1.0 L_c + 0.1 L_u)
+# Device protocol: cuda:0 + AMP FP16
+stage: pretrain
+epochs: 8
+batch: 16
+latent_dim: 32
+seed: 0
+
+device: cuda:0
+amp: true
+
+optimizer:
+  name: AdamW
+  lr: 1.0e-4
+
+scheduler:
+  cosine: true
+
+loss:
+  lambda_state: 0.5
+  lambda_constraint: 1.0
+  lambda_utility: 0.1
+  lambda_s: 0.5
+  lambda_c: 1.0
+  lambda_u: 0.1
+
+data:
+  # Scale to 1000/200 for paper runs
+  train_trajectories: 128
+  val_trajectories: 32
+  test: unseen_mobility
+
+env:
+  regime: fast
+  horizon: 48
+  n_agents: 8
+
+log_dir: runs/secdo_pretrain
+ckpt_dir: checkpoints/secdo_predictor

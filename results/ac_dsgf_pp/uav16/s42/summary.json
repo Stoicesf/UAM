@@ -1,0 +1,28 @@
+{
+  "run": "f:\\UAM\\results\\ac_dsgf_pp\\uav16\\s42",
+  "finished_at": "2026-07-16T18:39:17",
+  "finalize_note": "post-hoc 64-ep eval (train 102k done; original 200-ep interrupted)",
+  "paper_metrics": {
+    "success": 0.0419921875,
+    "collision": 0.50390625,
+    "reward": -23.918042191275163,
+    "path_length": 64.4691441655159,
+    "alignment": -0.3735067271627486,
+    "communication_cost": 0.7082695108838379,
+    "eval_episodes": 64
+  },
+  "success": 0.0419921875,
+  "communication_cost_mean": 0.7082695108838379,
+  "eval_stats": {
+    "reward": -23.918042191275163,
+    "success": 0.0419921875,
+    "collision": 0.50390625,
+    "path_length": 64.4691441655159,
+    "episode_length": 128.0,
+    "alignment": -0.3735067271627486
+  },
+  "utility_corr_late": 0.5109716000000001,
+  "comm_precision_late": 0.0,
+  "tag": "AC_DSGF_PP_16UAV",
+  "cei": 0.05928834654939778
+}

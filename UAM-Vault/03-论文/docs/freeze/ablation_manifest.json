@@ -1,0 +1,31 @@
+{
+  "protocol": {
+    "env": "VMAS navigation",
+    "num_agents": 4,
+    "seed": 42,
+    "frames": 102400,
+    "note": "All ablations matched to frozen DSGF v2 except single disabled component."
+  },
+  "variants": [
+    {
+      "id": "wo_dg",
+      "label": "w/o DG",
+      "summary": "results/dsgf/ablation_wo_dg_102k/summary.json"
+    },
+    {
+      "id": "wo_temporal",
+      "label": "w/o Temporal",
+      "summary": "results/dsgf/ablation_wo_temporal_102k/summary.json"
+    },
+    {
+      "id": "wo_residual",
+      "label": "w/o Residual",
+      "summary": "results/dsgf/ablation_wo_residual_102k/summary.json"
+    },
+    {
+      "id": "full",
+      "label": "Full DSGF",
+      "summary": "results/dsgf/dsfg_v2_102k/summary.json"
+    }
+  ]
+}

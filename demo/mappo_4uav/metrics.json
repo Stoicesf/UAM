@@ -1,0 +1,64 @@
+{
+  "method": "mappo",
+  "checkpoint": "results\\demo\\mappo_4uav\\checkpoints\\final.pt",
+  "seed": 42,
+  "best_episode": 0,
+  "final_success": 0.5,
+  "mean_edges": 1.5813953876495361,
+  "steps": 129,
+  "comm_radius": 0.5,
+  "success_threshold": 0.3,
+  "history": [
+    {
+      "episode": 0,
+      "final_success": 0.5,
+      "mean_edges": 1.5813953876495361,
+      "steps": 129
+    },
+    {
+      "episode": 1,
+      "final_success": 0.25,
+      "mean_edges": 1.9379844665527344,
+      "steps": 129
+    },
+    {
+      "episode": 2,
+      "final_success": 0.5,
+      "mean_edges": 3.7519378662109375,
+      "steps": 129
+    },
+    {
+      "episode": 3,
+      "final_success": 0.25,
+      "mean_edges": 1.612403154373169,
+      "steps": 129
+    },
+    {
+      "episode": 4,
+      "final_success": 0.25,
+      "mean_edges": 1.3798449039459229,
+      "steps": 129
+    },
+    {
+      "episode": 5,
+      "final_success": 0.5,
+      "mean_edges": 2.0,
+      "steps": 129
+    },
+    {
+      "episode": 6,
+      "final_success": 0.5,
+      "mean_edges": 4.434108734130859,
+      "steps": 129
+    },
+    {
+      "episode": 7,
+      "final_success": 0.5,
+      "mean_edges": 4.403100967407227,
+      "steps": 129
+    }
+  ],
+  "trajectory": "F:\\UAM\\demo\\figures\\trajectory_mappo.png",
+  "graph": "F:\\UAM\\demo\\figures\\graph_attention_mappo.png",
+  "video": "F:\\UAM\\demo\\videos\\mappo_4uav.mp4"
+}

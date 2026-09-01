@@ -1,0 +1,21 @@
+mode: online
+seed: 0
+amp: false
+load_predictor: checkpoints/secdo_platform/joint/best.pt
+
+optim:
+  lr: 1.0e-3
+  eta: 0.25
+
+online_adapt:
+  zeta: 0.05
+  steps: 40
+
+env:
+  regime: fast
+  horizon: 64
+  n_agents: 8
+  batch: 4
+
+ckpt_dir: checkpoints/secdo_platform/online
+log_dir: runs/secdo_platform/online

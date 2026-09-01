@@ -1,0 +1,12 @@
+baselines:
+  - secdo
+  - reactive
+  - oracle
+  - dsgf
+  - ac_dsgf
+
+notes:
+  dsgf: myopic reactive control (topology DSGF deferred)
+  ac_dsgf: myopic reactive control until Top-K coupling
+  secdo: anticipatory Pi_Bhat with learned F_phi
+  oracle: teacher c_{t+1} upper bound

@@ -1,0 +1,197 @@
+{
+  "device": "cuda:0",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "checkpoints": {
+    "pretrain": "checkpoints\\secdo_v2\\pretrain\\best.pt",
+    "joint": "checkpoints\\secdo_v2\\joint\\best.pt",
+    "online": "checkpoints\\secdo_v2\\online\\last.pt"
+  },
+  "uav_results": {
+    "slow_drift": [
+      {
+        "regime": "slow_drift",
+        "method": "ac_dsgf",
+        "n_seeds": 5,
+        "gap": 2.8739368347885373e-05,
+        "violation": 0.0007006767516334852,
+        "delta": 0.011247765071069202,
+        "rho": 0.011247765071069202,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.011247765071069202
+      },
+      {
+        "regime": "slow_drift",
+        "method": "dsgf",
+        "n_seeds": 5,
+        "gap": 2.4061668204287033e-05,
+        "violation": 0.0005735416663810611,
+        "delta": 0.013156052570169172,
+        "rho": 0.013156052570169172,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.013156052570169172
+      },
+      {
+        "regime": "slow_drift",
+        "method": "oracle",
+        "n_seeds": 5,
+        "gap": 9.182915277487305e-06,
+        "violation": 0.00020535571966320276,
+        "delta": 0.0027981486714755495,
+        "rho": 0.009879998315591365,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.9770833333333334,
+        "mean_eps_plus_delta": 0.0027981486714755495
+      },
+      {
+        "regime": "slow_drift",
+        "method": "reactive",
+        "n_seeds": 5,
+        "gap": 2.621876578435452e-05,
+        "violation": 0.0006900683743879199,
+        "delta": 0.013951266506531584,
+        "rho": 0.013951266506531584,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.013951266506531584
+      },
+      {
+        "regime": "slow_drift",
+        "method": "secdo",
+        "n_seeds": 5,
+        "gap": 8.012720764679054e-06,
+        "violation": 0.0033174974222977952,
+        "delta": 0.014029283627557256,
+        "rho": 0.010125217660485457,
+        "epsilon": 13.290225332975387,
+        "frac_delta_lt_rho": 0.03125,
+        "mean_eps_plus_delta": 13.304254616602943
+      }
+    ],
+    "fast_drift": [
+      {
+        "regime": "fast_drift",
+        "method": "ac_dsgf",
+        "n_seeds": 5,
+        "gap": 0.000494412629495855,
+        "violation": 0.011252640482659141,
+        "delta": 0.15492402627132834,
+        "rho": 0.15492402627132834,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.15492402627132834
+      },
+      {
+        "regime": "fast_drift",
+        "method": "dsgf",
+        "n_seeds": 5,
+        "gap": 0.0005356718848209614,
+        "violation": 0.012362537913334866,
+        "delta": 0.15265616785424452,
+        "rho": 0.15265616785424452,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.15265616785424452
+      },
+      {
+        "regime": "fast_drift",
+        "method": "oracle",
+        "n_seeds": 5,
+        "gap": 0.00020327151410034125,
+        "violation": 0.0028423637733794747,
+        "delta": 0.04201003379809359,
+        "rho": 0.13785732069906467,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.9895833333333334,
+        "mean_eps_plus_delta": 0.04201003379809359
+      },
+      {
+        "regime": "fast_drift",
+        "method": "reactive",
+        "n_seeds": 5,
+        "gap": 0.0005486631425204298,
+        "violation": 0.012236676400061697,
+        "delta": 0.1599706706784976,
+        "rho": 0.1599706706784976,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.1599706706784976
+      },
+      {
+        "regime": "fast_drift",
+        "method": "secdo",
+        "n_seeds": 5,
+        "gap": 0.00045419496913533903,
+        "violation": 0.01464744603727013,
+        "delta": 0.1309743476876368,
+        "rho": 0.13139164992996183,
+        "epsilon": 8.517125500241916,
+        "frac_delta_lt_rho": 0.5625,
+        "mean_eps_plus_delta": 8.648099847929553
+      }
+    ],
+    "stress_test": [
+      {
+        "regime": "stress_test",
+        "method": "ac_dsgf",
+        "n_seeds": 5,
+        "gap": 0.0008468016131549424,
+        "violation": 0.017050721189783267,
+        "delta": 0.20579326825682073,
+        "rho": 0.20579326825682073,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.20579326825682073
+      },
+      {
+        "regime": "stress_test",
+        "method": "dsgf",
+        "n_seeds": 5,
+        "gap": 0.0008245102716652278,
+        "violation": 0.016671942364579688,
+        "delta": 0.1922648530608664,
+        "rho": 0.1922648530608664,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.1922648530608664
+      },
+      {
+        "regime": "stress_test",
+        "method": "oracle",
+        "n_seeds": 5,
+        "gap": 0.00033890799644116976,
+        "violation": 0.004066305894715091,
+        "delta": 0.06703932889892408,
+        "rho": 0.22224421689752488,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.9895833333333334,
+        "mean_eps_plus_delta": 0.06703932889892408
+      },
+      {
+        "regime": "stress_test",
+        "method": "reactive",
+        "n_seeds": 5,
+        "gap": 0.0008218278524585306,
+        "violation": 0.01688257269949342,
+        "delta": 0.20499650978793701,
+        "rho": 0.20499650978793701,
+        "epsilon": 0.0,
+        "frac_delta_lt_rho": 0.0,
+        "mean_eps_plus_delta": 0.20499650978793701
+      },
+      {
+        "regime": "stress_test",
+        "method": "secdo",
+        "n_seeds": 5,
+        "gap": 0.0007141938578191306,
+        "violation": 0.018949687601222346,
+        "delta": 0.20238245086123546,
+        "rho": 0.20343916796458267,
+        "epsilon": 11.883924410740535,
+        "frac_delta_lt_rho": 0.6166666666666667,
+        "mean_eps_plus_delta": 12.08630686160177
+      }
+    ]
+  }
+}

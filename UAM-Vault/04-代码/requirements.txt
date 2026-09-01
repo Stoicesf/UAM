@@ -1,0 +1,15 @@
+# PyTorch GPU (CUDA 12.1) — install separately before other deps:
+# pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio==2.5.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+vmas
+torchrl
+numpy
+pandas
+matplotlib
+tensorboard
+tqdm
+pyyaml
+gymnasium
+pyglet<=1.5.27

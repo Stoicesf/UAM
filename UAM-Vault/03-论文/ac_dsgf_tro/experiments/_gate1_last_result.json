@@ -1,0 +1,187 @@
+{
+  "all_pass": true,
+  "fixed_k": [
+    {
+      "N": 8,
+      "K": 2,
+      "max_V_B": 0.0,
+      "mean_degree": 1.95703125,
+      "mean_rho": 0.27957590762525797,
+      "pass": true
+    },
+    {
+      "N": 8,
+      "K": 4,
+      "max_V_B": 0.0,
+      "mean_degree": 3.15625,
+      "mean_rho": 0.4508928544819355,
+      "pass": true
+    },
+    {
+      "N": 8,
+      "K": 8,
+      "max_V_B": 0.0,
+      "mean_degree": 3.509765625,
+      "mean_rho": 0.5013950867578387,
+      "pass": true
+    },
+    {
+      "N": 16,
+      "K": 2,
+      "max_V_B": 0.0,
+      "mean_degree": 2.0,
+      "mean_rho": 0.13333334028720856,
+      "pass": true
+    },
+    {
+      "N": 16,
+      "K": 4,
+      "max_V_B": 0.0,
+      "mean_degree": 3.97265625,
+      "mean_rho": 0.2648437609896064,
+      "pass": true
+    },
+    {
+      "N": 16,
+      "K": 8,
+      "max_V_B": 0.0,
+      "mean_degree": 6.97265625,
+      "mean_rho": 0.4648437537252903,
+      "pass": true
+    },
+    {
+      "N": 32,
+      "K": 2,
+      "max_V_B": 0.0,
+      "mean_degree": 2.0,
+      "mean_rho": 0.06451612710952759,
+      "pass": true
+    },
+    {
+      "N": 32,
+      "K": 4,
+      "max_V_B": 0.0,
+      "mean_degree": 4.0,
+      "mean_rho": 0.12903225421905518,
+      "pass": true
+    },
+    {
+      "N": 32,
+      "K": 8,
+      "max_V_B": 0.0,
+      "mean_degree": 7.998046875,
+      "mean_rho": 0.2580015053972602,
+      "pass": true
+    }
+  ],
+  "encoder": [
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 8,
+      "K": 2,
+      "mean_degree": 2.0,
+      "mean_rho": 0.2857142984867096,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N8_K2_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 8,
+      "K": 4,
+      "mean_degree": 4.0,
+      "mean_rho": 0.5714285969734192,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N8_K4_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 8,
+      "K": 8,
+      "mean_degree": 7.0,
+      "mean_rho": 1.0,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N8_K8_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 16,
+      "K": 2,
+      "mean_degree": 2.0,
+      "mean_rho": 0.13333334028720856,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N16_K2_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 16,
+      "K": 4,
+      "mean_degree": 4.0,
+      "mean_rho": 0.2666666805744171,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N16_K4_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 16,
+      "K": 8,
+      "mean_degree": 8.0,
+      "mean_rho": 0.5333333611488342,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N16_K8_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 32,
+      "K": 2,
+      "mean_degree": 2.0,
+      "mean_rho": 0.06451612710952759,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N32_K2_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 32,
+      "K": 4,
+      "mean_degree": 4.0,
+      "mean_rho": 0.12903225421905518,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N32_K4_20260718_213518"
+    },
+    {
+      "max_V_B": 0.0,
+      "mean_V_B": 0.0,
+      "n_steps": 16,
+      "gate1_pass": true,
+      "N": 32,
+      "K": 8,
+      "mean_degree": 8.0,
+      "mean_rho": 0.25806450843811035,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate1_enc_N32_K8_20260718_213519"
+    }
+  ]
+}

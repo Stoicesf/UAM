@@ -1,0 +1,36 @@
+# Stage II — closed-loop SECDO; c_hat.detach() before anticipatory Π
+stage: secdo_joint
+seed: 0
+device: cuda:0
+amp: true
+stop_gradient_projection: true
+latent_dim: 32
+skip_pretrain: false
+load_predictor: checkpoints/secdo_predictor/best.pt
+
+schedule:
+  pretrain_epochs: 0
+  head_only_epochs: 3
+  joint_epochs: 3
+  steps_per_epoch: 8
+
+optim:
+  lr: 1.0e-3
+  lr_joint: 3.0e-4
+  eta: 0.25
+  gamma_v: 1.0
+  lambda_pred: 1.0
+
+loss:
+  lambda_c: 1.0
+  lambda_s: 0.5
+  lambda_u: 0.1
+
+env:
+  regime: fast
+  horizon: 48
+  n_agents: 8
+  batch: 8
+
+log_dir: runs/secdo_joint
+ckpt_dir: checkpoints/secdo_joint

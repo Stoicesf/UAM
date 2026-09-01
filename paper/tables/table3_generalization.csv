@@ -1,0 +1,16 @@
+method,obstacles,success,collision,reward,path_length,episode_length,checkpoint,gen_gap
+mappo,0,0.06625,0.2525,0.5935623919032514,64.80664798736572,128.0,results\generalization\mappo_obs4\checkpoints\final.pt,0.0
+mappo,2,0.0625,0.29625,-1.6179041435383261,65.12551162719727,128.0,results\generalization\mappo_obs4\checkpoints\final.pt,0.0566
+mappo,4,0.06625,0.25125,-3.4017114979354663,67.36136568069458,128.0,results\generalization\mappo_obs4\checkpoints\final.pt,0.0
+mappo,6,0.07375,0.2275,-1.7597534781089053,72.66164878845215,128.0,results\generalization\mappo_obs4\checkpoints\final.pt,-0.1132
+mappo,8,0.0875,0.1925,0.5698886446096003,80.44363735198975,128.0,results\generalization\mappo_obs4\checkpoints\final.pt,-0.3208
+gat,0,0.0425,0.26625,-0.9404855607077479,66.49773507118225,128.0,results\generalization\gat_obs4\checkpoints\final.pt,0.2917
+gat,2,0.0475,0.21875,-2.4174129842966794,67.57991249084472,128.0,results\generalization\gat_obs4\checkpoints\final.pt,0.2083
+gat,4,0.06,0.22625,-2.8868199340440333,70.7279727935791,128.0,results\generalization\gat_obs4\checkpoints\final.pt,0.0
+gat,6,0.0725,0.19125,-2.6659097737260162,75.58746997833252,128.0,results\generalization\gat_obs4\checkpoints\final.pt,-0.2083
+gat,8,0.09125,0.1925,-1.1669383845035919,80.65146160125732,128.0,results\generalization\gat_obs4\checkpoints\final.pt,-0.5208
+dsgf,0,0.03125,0.28625,-0.07868074494879693,71.53052299499512,128.0,results\generalization\dsgf_obs4\checkpoints\final.pt,0.3902
+dsgf,2,0.04,0.25375,-0.9917403956130147,70.25166456222534,128.0,results\generalization\dsgf_obs4\checkpoints\final.pt,0.2195
+dsgf,4,0.05125,0.27375,-3.330811761170626,73.3928737449646,128.0,results\generalization\dsgf_obs4\checkpoints\final.pt,0.0
+dsgf,6,0.04625,0.24125,-1.6992136663291604,80.86866189956665,128.0,results\generalization\dsgf_obs4\checkpoints\final.pt,0.0976
+dsgf,8,0.05125,0.2075,-0.24002624444663526,88.90731399536133,128.0,results\generalization\dsgf_obs4\checkpoints\final.pt,0.0

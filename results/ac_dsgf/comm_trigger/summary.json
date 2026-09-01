@@ -1,0 +1,39 @@
+{
+  "claim": "AC communication varies with task phase \u2014 not random silence",
+  "correlations": {
+    "goal_dist": 0.025361212531647755,
+    "dispersion": -0.5700623926299274,
+    "nn_risk": 0.8376779229725739
+  },
+  "phases": [
+    {
+      "phase": "early (disperse)",
+      "mean_comm": 0.07602577275511893,
+      "mean_edges": 1.0416666666666665,
+      "mean_goal_dist": 0.9594443833286113,
+      "mean_dispersion": 0.6136125951553836,
+      "mean_nn_risk": 1.9494813846593555,
+      "n_episodes": 16
+    },
+    {
+      "phase": "mid (approach)",
+      "mean_comm": 0.08444701950065792,
+      "mean_edges": 1.3290441176470589,
+      "mean_goal_dist": 0.6704919784713317,
+      "mean_dispersion": 0.5250244801590109,
+      "mean_nn_risk": 2.120175217442653,
+      "n_episodes": 16
+    },
+    {
+      "phase": "late (finish)",
+      "mean_comm": 0.07892189478939947,
+      "mean_edges": 1.4448529411764706,
+      "mean_goal_dist": 0.4614791739732027,
+      "mean_dispersion": 0.5521681074272184,
+      "mean_nn_risk": 2.0207034027313484,
+      "n_episodes": 16
+    }
+  ],
+  "n_episodes": 16,
+  "ckpt": "F:\\UAM\\results\\ac_dsgf\\ac_dsgf_smoke_v0\\checkpoints\\final.pt"
+}

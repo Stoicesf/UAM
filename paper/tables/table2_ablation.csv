@@ -1,0 +1,5 @@
+label,success_pct,reward,collision_pct,communication_cost,path_length
+w/o DG,0.28,-8.3505,13.84,6.0,91.1409
+w/o Temporal,0.86,-6.3979,13.06,6.0,80.6302
+w/o Residual,0.22,-8.3442,11.99,6.0,92.2041
+Full DSGF,9.27,-6.1276,14.68,6.0,77.4583

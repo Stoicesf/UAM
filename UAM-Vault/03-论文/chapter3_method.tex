@@ -1,0 +1,200 @@
+% =============================================================================
+% III. Method — DSGF-guided MAPPO
+% Status: P2 draft for IEEE; algorithm frozen (DSGF v2).
+% =============================================================================
+
+\section{Method}
+\label{sec:method}
+
+We propose \emph{Dynamic Sparse Graph Fusion} (DSGF), a spatiotemporal guidance
+module that injects coordination structure into decentralized MAPPO execution
+under dynamic communication constraints.
+DSGF consists of three coupled components:
+(i)~quality-aware dynamic graph construction,
+(ii)~sparse spatial attention over informative neighbors, and
+(iii)~temporal residual fusion with a decaying residual policy head.
+The resulting guidance field $\Phi_i^{t}$ conditions the local actor while the
+critic remains a standard centralized MAPPO critic (CTDE).
+
+\subsection{Problem Formulation}
+\label{sec:problem}
+
+Consider $N$ cooperative UAVs navigating in a continuous 2D workspace under
+partial observability.
+At time $t$, agent $i$ receives a local observation
+\begin{equation}
+o_i^{t}
+=
+\bigl[
+p_i^{t},\;
+v_i^{t},\;
+g_i^{t},\;
+\ell_i^{t}
+\bigr]
+\in \mathbb{R}^{d_o},
+\end{equation}
+where $p_i^{t},v_i^{t}\in\mathbb{R}^{2}$ are position and velocity,
+$g_i^{t}$ is the goal-relative vector, and $\ell_i^{t}$ denotes local range
+sensing (e.g., lidar).
+The decentralized policy produces a continuous action $a_i^{t}\in\mathcal{A}$.
+
+Communication is range-limited: two agents may exchange latent messages only if
+$\|p_i^{t}-p_j^{t}\|<R_c$, inducing a time-varying graph
+$G_t=(\mathcal{V},\mathcal{E}_t)$.
+The cooperative objective is to maximize the expected team return
+\begin{equation}
+\max_{\theta}
+\;
+\mathbb{E}_{\pi_\theta}
+\Biggl[
+\sum_{t=0}^{H}
+\sum_{i=1}^{N}
+r_i^{t}
+\Biggr],
+\qquad
+r_i^{t}
+=
+r_i^{\mathrm{goal}}(t)
++
+r_i^{\mathrm{coll}}(t),
+\end{equation}
+subject to collision penalties and the communication topology $G_t$.
+Long-horizon coordination requires information beyond immediate geometric
+neighbors, yet dense all-to-all attention scales poorly and may overfit
+surrogate alignment signals during prolonged training.
+
+\subsection{Dynamic Sparse Graph Construction}
+\label{sec:dyn-graph}
+
+Given agent positions and velocities, we first build a hard communication mask
+\begin{equation}
+A_{ij}^{t}
+=
+\mathbb{1}\!\left[
+\|p_i^{t}-p_j^{t}\| < R_c,\; i\neq j
+\right].
+\end{equation}
+Unlike binary GAT graphs, DSGF further scores each feasible link by a
+learnable communication quality $q_{ij}^{t}\in(0,1)$.
+We form edge features
+$e_{ij}^{t}=\bigl[d_{ij}^{t},\,\Delta v_{ij}^{t},\,\theta_{ij}^{t},\,c_{ij}^{t}\bigr]$,
+where $d_{ij}$ is distance, $\Delta v_{ij}$ is relative speed magnitude,
+$\theta_{ij}$ is velocity alignment, and
+$c_{ij}=\exp\!\bigl(-d_{ij}^{2}/(2R_c^{2})\bigr)$ is a distance prior.
+A small MLP maps $e_{ij}$ to quality scores $q_{ij}=\sigma(\mathrm{MLP}(e_{ij}))$.
+The weighted adjacency used by attention is
+\begin{equation}
+\tilde{A}_{ij}^{t}
+=
+A_{ij}^{t}\, q_{ij}^{t}.
+\end{equation}
+Thus $\tilde{A}$ retains the sparsity of the radius constraint while
+preferentially weighting informative neighbors (approaching / aligned agents)
+over geometrically valid but weakly useful links.
+
+\subsection{Spatial Sparse Attention}
+\label{sec:sparse-attn}
+
+Node states are embedded as $h_i^{(0)}=W_o o_i$.
+Sparse multi-head attention aggregates only over the support of $\tilde{A}$:
+\begin{equation}
+\alpha_{ij}^{t}
+=
+\frac{
+\exp\!\bigl(f(h_i^{t},h_j^{t})\bigr)\,
+\tilde{A}_{ij}^{t}
+}{
+\sum_{k\in\mathcal{N}_i^{t}}
+\exp\!\bigl(f(h_i^{t},h_k^{t})\bigr)\,
+\tilde{A}_{ik}^{t}
+},
+\qquad
+\mathcal{N}_i^{t}
+=
+\{j:A_{ij}^{t}=1\},
+\end{equation}
+\begin{equation}
+h_i^{\prime\,t}
+=
+\sigma\!\Biggl(
+\sum_{j\in\mathcal{N}_i^{t}}
+\alpha_{ij}^{t}\, W h_j^{t}
+\Biggr).
+\end{equation}
+If $|\mathcal{N}_i^{t}|=\emptyset$, the node keeps its local embedding
+(no hallucinated long-range messages).
+
+\paragraph{Difference from GAT.}
+Standard GAT treats all in-radius neighbors as equivalent binary edges.
+DSGF modulates scores by $q_{ij}$, i.e., attention is conditioned on both
+geometry \emph{and} instantaneous communication quality, which improves
+robustness when $R_c$ is small (Sec.~\ref{sec:comm-results}).
+
+\subsection{Temporal Residual Fusion}
+\label{sec:temporal-residual}
+
+Spatial features alone induce myopic policies.
+We maintain a per-agent temporal state with a GRU cell,
+\begin{equation}
+z_i^{t}
+=
+\mathrm{GRU}\!\bigl(h_i^{\prime\,t},\, z_i^{t-1}\bigr),
+\end{equation}
+and emit a guidance field
+$\Phi_i^{t}=\mathrm{MLP}(z_i^{t})\in\mathbb{R}^{d_\Phi}$
+(normalized directional components plus risk/priority channels).
+
+\paragraph{Residual policy decoupling.}
+A key source of long-horizon degradation in guided MARL is coupling the
+task reward with a strong guidance alignment surrogate.
+DSGF therefore injects guidance as a \emph{residual correction} rather than a
+dominant policy input:
+\begin{equation}
+a_i^{t}
+\sim
+\pi_\theta\!\bigl(\,\cdot\mid o_i^{t}\bigr)
+\;+\;
+\beta(t)\,
+\Delta_\phi\!\bigl(\Phi_i^{t}\bigr),
+\end{equation}
+where $\beta(t)$ anneals from $\beta_{\max}$ to $\beta_{\min}$ over training.
+This residual schedule prevents over-specialization to the guide field while
+preserving early coordination benefits.
+Empirically (4-UAV ablation, Table~\ref{tab:ablation}), removing residual
+decoupling collapses success from $9.27\%$ to $0.22\%$.
+
+\subsection{DSGF-guided MAPPO Optimization}
+\label{sec:opt}
+
+Training follows CTDE MAPPO: the actor is decentralized and receives
+$(o_i,\Phi_i)$, while the critic estimates $V_\psi(\mathbf{o})$ from joint
+observations.
+Policy updates maximize the clipped PPO objective with GAE advantages;
+optional guidance alignment rewards (used by GAT baselines) are \emph{disabled}
+for DSGF v2 so that task return remains the sole optimization signal for the
+residual actor.
+Checkpoints and hyperparameters are frozen in
+\texttt{configs/dsgf/dsgf\_v2\_frozen.yaml}.
+
+\subsection{Complexity Analysis}
+\label{sec:complexity}
+
+Let $d$ be the hidden width and $k=\frac{1}{N}\sum_i|\mathcal{N}_i|$ the average
+degree under $R_c$.
+Dense GAT / Transformer attention costs $O(N^{2}d)$ per layer.
+DSGF message passing, restricted to the support of $\tilde{A}$, costs
+$O(Nkd)$; the GRU update adds $O(Nd)$ per timestep.
+Hence the dominant per-step guidance complexity is
+\begin{equation}
+O(Nkd+Nd)
+\quad\text{with}\quad
+k\ll N
+\text{ under sparse connectivity}.
+\end{equation}
+Table~\ref{tab:complexity} summarizes the comparison.
+Pairwise distance evaluation for radius masking remains $O(N^{2})$ and is
+shared by all geometric graph methods; the practical gain of DSGF lies in
+\emph{attention} sparsity and quality weighting, which dominate wall-clock cost
+once $N$ grows.
+
+\input{tables/table5_complexity}

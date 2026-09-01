@@ -1,0 +1,9 @@
+SECDO-v2.0-submission
+Status: SUBMISSION FREEZE — ready to submit
+Do not bump to v2.1 / v2-final without an explicit post-review cycle.
+Post-review branch/tag name if needed: SECDO-v2.1-post-review
+
+Git (run in a repository root that tracks this tree):
+  git tag -a SECDO-v2.0-submission -m "Submission frozen version"
+  git push origin SECDO-v2.0-submission
+Note: workspace f:\UAM had no .git at freeze time.

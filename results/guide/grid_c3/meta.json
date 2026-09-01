@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ablation_c3",
+  "stage": 1,
+  "name": "C3: adaptive decay lambda 102k",
+  "run_name": "grid_c3",
+  "seed": 42,
+  "started_at": "2026-07-09T17:02:40",
+  "config_path": "configs/experiments/ablation_c3_adaptive.yaml",
+  "guidance_mode": "mlp",
+  "extra": {}
+}

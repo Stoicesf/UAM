@@ -1,0 +1,11 @@
+{
+  "experiment_id": "comm_dsgf_rfull",
+  "stage": 4,
+  "name": "DSGF @ R=full (16 UAV)",
+  "run_name": "dsgf_rfull",
+  "seed": 42,
+  "started_at": "2026-07-14T19:00:50",
+  "config_path": "F:\\UAM\\configs\\communication\\generated\\dsgf_rfull.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

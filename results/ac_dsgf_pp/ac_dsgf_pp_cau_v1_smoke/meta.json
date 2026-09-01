@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ac_dsgf_pp_cau_v1_smoke",
+  "stage": 10,
+  "name": "AC-DSGF++ CAU-v1 Outcome Utility 4UAV 20k",
+  "run_name": "ac_dsgf_pp_cau_v1_smoke",
+  "seed": 42,
+  "started_at": "2026-07-17T18:32:31",
+  "config_path": "configs/ac_dsgf_pp/ac_dsgf_pp_cau_v1_smoke.yaml",
+  "guidance_mode": "ac_dsgf_pp",
+  "extra": {}
+}

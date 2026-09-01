@@ -1,0 +1,11 @@
+{
+  "experiment_id": "exp4_dsfg",
+  "stage": 4,
+  "name": "MAPPO + DSGF-HRL 102k",
+  "run_name": "dsfg_v1_102k",
+  "seed": 42,
+  "started_at": "2026-07-09T18:00:12",
+  "config_path": "configs/experiments/exp4_dsfg_102k.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

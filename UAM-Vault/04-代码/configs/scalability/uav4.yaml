@@ -1,0 +1,34 @@
+experiment:
+  id: scalability_uav4
+  stage: 5
+  name: "DSGF v2 Scalability — 4 UAV"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+env:
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_dynamic_quality: true
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+
+output:
+  category: scalability
+  results_dir: results

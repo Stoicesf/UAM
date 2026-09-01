@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ablation_c2",
+  "stage": 1,
+  "name": "C2: lambda=0.03 warmup30% 102k",
+  "run_name": "grid_c2",
+  "seed": 42,
+  "started_at": "2026-07-09T17:14:19",
+  "config_path": "configs/experiments/ablation_c2_warmup03.yaml",
+  "guidance_mode": "mlp",
+  "extra": {}
+}

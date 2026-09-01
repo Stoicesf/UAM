@@ -1,0 +1,8 @@
+# Runtime / Scalability (CPU, no training)
+# Source: scripts/bench_inference_cost.py + Table I Comm at N=16
+# N=4/8: attended-edge complexity only (no checkpoint timing)
+
+N,GAT_infer_ms,GAT_Comm,DSGF_infer_ms,DSGF_Comm,AC_infer_ms,AC_Comm,note
+4,,,, ,,,theory O(Nk) vs O(NK)
+8,,,, ,,,theory O(Nk) vs O(NK)
+16,1.66,38.8,3.35,39.3,3.94,0.43,measured inference + Table I Comm

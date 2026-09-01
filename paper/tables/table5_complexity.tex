@@ -1,0 +1,32 @@
+% Table V — Computational Complexity Analysis (P2 Task 1)
+% N: number of agents; d: feature dim; k: avg. neighbors (k ≪ N under sparse R_c);
+% T: temporal memory horizon (GRU step is O(Nd) per timestep).
+%
+% Note: pairwise distance for graph construction is O(N^2), shared by GAT/DSGF.
+% Message-passing / attention complexity is what differs under radius constraints.
+
+\begin{table}[!t]
+\centering
+\caption{Per-timestep computational complexity of guidance (or policy) modules.
+$N$ denotes the number of UAVs, $d$ the hidden dimension, $k$ the average number of
+neighbors within the communication radius ($k\ll N$ under sparse connectivity),
+and $T$ the temporal memory horizon.}
+\label{tab:complexity}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{Spatial Aggregation} & \textbf{Temporal} & \textbf{Complexity} \\
+\midrule
+MAPPO & --- & --- & $O(Nd)$ \\
+GAT & Dense / radius graph & --- & $O(N^{2}d)$ \\
+Transformer & Full attention & --- & $O(N^{2}d)$ \\
+DSGF (Ours) & Quality-weighted sparse graph & GRU memory & $O(Nkd + Nd)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Compact CSV mirror for scripts / non-LaTeX readers:
+% Method,Spatial,Temporal,Complexity
+% MAPPO,-,-,O(Nd)
+% GAT,dense graph,-,O(N^2 d)
+% Transformer,attention,-,O(N^2 d)
+% DSGF,sparse quality graph,GRU,O(Nkd+Nd)

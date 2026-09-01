@@ -1,0 +1,10 @@
+\section{Proof Sketch of Theorem~\ref{thm:2}}
+\label{app:thm2}
+
+Start from a projected-gradient inequality for the \emph{exact} projection onto $\mathcal{B}_{t+1}$.
+Replace the exact projection by SECDO's projection onto $\hat{\mathcal{B}}_{t+1}$ (or $\mathcal{B}(c^{\mathrm{mix}})$) using Lemma~\ref{lem:2}; Lipschitz continuity of $F_t$ contributes an additive $O(\delta_t)$ term per step.
+State-prediction noise in $\widehat{\nabla}_t$ contributes $O(\epsilon_t)$.
+Telescope distance terms and apply the standard dynamic-regret / path-variation argument with $P_T=\sum\|x_{t+1}^\star-x_t^\star\|$, choosing $\eta\asymp\sqrt{(1+P_T)/T}$ (or an equivalent two-stage bound), to obtain
+$O\sqrt{T(1+P_T)}+O\sum(\epsilon_t+\delta_t)$.
+The bound on $P_T$ is Lemma~\ref{lem:2}.
+Full expansions mirror the SECDO theory freeze notes (\texttt{thm2\_prediction\_aware\_gap.md}).

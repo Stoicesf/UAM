@@ -1,0 +1,11 @@
+{
+  "experiment_id": "scalability_uav32",
+  "stage": 5,
+  "name": "DSGF v2 Scalability — 32 UAV",
+  "run_name": "uav32",
+  "seed": 42,
+  "started_at": "2026-07-11T14:20:24",
+  "config_path": "configs/scalability/uav32.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

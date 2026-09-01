@@ -1,0 +1,20 @@
+[
+  {
+    "regime": "slow",
+    "method": "secdo",
+    "x_eps_plus_delta": 26.36770163501448,
+    "y_gap": 6.691143911060256e-05
+  },
+  {
+    "regime": "fast",
+    "method": "secdo",
+    "x_eps_plus_delta": 9.972477721593654,
+    "y_gap": 0.0006874905971017142
+  },
+  {
+    "regime": "stress",
+    "method": "secdo",
+    "x_eps_plus_delta": 13.396728778646017,
+    "y_gap": 0.0010580050011412823
+  }
+]

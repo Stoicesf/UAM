@@ -1,0 +1,182 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{yu2022mappo}
+\citation{yu2022mappo,lowe2017maddpg,rashid2018qmix}
+\citation{chung2018uav,bettini2022vmas}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{I}{1}{Introduction}{section.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-}0a}Limitation of prior pipelines.}{1}{paragraph.1.0.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-}0b}Our formulation.}{1}{paragraph.1.0.0.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Motivation: without residual decoupling, guided MARL can collapse under long-horizon optimization (4-UAV ablation; Table~\ref {tab:ablation}). AC-DSGF keeps residual guidance while learning budget-aware topology.}}{1}{figure.1}\protected@file@percent }
+\newlabel{fig:motivation}{{1}{1}{Motivation: without residual decoupling, guided MARL can collapse under long-horizon optimization (4-UAV ablation; Table~\ref {tab:ablation}). AC-DSGF keeps residual guidance while learning budget-aware topology}{figure.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-}0c}Method sketch.}{1}{paragraph.1.0.0.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-}0d}Claim.}{1}{paragraph.1.0.0.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-}0e}Contributions.}{1}{paragraph.1.0.0.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{II}{1}{Related Work}{section.2}{}}
+\citation{jiang2018graphcomm,iqbal2019actorattention,jiang2020graph,velickovic2018gat}
+\citation{singh2019learning,wang2020learning,foerster2016learning,sukhbaatar2016commnet,das2019tarmac,kim2019learning,mordatch2018emergent}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Multi-Agent RL for UAV Swarms}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Graph-based Communication and Interaction Modeling}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Communication-Efficient MARL}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {II-C}0a}Positioning.}{2}{paragraph.2.3.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}Problem Formulation}{2}{section.3}\protected@file@percent }
+\newlabel{sec:problem}{{III}{2}{Problem Formulation}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Multi-UAV Cooperative Navigation}{2}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:obs}{{1}{2}{Multi-UAV Cooperative Navigation}{equation.1}{}}
+\newlabel{eq:obj-reward}{{2}{2}{Multi-UAV Cooperative Navigation}{equation.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Communication Constraint}{2}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:comm-cost}{{3}{2}{Communication Constraint}{equation.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Metric: Communication Efficiency Index}{2}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:cei}{{4}{2}{Metric: Communication Efficiency Index}{equation.4}{}}
+\newlabel{sec:notation}{{\mbox  {III-C}}{3}{Notation}{section*.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Summary of key symbols. Soft gates $g_{ij}^{t}\!\in \![0,1]$ are continuous (probability-like intensities), not hard binary edges; binary decisions appear only after Top-$K$ when a hard budget is enforced.}}{3}{table.1}\protected@file@percent }
+\newlabel{tab:notation}{{I}{3}{Summary of key symbols. Soft gates $g_{ij}^{t}\!\in \![0,1]$ are continuous (probability-like intensities), not hard binary edges; binary decisions appear only after Top-$K$ when a hard budget is enforced}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Method: AC-DSGF}{3}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{IV}{3}{Method: AC-DSGF}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Problem Formulation}{3}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:joint}{{\mbox  {IV-A}}{3}{Problem Formulation}{subsection.4.1}{}}
+\newlabel{eq:Ct}{{5}{3}{Problem Formulation}{equation.5}{}}
+\newlabel{eq:joint-max}{{6}{3}{Problem Formulation}{equation.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Framework of AC-DSGF: adaptive topology learning (gate + budget) defines the interaction graph consumed by residual DSGF guidance, rather than post-hoc pruning of a fixed graph.}}{3}{figure.2}\protected@file@percent }
+\newlabel{fig:framework}{{2}{3}{Framework of AC-DSGF: adaptive topology learning (gate + budget) defines the interaction graph consumed by residual DSGF guidance, rather than post-hoc pruning of a fixed graph}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Adaptive Communication Topology Learning}{3}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:ac-graph}{{\mbox  {IV-B}}{3}{Adaptive Communication Topology Learning}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0a}Feasible mask and quality.}{3}{paragraph.4.2.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0b}Gate (learned selectivity).}{3}{paragraph.4.2.0.2}\protected@file@percent }
+\newlabel{eq:gate}{{7}{3}{Gate (learned selectivity)}{equation.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0c}Difference from pruning.}{3}{paragraph.4.2.0.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Communication Budget Optimization}{3}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:budget}{{\mbox  {IV-C}}{3}{Communication Budget Optimization}{subsection.4.3}{}}
+\newlabel{eq:topk}{{8}{3}{Communication Budget Optimization}{equation.8}{}}
+\newlabel{eq:Aac}{{9}{3}{Communication Budget Optimization}{equation.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}Residual-Guided Coordination}{3}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:residual}{{\mbox  {IV-D}}{3}{Residual-Guided Coordination}{subsection.4.4}{}}
+\newlabel{eq:attn}{{10}{3}{Residual-Guided Coordination}{equation.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces How communication is treated during learning.}}{4}{table.2}\protected@file@percent }
+\newlabel{tab:comm-diff}{{II}{4}{How communication is treated during learning}{table.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Gate stability: mean$\pm $std Soft Comm.\ Mass $C_t$ and mean $|\Delta E_t|$ over episodes. Sparse AC graphs are dynamic yet non-chattering.}}{4}{figure.3}\protected@file@percent }
+\newlabel{fig:gate-stable}{{3}{4}{Gate stability: mean$\pm $std Soft Comm.\ Mass $C_t$ and mean $|\Delta E_t|$ over episodes. Sparse AC graphs are dynamic yet non-chattering}{figure.3}{}}
+\newlabel{eq:residual}{{11}{4}{Residual-Guided Coordination}{equation.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-E}}Difference from Conventional Communication Learning}{4}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:diff-comm}{{\mbox  {IV-E}}{4}{Difference from Conventional Communication Learning}{subsection.4.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-F}}Gate Stability (non-random switching)}{4}{subsection.4.6}\protected@file@percent }
+\newlabel{sec:gate-stable}{{\mbox  {IV-F}}{4}{Gate Stability (non-random switching)}{subsection.4.6}{}}
+\newlabel{eq:deltaE}{{12}{4}{Gate Stability (non-random switching)}{equation.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-G}}Theoretical Analysis}{4}{subsection.4.7}\protected@file@percent }
+\newlabel{sec:theory}{{\mbox  {IV-G}}{4}{Theoretical Analysis}{subsection.4.7}{}}
+\newlabel{sec:theory-obj}{{\mbox  {IV-G}1}{4}{Adaptive Communication Optimization}{subsubsection.4.7.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-G}1}Adaptive Communication Optimization}{4}{subsubsection.4.7.1}\protected@file@percent }
+\newlabel{eq:J}{{13}{4}{Adaptive Communication Optimization}{equation.13}{}}
+\newlabel{sec:theory-sparse}{{\mbox  {IV-G}2}{4}{Sparse Topology Complexity Bound}{subsubsection.4.7.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-G}2}Sparse Topology Complexity Bound}{4}{subsubsection.4.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-G}2a}Lemma~1 (Communication sparsification).}{4}{paragraph.4.7.2.1}\protected@file@percent }
+\newlabel{sec:theory-density}{{\mbox  {IV-G}3}{4}{Communication Density Scaling}{subsubsection.4.7.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-G}3}Communication Density Scaling}{4}{subsubsection.4.7.3}\protected@file@percent }
+\newlabel{prop:density}{{\mbox  {IV-G}3a}{4}{Proposition~2 (Communication density scaling)}{paragraph.4.7.3.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-G}3a}Proposition~2 (Communication density scaling).}{4}{paragraph.4.7.3.1}\protected@file@percent }
+\newlabel{eq:eta}{{14}{4}{Proposition~2 (Communication density scaling)}{equation.14}{}}
+\newlabel{eq:eta-limit}{{15}{4}{Proposition~2 (Communication density scaling)}{equation.15}{}}
+\newlabel{sec:theory-residual}{{\mbox  {IV-G}4}{4}{Residual Stability}{subsubsection.4.7.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-G}4}Residual Stability}{4}{subsubsection.4.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-G}4a}Lemma~2 (Residual stability).}{4}{paragraph.4.7.4.1}\protected@file@percent }
+\newlabel{eq:residual-bound}{{16}{4}{Lemma~2 (Residual stability)}{equation.16}{}}
+\newlabel{sec:theory-deploy}{{\mbox  {IV-G}5}{4}{Deployment Approximation}{subsubsection.4.7.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-G}5}Deployment Approximation}{4}{subsubsection.4.7.5}\protected@file@percent }
+\newlabel{eq:deploy}{{17}{4}{Deployment Approximation}{equation.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-H}}Optimization}{4}{subsection.4.8}\protected@file@percent }
+\newlabel{sec:opt}{{\mbox  {IV-H}}{4}{Optimization}{subsection.4.8}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces AC-DSGF Training}}{5}{algorithm.1}\protected@file@percent }
+\newlabel{alg:ac-dsgf}{{1}{5}{Optimization}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-I}}Computational and Communication Complexity}{5}{subsection.4.9}\protected@file@percent }
+\newlabel{sec:complexity}{{\mbox  {IV-I}}{5}{Computational and Communication Complexity}{subsection.4.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-I}0a}Dense / GAT baselines.}{5}{paragraph.4.9.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-I}0b}AC-DSGF.}{5}{paragraph.4.9.0.2}\protected@file@percent }
+\newlabel{eq:ac-complexity}{{18}{5}{AC-DSGF}{equation.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Complexity and typical communication intensity (conceptual). $K$ is the average budgeted degree; $k$ is the average radius degree.}}{5}{table.3}\protected@file@percent }
+\newlabel{tab:complexity}{{III}{5}{Complexity and typical communication intensity (conceptual). $K$ is the average budgeted degree; $k$ is the average radius degree}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Runtime / scalability (CPU, no retraining). Inference ms/step at $N{=}16$ (50 timed steps); Comm from Table~\ref {tab:main}. For $N{=}4,8$: attended complexity only ($K{\ll }k$).}}{5}{table.4}\protected@file@percent }
+\newlabel{tab:compute}{{IV}{5}{Runtime / scalability (CPU, no retraining). Inference ms/step at $N{=}16$ (50 timed steps); Comm from Table~\ref {tab:main}. For $N{=}4,8$: attended complexity only ($K{\ll }k$)}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Evaluation under Communication-Constrained Swarm Coordination}{5}{section.5}\protected@file@percent }
+\newlabel{sec:setup}{{V}{5}{Evaluation under Communication-Constrained Swarm Coordination}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Environment and Protocol}{5}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Baselines}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Metrics}{5}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Experiment Map}{5}{subsection.5.4}\protected@file@percent }
+\bibstyle{IEEEtran}
+\bibdata{refs}
+\bibcite{yu2022mappo}{1}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Task performance under communication constraints ($N{=}16$, unified \texttt  {step\_mdp} protocol, budget ratio $\rho {=}1$). AC-DSGF maintains task effectiveness with substantially lower Soft Communication Activation Mass (higher CEI). We do \emph  {not} claim Success leadership.}}{6}{table.5}\protected@file@percent }
+\newlabel{tab:main}{{V}{6}{Task performance under communication constraints ($N{=}16$, unified \texttt {step\_mdp} protocol, budget ratio $\rho {=}1$). AC-DSGF maintains task effectiveness with substantially lower Soft Communication Activation Mass (higher CEI). We do \emph {not} claim Success leadership}{table.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces DSGF residual ablation at $N{=}4$ (mechanism test; \emph  {not} Table~I scale).}}{6}{table.6}\protected@file@percent }
+\newlabel{tab:ablation}{{VI}{6}{DSGF residual ablation at $N{=}4$ (mechanism test; \emph {not} Table~I scale)}{table.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Results}{6}{section.6}\protected@file@percent }
+\newlabel{sec:results}{{VI}{6}{Results}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Overall Performance}{6}{subsection.6.1}\protected@file@percent }
+\newlabel{sec:main}{{\mbox  {VI-A}}{6}{Overall Performance}{subsection.6.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Ablation Study}{6}{subsection.6.2}\protected@file@percent }
+\newlabel{sec:ablation}{{\mbox  {VI-B}}{6}{Ablation Study}{subsection.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Communication Budget Analysis}{6}{subsection.6.3}\protected@file@percent }
+\newlabel{sec:budget-res}{{\mbox  {VI-C}}{6}{Communication Budget Analysis}{subsection.6.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Silence Collapse Ablation}{6}{subsection.6.4}\protected@file@percent }
+\newlabel{sec:silence}{{\mbox  {VI-D}}{6}{Silence Collapse Ablation}{subsection.6.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}Communication Behavior Analysis}{6}{subsection.6.5}\protected@file@percent }
+\newlabel{sec:trigger}{{\mbox  {VI-E}}{6}{Communication Behavior Analysis}{subsection.6.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Scalability and Deployment Analysis}{6}{subsection.6.6}\protected@file@percent }
+\newlabel{sec:scale-deploy}{{\mbox  {VI-F}}{6}{Scalability and Deployment Analysis}{subsection.6.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Success (\%) under communication budget ratio $\rho $ ($N{=}16$). Trends indicate graceful degradation under tighter budgets.}}{6}{table.7}\protected@file@percent }
+\newlabel{tab:budget}{{VII}{6}{Success (\%) under communication budget ratio $\rho $ ($N{=}16$). Trends indicate graceful degradation under tighter budgets}{table.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Success vs.\ communication budget ($N{=}16$). AC-DSGF maintains task effectiveness under severe budget cuts (graceful degradation).}}{6}{figure.4}\protected@file@percent }
+\newlabel{fig:budget}{{4}{6}{Success vs.\ communication budget ($N{=}16$). AC-DSGF maintains task effectiveness under severe budget cuts (graceful degradation)}{figure.4}{}}
+\newlabel{sec:density-scale}{{\mbox  {VI-F}1}{6}{Communication Density Scaling}{subsubsection.6.6.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-F}1}Communication Density Scaling}{6}{figure.6}\protected@file@percent }
+\newlabel{sec:gate-dist}{{\mbox  {VI-F}2}{6}{Learned Communication Selectivity}{subsubsection.6.6.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-F}2}Learned Communication Selectivity}{6}{figure.7}\protected@file@percent }
+\newlabel{sec:topk-deploy}{{\mbox  {VI-F}3}{6}{Top-$K$ Deployment}{subsubsection.6.6.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-F}3}Top-$K$ Deployment}{6}{figure.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-G}}Robustness under Packet Loss}{6}{subsection.6.7}\protected@file@percent }
+\newlabel{sec:packet-loss}{{\mbox  {VI-G}}{6}{Robustness under Packet Loss}{subsection.6.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-H}}Communication--Performance Pareto}{6}{subsection.6.8}\protected@file@percent }
+\newlabel{sec:pareto}{{\mbox  {VI-H}}{6}{Communication--Performance Pareto}{subsection.6.8}{}}
+\newlabel{sec:limitations}{{\mbox  {VI-H}}{6}{Discussion and Limitations}{section*.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{6}{section.7}\protected@file@percent }
+\newlabel{sec:conclusion}{{VII}{6}{Conclusion}{section.7}{}}
+\bibcite{lowe2017maddpg}{2}
+\bibcite{rashid2018qmix}{3}
+\bibcite{chung2018uav}{4}
+\bibcite{bettini2022vmas}{5}
+\bibcite{jiang2018graphcomm}{6}
+\bibcite{iqbal2019actorattention}{7}
+\bibcite{jiang2020graph}{8}
+\bibcite{velickovic2018gat}{9}
+\bibcite{singh2019learning}{10}
+\bibcite{wang2020learning}{11}
+\bibcite{foerster2016learning}{12}
+\bibcite{sukhbaatar2016commnet}{13}
+\bibcite{das2019tarmac}{14}
+\bibcite{kim2019learning}{15}
+\bibcite{mordatch2018emergent}{16}
+\@writefile{lot}{\contentsline {table}{\numberline {VIII}{\ignorespaces Communication mechanism validation ($N{=}16$, AC checkpoint). AC-full is \emph  {not} silence collapse: opening all radius edges ($g{=}A$) inflates Soft Mass by over three orders of magnitude with only a small Success change.}}{7}{table.8}\protected@file@percent }
+\newlabel{tab:silence}{{VIII}{7}{Communication mechanism validation ($N{=}16$, AC checkpoint). AC-full is \emph {not} silence collapse: opening all radius edges ($g{=}A$) inflates Soft Mass by over three orders of magnitude with only a small Success change}{table.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Communication behavior: Soft Mass rises with proximity risk ($\mathrm  {corr}{=}0.84$) and falls with spatial dispersion ($\mathrm  {corr}{=}{-}0.57$)---sparse topology is task-driven, not random.}}{7}{figure.5}\protected@file@percent }
+\newlabel{fig:trigger}{{5}{7}{Communication behavior: Soft Mass rises with proximity risk ($\mathrm {corr}{=}0.84$) and falls with spatial dispersion ($\mathrm {corr}{=}{-}0.57$)---sparse topology is task-driven, not random}{figure.5}{}}
+\@writefile{toc}{\contentsline {section}{References}{7}{section*.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces Soft Comm.\ Mass $C$ and density $\eta _N=C/(N(N-1))$ (zero-shot from $N{=}16$ checkpoint).}}{7}{table.9}\protected@file@percent }
+\newlabel{tab:eta}{{IX}{7}{Soft Comm.\ Mass $C$ and density $\eta _N=C/(N(N-1))$ (zero-shot from $N{=}16$ checkpoint)}{table.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Communication density scaling with swarm size. AC-DSGF maintains nearly constant sparse activation density as $N$ increases, while DSGF exhibits much higher interaction density---consistent with $\eta _N=\mathcal  {O}(K/N)$ (Prop.~2). The claim is a different communication growth law, not higher Success at $N{=}32$.}}{7}{figure.6}\protected@file@percent }
+\newlabel{fig:density-scale}{{6}{7}{Communication density scaling with swarm size. AC-DSGF maintains nearly constant sparse activation density as $N$ increases, while DSGF exhibits much higher interaction density---consistent with $\eta _N=\mathcal {O}(K/N)$ (Prop.~2). The claim is a different communication growth law, not higher Success at $N{=}32$}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Learned communication selectivity ($N{=}16$). (a)~DSGF opens radius edges at $g\equiv 1$. (b)~AC-DSGF concentrates mass on continuous low-intensity activations rather than silencing all edges ($g\equiv 0$). Structure is evidenced by relative ranking under Top-$K$ (Fig.~\ref {fig:topk}).}}{8}{figure.7}\protected@file@percent }
+\newlabel{fig:gate-dist}{{7}{8}{Learned communication selectivity ($N{=}16$). (a)~DSGF opens radius edges at $g\equiv 1$. (b)~AC-DSGF concentrates mass on continuous low-intensity activations rather than silencing all edges ($g\equiv 0$). Structure is evidenced by relative ranking under Top-$K$ (Fig.~\ref {fig:topk})}{figure.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {X}{\ignorespaces Top-$K$ deployment from soft gates ($N{=}16$, eval-only discretization, no retraining).}}{8}{table.10}\protected@file@percent }
+\newlabel{tab:topk}{{X}{8}{Top-$K$ deployment from soft gates ($N{=}16$, eval-only discretization, no retraining)}{table.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Top-$K$ deployment from soft gates. Soft learned topology can be discretized into practical communication links at comparable task effectiveness. Mild improvements after removing weak soft activations indicate that low- confidence edges may inject unnecessary interactions at inference; we do \emph  {not} claim Top-$K$ should replace soft training.}}{8}{figure.8}\protected@file@percent }
+\newlabel{fig:topk}{{8}{8}{Top-$K$ deployment from soft gates. Soft learned topology can be discretized into practical communication links at comparable task effectiveness. Mild improvements after removing weak soft activations indicate that low- confidence edges may inject unnecessary interactions at inference; we do \emph {not} claim Top-$K$ should replace soft training}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Task success under random edge drops ($N{=}16$). AC-DSGF remains nearly flat as loss increases---consistent with \emph  {graceful degradation} under unreliable links.}}{8}{figure.9}\protected@file@percent }
+\newlabel{fig:packet-loss}{{9}{8}{Task success under random edge drops ($N{=}16$). AC-DSGF remains nearly flat as loss increases---consistent with \emph {graceful degradation} under unreliable links}{figure.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {XI}{\ignorespaces Success (\%) vs.\ packet-loss rate $p$ ($N{=}16$). Emphasize degradation slope, not absolute comparison to Table~I.}}{8}{table.11}\protected@file@percent }
+\newlabel{tab:packet-loss}{{XI}{8}{Success (\%) vs.\ packet-loss rate $p$ ($N{=}16$). Emphasize degradation slope, not absolute comparison to Table~I}{table.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Communication--performance Pareto ($N{=}16$, Table~\ref {tab:main}). AC-DSGF occupies the high-efficiency region: comparable task effectiveness at minimal Soft Comm.\ Mass.}}{8}{figure.10}\protected@file@percent }
+\newlabel{fig:pareto}{{10}{8}{Communication--performance Pareto ($N{=}16$, Table~\ref {tab:main}). AC-DSGF occupies the high-efficiency region: comparable task effectiveness at minimal Soft Comm.\ Mass}{figure.10}{}}
+\gdef \@abspage@last{8}

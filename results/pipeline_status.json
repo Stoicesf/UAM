@@ -1,0 +1,92 @@
+{
+  "updated_at": "2026-07-14T20:05:00",
+  "p2_status": "writing",
+  "p2_completed": [
+    "experiment_freeze",
+    "table5_complexity",
+    "chapter1_intro_draft",
+    "chapter3_method_draft",
+    "chapter4_exp_results_draft"
+  ],
+  "summaries_complete": 20,
+  "summaries_target": 20,
+  "p0_completed": [
+    "analyze_baseline16_stats",
+    "plot_baseline16_5seed",
+    "export_table1_5seed_csv",
+    "plot_scalability"
+  ],
+  "p0_done": true,
+  "p1_completed": [
+    "ablation_figure_4panel",
+    "table2_ablation",
+    "generalization_env_check",
+    "generalization_zero_shot_pipeline",
+    "generalization_train_obs4_3methods",
+    "table3_generalization",
+    "fig5_generalization",
+    "communication_smoke_gat_r1_dsgf_r2",
+    "communication_fast_9runs",
+    "table4_communication",
+    "fig6_communication_pareto"
+  ],
+  "significance": {
+    "dsgf_vs_mappo_ttest": {
+      "t_stat": 1.8880153043296735,
+      "p_value": 0.10692550946484518
+    },
+    "dsgf_vs_mappo_wilcoxon_paired": {
+      "statistic": 0.0,
+      "p_value": 0.0625
+    }
+  },
+  "next_tasks": [
+    {
+      "priority": "P1",
+      "task": "Generalization (zero-shot obstacle / comm radius)",
+      "status": "done",
+      "note": "obs=4 train + zero-shot eval obs=0/2/4/6/8; table3 + fig5"
+    },
+    {
+      "priority": "P1",
+      "task": "Communication radius sweep + Pareto figure",
+      "status": "done",
+      "note": "fast 9-run complete; table4 + fig6 pareto saved"
+    },
+    {
+      "priority": "P1",
+      "task": "Ablation bar chart (w/o DG, Temporal, Residual)",
+      "status": "pending",
+      "data": "results/dsgf/ablation_*"
+    },
+    {
+      "priority": "P2",
+      "task": "Complexity analysis (runtime / memory / O(kN))",
+      "status": "pending"
+    },
+    {
+      "priority": "P2",
+      "task": "Trajectory / communication graph figure",
+      "status": "pending"
+    },
+    {
+      "priority": "writing",
+      "task": "Fill chapter3_method.tex + chapter4_exp.tex",
+      "status": "done",
+      "note": "IEEE drafts in paper/; add Related Work + Abstract next"
+    },
+    {
+      "priority": "P2",
+      "task": "Related Work + Abstract + master main.tex",
+      "status": "pending",
+      "note": "DSGF v2 IEEE writing — algorithm frozen"
+    },
+    {
+      "priority": "AC-DSGF",
+      "task": "Phase0 Smoke: CommunicationController + λ_c·C + 4UAV 20k",
+      "status": "pending",
+      "roadmap": "paper/ac_dsgf_roadmap.md",
+      "note": "Do not modify dsgf_v2_frozen; scaffold under models/communication/ + ac_dsgf.py"
+    }
+  ]
+}

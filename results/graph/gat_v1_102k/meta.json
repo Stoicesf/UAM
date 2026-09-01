@@ -1,0 +1,11 @@
+{
+  "experiment_id": "exp2_gat",
+  "stage": 2,
+  "name": "MAPPO + GAT Guide v1",
+  "run_name": "gat_v1_102k",
+  "seed": 42,
+  "started_at": "2026-07-09T17:42:48",
+  "config_path": "configs/gat/gat_v1_stable.yaml",
+  "guidance_mode": "gat",
+  "extra": {}
+}

@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ablation_wo_dg",
+  "stage": 4,
+  "name": "DSGF v2 w/o Dynamic Graph",
+  "run_name": "ablation_wo_dg_102k",
+  "seed": 42,
+  "started_at": "2026-07-10T13:09:57",
+  "config_path": "F:\\UAM\\configs\\dsgf\\ablation_wo_dynamic_graph.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

@@ -1,0 +1,207 @@
+"""Day 3–4: theory–code consistency audit for SECDO-v2.0."""
+
+from __future__ import annotations
+
+import ast
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+OUT = ROOT / "paper" / "ac_dsgf_v2" / "appendix" / "C4_AUDIT_REPORT.md"
+
+
+def _has_name(path: Path, *names: str) -> bool:
+    text = path.read_text(encoding="utf-8")
+    return all(n in text for n in names)
+
+
+def main() -> int:
+    checks = []
+
+    opt = ROOT / "secdo" / "optimizer" / "secdo_optimizer.py"
+    checks.append(
+        (
+            "SECDOOptimizer.step: y → PI → α → c_mix → Π",
+            _has_name(opt, "predictability_index", "anticipation_weight", "mix_budget", "project_sum_budget"),
+            str(opt),
+        )
+    )
+    checks.append(
+        (
+            "fixed_alpha path (A3 / Cor4)",
+            "fixed_alpha" in opt.read_text(encoding="utf-8"),
+            str(opt),
+        )
+    )
+
+    solver = ROOT / "secdo" / "baselines" / "secdo_solver.py"
+    stext = solver.read_text(encoding="utf-8")
+    checks.append(
+        (
+            "logs δ, χ, PI, α",
+            all(k in stext for k in ("delta", "chi", "PI", "alpha")),
+            str(solver),
+        )
+    )
+    checks.append(
+        (
+            "SECDO does not call _peek_c_next (no future leak)",
+            "_peek_c_next" not in stext,
+            str(solver),
+        )
+    )
+
+    oracle = ROOT / "secdo" / "baselines" / "oracle.py"
+    checks.append(
+        (
+            "Oracle alone peeks c_{t+1}",
+            "_peek_c_next" in oracle.read_text(encoding="utf-8"),
+            str(oracle),
+        )
+    )
+
+    reactive = ROOT / "secdo" / "baselines" / "reactive.py"
+    checks.append(
+        (
+            "Reactive path exists (A1)",
+            reactive.is_file() and "ReactiveSolver" in reactive.read_text(encoding="utf-8"),
+            str(reactive),
+        )
+    )
+
+    # A2 = fixed_alpha=0 supported by solver ctor
+    checks.append(
+        (
+            "A2 via SECDOSolver(fixed_alpha=0)",
+            "fixed_alpha" in stext,
+            str(solver),
+        )
+    )
+
+    losses = ROOT / "secdo" / "training" / "losses.py"
+    checks.append(
+        (
+            "constraint_loss (L_c) present",
+            losses.is_file() and "constraint" in losses.read_text(encoding="utf-8").lower(),
+            str(losses),
+        )
+    )
+
+    # wording scan in paper track (exclude rebuttal/redline docs that quote forbidden phrases)
+    bad_hits = []
+    scan_roots = [
+        ROOT / "paper" / "ac_dsgf_v2" / "sections",
+        ROOT / "paper" / "ac_dsgf_v2" / "drafts",
+    ]
+    forbidden = ("guaranteed optimal", "verify theorem", "SECDO always wins")
+    for root in scan_roots:
+        if not root.is_dir():
+            continue
+        for p in root.rglob("*.md"):
+            text = p.read_text(encoding="utf-8").lower()
+            for phrase in forbidden:
+                # allow lines that are prohibitions
+                if phrase in text:
+                    for line in p.read_text(encoding="utf-8").splitlines():
+                        low = line.lower()
+                        if phrase in low and not any(
+                            m in low
+                            for m in (
+                                "禁止",
+                                "不要写",
+                                "❌",
+                                "红线",
+                                "not ",
+                                "do not",
+                                "非 ",
+                                "不是",
+                                "非uav",
+                                "措辞",
+                                "改用",
+                                "不等于",
+                                "≠",
+                            )
+                        ):
+                            bad_hits.append(f"{p.relative_to(ROOT)}: {line.strip()[:120]}")
+    checks.append(
+        (
+            "sections/drafts: no forbidden absolute claims",
+            len(bad_hits) == 0,
+            "; ".join(bad_hits[:5]) if bad_hits else "ok",
+        )
+    )
+
+    # symbol map smoke import
+    try:
+        from secdo.optimizer.secdo_optimizer import (
+            SECDOOptimizer,
+            anticipation_weight,
+            mix_budget,
+            predictability_index,
+        )
+        import torch
+
+        d = torch.tensor([0.1])
+        c = torch.tensor([0.2])
+        pi = predictability_index(d, c)
+        a = anticipation_weight(pi)
+        cm = mix_budget(torch.tensor([1.0]), torch.tensor([0.0]), a)
+        ok_import = bool(pi.numel() and a.numel() and cm.numel())
+    except Exception as e:
+        ok_import = False
+        checks.append(("runtime import PI/α/mix", False, str(e)))
+    else:
+        checks.append(("runtime import PI/α/mix", ok_import, "secdo.optimizer.secdo_optimizer"))
+
+    lines = [
+        "# C.4 一致性审计报告（Day 3–4）",
+        "",
+        f"**Generated by** `scripts/audit_secdo_consistency.py`",
+        "",
+        "| 检查项 | 结果 | 备注 |",
+        "|--------|------|------|",
+    ]
+    all_ok = True
+    for name, ok, note in checks:
+        all_ok = all_ok and ok
+        lines.append(f"| {name} | {'PASS' if ok else 'FAIL'} | `{note}` |")
+
+    lines += [
+        "",
+        "## 理论–代码符号（抽检）",
+        "",
+        "| 理论 | 代码 |",
+        "|------|------|",
+        "| PI | `predictability_index` |",
+        "| α | `anticipation_weight` |",
+        "| c_mix | `mix_budget` |",
+        "| Π | `project_sum_budget` |",
+        "| fixed α | `SECDOOptimizer.step(..., fixed_alpha=)` |",
+        "| A1 | `ReactiveSolver` |",
+        "| A2 | `SECDOSolver(fixed_alpha=0)` |",
+        "| A3 | `SECDOSolver(fixed_alpha=1)` |",
+        "",
+        f"**Overall:** {'PASS' if all_ok else 'FAIL'}",
+        "",
+    ]
+    OUT.write_text("\n".join(lines), encoding="utf-8")
+    print("\n".join(lines), flush=True)
+
+    # also tick C_algorithm_details checklist into a sidecar json
+    (ROOT / "results" / "secdo_v2" / "ablation").mkdir(parents=True, exist_ok=True)
+    (ROOT / "results" / "secdo_v2" / "ablation" / "audit.json").write_text(
+        json.dumps(
+            {"pass": all_ok, "checks": [{"name": n, "ok": o, "note": note} for n, o, note in checks]},
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return 0 if all_ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

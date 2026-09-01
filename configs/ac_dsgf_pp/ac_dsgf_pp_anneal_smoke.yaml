@@ -1,0 +1,65 @@
+# AC-DSGF++ Budget Annealing — 4UAV smoke (schedule scaled ×0.2 from 102k design)
+#
+# Formal (102k):  0–20k free → 20–70k anneal → 70–102k fixed@1.0
+# Smoke  (20.5k): 0–4k  free → 4–14k  anneal → 14–20.5k fixed@1.0
+#
+# Gates (vs v2c / v2e-B): Success 18–22%, Comm 0.8–1.2, corr 0.5–0.65
+experiment:
+  id: ac_dsgf_pp_anneal_smoke
+  stage: 6
+  name: "AC-DSGF++ Anneal Smoke 4UAV 20k"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 32
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+  utility_warmup_steps: 1000
+  lambda_comm: 0.0
+  lambda_budget: 0.02
+  target_comm: 1.0
+  lambda_u: 0.5
+  lambda_rank: 0.1
+  ranking_mode: hinge
+  use_utility_in_gate: true
+  use_utility_in_policy: true
+  gate_residual: true
+  gate_residual_alpha: 0.5
+  gate_residual_alpha_after: 0.8
+  budget:
+    enabled: true
+    schedule: linear
+    start_step: 4096
+    end_step: 14336
+    start_target: 2.0
+    end_target: 1.0
+    lambda_start: 0.0
+    lambda_end: 0.02
+
+output:
+  category: ac_dsgf_pp
+  results_dir: results
+  tag: AC_DSGF_PP_ANNEAL_SMOKE

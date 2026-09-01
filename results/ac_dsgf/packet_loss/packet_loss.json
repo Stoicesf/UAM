@@ -1,0 +1,102 @@
+[
+  {
+    "method": "mappo",
+    "packet_loss": 0.0,
+    "success": 0.3135
+  },
+  {
+    "method": "mappo",
+    "packet_loss": 0.1,
+    "success": 0.3066
+  },
+  {
+    "method": "mappo",
+    "packet_loss": 0.3,
+    "success": 0.3115
+  },
+  {
+    "method": "mappo",
+    "packet_loss": 0.5,
+    "success": 0.335
+  },
+  {
+    "method": "mappo",
+    "packet_loss": 0.7,
+    "success": 0.2988
+  },
+  {
+    "method": "gat",
+    "packet_loss": 0.0,
+    "success": 0.2119
+  },
+  {
+    "method": "gat",
+    "packet_loss": 0.1,
+    "success": 0.1758
+  },
+  {
+    "method": "gat",
+    "packet_loss": 0.3,
+    "success": 0.1611
+  },
+  {
+    "method": "gat",
+    "packet_loss": 0.5,
+    "success": 0.1455
+  },
+  {
+    "method": "gat",
+    "packet_loss": 0.7,
+    "success": 0.1582
+  },
+  {
+    "method": "dsgf",
+    "packet_loss": 0.0,
+    "success": 0.2178
+  },
+  {
+    "method": "dsgf",
+    "packet_loss": 0.1,
+    "success": 0.2422
+  },
+  {
+    "method": "dsgf",
+    "packet_loss": 0.3,
+    "success": 0.207
+  },
+  {
+    "method": "dsgf",
+    "packet_loss": 0.5,
+    "success": 0.2148
+  },
+  {
+    "method": "dsgf",
+    "packet_loss": 0.7,
+    "success": 0.1846
+  },
+  {
+    "method": "ac_dsgf",
+    "packet_loss": 0.0,
+    "success": 0.2617
+  },
+  {
+    "method": "ac_dsgf",
+    "packet_loss": 0.1,
+    "success": 0.2607
+  },
+  {
+    "method": "ac_dsgf",
+    "packet_loss": 0.3,
+    "success": 0.2637
+  },
+  {
+    "method": "ac_dsgf",
+    "packet_loss": 0.5,
+    "success": 0.2832
+  },
+  {
+    "method": "ac_dsgf",
+    "packet_loss": 0.7,
+    "success": 0.2578
+  }
+]

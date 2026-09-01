@@ -1,0 +1,30 @@
+[
+  {
+    "uav": 4,
+    "success": 0.0927,
+    "collision": 0.1468,
+    "path_length": 77.4583,
+    "reward": -6.1276
+  },
+  {
+    "uav": 8,
+    "success": 0.0156,
+    "collision": 0.2148,
+    "path_length": 70.6821,
+    "reward": -11.4098
+  },
+  {
+    "uav": 16,
+    "success": 0.0347,
+    "collision": 0.3016,
+    "path_length": 62.2609,
+    "reward": -22.5455
+  },
+  {
+    "uav": 32,
+    "success": 0.0188,
+    "collision": 0.2225,
+    "path_length": 55.2091,
+    "reward": 34.8796
+  }
+]

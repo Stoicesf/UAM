@@ -1,0 +1,16 @@
+\section{Proof of Lemma~\ref{lem:surrogate}}
+\label{app:surrogate}
+
+By Theorem~\ref{thm:1}, $\delta_t\le\lvert\hat c_t-c_t\rvert$ under scalar budgets.
+Taking expectations and applying Jensen's inequality / Cauchy--Schwarz on the scalar residual yields
+\begin{equation}
+\mathbb{E}[\delta_t]
+\;\le\;
+\mathbb{E}\lvert\hat c_t-c_t\rvert
+\;\le\;
+\sqrt{\mathbb{E}\lvert\hat c_t-c_t\rvert^2}
+\;=\;
+\sqrt{\mathbb{E}[L_c]}.
+\end{equation}
+Thus reducing $L_c$ contracts the set-mismatch term that enters Theorems~\ref{thm:1}--\ref{thm:2}.
+We emphasize that $L_c$ is a surrogate for $\delta$, not a surrogate for $\mathrm{Reg}_T$.

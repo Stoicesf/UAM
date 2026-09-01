@@ -1,0 +1,24 @@
+# Exp7 — Communication cost comparison
+experiment:
+  id: exp7_communication
+  stage: 7
+  name: "Communication Cost MAPPO vs DSGF"
+
+train:
+  seed: 42
+  total_frames: 51_200
+  algorithm: guided_mappo
+
+guidance:
+  mode: full
+  guidance_dim: 4
+  hidden_dim: 128
+  num_heads: 4
+  comm_radius: 0.5
+  use_guidance_reward: true
+  guidance_reward_coef: 0.1
+  log_communication_cost: true
+
+output:
+  results_dir: results
+  figures_dir: figures

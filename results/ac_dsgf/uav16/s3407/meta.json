@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ac_dsgf_16uav",
+  "stage": 5,
+  "name": "AC-DSGF 16 UAV Formal",
+  "run_name": "uav16_s3407",
+  "seed": 3407,
+  "started_at": "2026-07-15T13:02:58",
+  "config_path": "F:\\UAM\\configs\\ac_dsgf\\ac_dsgf_16uav.yaml",
+  "guidance_mode": "ac_dsgf",
+  "extra": {}
+}

@@ -1,0 +1,36 @@
+# SECDO-v2.0-submission hyperparameter snapshot (frozen)
+# Source configs: secdo/configs/train/*.yaml
+
+version: SECDO-v2.0-submission
+
+loss:
+  lambda_state: 0.5
+  lambda_constraint: 1.0
+  lambda_utility: 0.1
+
+optimizer:
+  name: AdamW
+  lr: 1.0e-4
+
+model:
+  latent_dim: 32
+  amp: true
+
+train:
+  pretrain_epochs: 5   # see secdo/configs/train/pretrain.yaml
+  batch: 16
+  trajectory_length: 32
+
+uav_eval:
+  horizon: 96
+  batch: 16
+  seeds: [0, 1, 2, 3, 4]
+  regimes: [slow_drift, fast_drift, stress_test]
+  eta: 0.25
+
+algorithm:
+  alpha: "1/(1+PI^2)"
+  projection: "single Pi on B(c_mix)"
+  detach_c_hat_through_Pi: true
+
+device: cuda:0

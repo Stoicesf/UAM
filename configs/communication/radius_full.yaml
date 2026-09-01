@@ -1,0 +1,3 @@
+# Full connectivity — radius >> world diameter (16 UAV navigation)
+comm_radius: 100.0
+label: "full"

@@ -1,0 +1,53 @@
+% Supplementary appendix for AC-DSGF (RA-L) — ≤2 pages
+% Compile: pdflatex appendix.tex
+% Do NOT put new Success-leaderboard experiments here.
+
+\documentclass[letterpaper,10pt,journal]{IEEEtran}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref}
+
+\title{Supplementary Material: Adaptive Communication Topology Learning (AC-DSGF)}
+\author{Anonymous}
+\begin{document}
+\maketitle
+
+\section*{S1. Network architecture (summary)}
+AC-DSGF wraps a spatial--temporal graph encoder with a differentiable gate head.
+Node embedding dimension $d_h{=}128$; spatial layers use communication-aware
+sparse attention (2 layers, 4 heads); residual guidance dimension $d_\Phi{=}6$.
+Gates $g_{ij}=\sigma(s_{ij})\cdot A_{ij}$ are restricted to the radius support
+$A_{ij}$ ($R_c{=}0.5$). Soft training cost $C_s=\sum g_{ij}$ (SCAM) is
+penalized by $\lambda_c$ in $\mathbb{E}[R-\lambda_c C_s]$. Hard deployment uses
+thresholding or per-agent Top-$K$.
+
+\section*{S2. Hyperparameters (frozen v1)}
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Item & Value \\
+\midrule
+Agents $N$ (main) & 16 \\
+Episode horizon & 128 \\
+MAPPO / CTDE & as in baseline configs \\
+$\lambda_c$ (main checkpoint) & $10^{-3}$ \\
+Comm.\ radius $R_c$ & 0.5 \\
+Success threshold & 0.3 \\
+Eval protocol & TorchRL \texttt{step\_mdp} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Full YAML: \texttt{configs/ac\_dsgf/ac\_dsgf\_16uav.yaml}.
+
+\section*{S3. Proposition~1 derivation (degree constraint)}
+Assume $|E_t(i)|\le K$ for each agent. Then $|E_t|\le NK$.
+The complete digraph has $|E_{\mathrm{full}}|=N(N-1)$, hence
+\[
+\eta_N=\frac{|E_t|}{|E_{\mathrm{full}}|}\le\frac{K}{N-1}=\mathcal{O}\!\left(\frac1N\right).
+\]
+This is a \emph{scaling interpretation under bounded neighborhood}, not a
+learning-convergence claim and not an equality $|E_t|=KN$.
+
+\section*{S4. What is \emph{not} in this appendix}
+No additional high-Success leaderboards; no SwarmOS/PX4 engineering claims;
+no multi-$\lambda$ retrain curves claimed as main-text results.
+
+\end{document}

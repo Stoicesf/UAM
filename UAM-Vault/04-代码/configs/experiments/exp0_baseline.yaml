@@ -1,0 +1,19 @@
+# Stage 0 / Exp1 — MAPPO Baseline (DO NOT MODIFY after validation)
+experiment:
+  id: exp0_baseline
+  stage: 0
+  name: "MAPPO Baseline"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: mappo
+
+guidance:
+  mode: none
+  use_guidance_reward: false
+
+output:
+  category: baseline
+  results_dir: results
+  figures_dir: figures

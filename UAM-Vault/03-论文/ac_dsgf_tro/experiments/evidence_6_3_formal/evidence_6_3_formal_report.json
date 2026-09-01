@@ -1,0 +1,208 @@
+{
+  "protocol": "formal_6_3",
+  "device": "cuda",
+  "G_star_definition": "full-support reference topology before budget projection",
+  "note": "Fig2=Delta_A_gamma (action discrepancy), not task Delta J. Consistent with Lemma1/2; not a proof.",
+  "seeds": [
+    1234,
+    2026,
+    3407,
+    42,
+    8888
+  ],
+  "K": [
+    1,
+    2,
+    4,
+    6
+  ],
+  "episodes_per_seed": 32,
+  "phaseAB_run": "f:\\UAM\\runs\\tro_evidence_6_3_formal_20260719_121020",
+  "phaseC_run": "f:\\UAM\\runs\\tro_evidence_6_3_formal_20260719_143833",
+  "phaseAB_agg": [
+    {
+      "K": 1,
+      "mean_D_G": 5.239697706024162,
+      "std_D_G": 0.1075693493305838,
+      "mean_epsilon_G": 3.830532141495496,
+      "std_epsilon_G": 1.5231417268546688,
+      "mean_delta_a": 0.20957938941519388,
+      "std_delta_a": 0.08450176253295807,
+      "mean_Delta_A_gamma": 9.840955573192419,
+      "std_Delta_A_gamma": 3.970785524123629,
+      "n_seeds": 5
+    },
+    {
+      "K": 2,
+      "mean_D_G": 3.8606070690555496,
+      "std_D_G": 0.11255700544186358,
+      "mean_epsilon_G": 1.9536630231086747,
+      "std_epsilon_G": 0.8664565041856983,
+      "mean_delta_a": 0.11734066966353111,
+      "std_delta_a": 0.05510289541010395,
+      "mean_Delta_A_gamma": 5.440137120192267,
+      "std_Delta_A_gamma": 2.537228881835562,
+      "n_seeds": 5
+    },
+    {
+      "K": 4,
+      "mean_D_G": 1.2490044209756888,
+      "std_D_G": 0.06730416638472596,
+      "mean_epsilon_G": 0.33804644167612424,
+      "std_epsilon_G": 0.15328342126071556,
+      "mean_delta_a": 0.021257649782097588,
+      "std_delta_a": 0.011150025043275499,
+      "mean_Delta_A_gamma": 0.9061524358984074,
+      "std_Delta_A_gamma": 0.4657300909646414,
+      "n_seeds": 5
+    },
+    {
+      "K": 6,
+      "mean_D_G": 0.09834253945155069,
+      "std_D_G": 0.02699719451690773,
+      "mean_epsilon_G": 0.022379854105747655,
+      "std_epsilon_G": 0.018694477775644536,
+      "mean_delta_a": 0.0011876788875554213,
+      "std_delta_a": 0.0010910189032339516,
+      "mean_Delta_A_gamma": 0.047341407340271854,
+      "std_Delta_A_gamma": 0.0426473087016927,
+      "n_seeds": 5
+    }
+  ],
+  "linear_fit_Lemma2": {
+    "fit_on_K_means": {
+      "alpha": 0.7204524657098568,
+      "beta": -0.3456037483344521,
+      "R2": 0.9423472553150211,
+      "n": 4
+    },
+    "fit_on_seed_K": {
+      "alpha": 0.7242268454471783,
+      "beta": -0.35546209958772396,
+      "R2": 0.7131519769275947,
+      "n": 20
+    }
+  },
+  "phaseC_agg": [
+    {
+      "mode": "full_support_ref",
+      "K": "",
+      "fraction": 1.0,
+      "reward_mean": 6.098309911356774,
+      "reward_std": 0.45357628197793914,
+      "success_mean": 0.127734375,
+      "success_std": 0.01784091757292068,
+      "comm_cost_mean": 42.71015625,
+      "comm_cost_std": 1.2435694884612745,
+      "n_seeds": 5
+    },
+    {
+      "mode": "fixed_k",
+      "K": "1",
+      "fraction": 0.3560627748044222,
+      "reward_mean": 6.352092669904232,
+      "reward_std": 0.3428317553691031,
+      "success_mean": 0.127734375,
+      "success_std": 0.01535906504010742,
+      "comm_cost_mean": 15.19599609375,
+      "comm_cost_std": 0.10739195250866355,
+      "n_seeds": 5
+    },
+    {
+      "mode": "fixed_k",
+      "K": "2",
+      "fraction": 0.6436024310998226,
+      "reward_mean": 6.1825537730124775,
+      "reward_std": 0.5197853823688896,
+      "success_mean": 0.126953125,
+      "success_std": 0.01777236432199582,
+      "comm_cost_mean": 27.46484375,
+      "comm_cost_std": 0.3439955787818145,
+      "n_seeds": 5
+    },
+    {
+      "mode": "fixed_k",
+      "K": "4",
+      "fraction": 0.9458317460430299,
+      "reward_mean": 6.284653455740772,
+      "reward_std": 0.3244263619613582,
+      "success_mean": 0.1265625,
+      "success_std": 0.02636067627937967,
+      "comm_cost_mean": 40.377734375,
+      "comm_cost_std": 1.3513523039788677,
+      "n_seeds": 5
+    },
+    {
+      "mode": "fixed_k",
+      "K": "6",
+      "fraction": 0.9972765121257232,
+      "reward_mean": 6.12600986470934,
+      "reward_std": 0.4380772421844565,
+      "success_mean": 0.130078125,
+      "success_std": 0.01959365031872571,
+      "comm_cost_mean": 42.5916015625,
+      "comm_cost_std": 1.407852907267729,
+      "n_seeds": 5
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": 0.1,
+      "reward_mean": 6.245975618576631,
+      "reward_std": 0.5036818576208084,
+      "success_mean": 0.12265625,
+      "success_std": 0.02568637847308374,
+      "comm_cost_mean": 15.1892578125,
+      "comm_cost_std": 0.13302724195002344,
+      "n_seeds": 5
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": 0.2,
+      "reward_mean": 6.2512398739112545,
+      "reward_std": 0.371043047094475,
+      "success_mean": 0.121875,
+      "success_std": 0.012389649630588832,
+      "comm_cost_mean": 15.69560546875,
+      "comm_cost_std": 0.2015291408168771,
+      "n_seeds": 5
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": 0.4,
+      "reward_mean": 6.237557078152895,
+      "reward_std": 0.47418905565333036,
+      "success_mean": 0.119140625,
+      "success_std": 0.009568319307746789,
+      "comm_cost_mean": 24.0740234375,
+      "comm_cost_std": 0.27151504014088257,
+      "n_seeds": 5
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": 0.6,
+      "reward_mean": 6.144913188554346,
+      "reward_std": 0.2636314613989518,
+      "success_mean": 0.13203125,
+      "success_std": 0.018512493142301228,
+      "comm_cost_mean": 32.69365234375,
+      "comm_cost_std": 1.080331224583262,
+      "n_seeds": 5
+    },
+    {
+      "mode": "ratio",
+      "K": "",
+      "fraction": 0.8,
+      "reward_mean": 6.197177884355187,
+      "reward_std": 0.5191064778871161,
+      "success_mean": 0.128515625,
+      "success_std": 0.02474849072102681,
+      "comm_cost_mean": 41.18251953125,
+      "comm_cost_std": 1.4863810072926564,
+      "n_seeds": 5
+    }
+  ]
+}

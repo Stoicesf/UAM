@@ -1,0 +1,11 @@
+{
+  "experiment_id": "comm_gat_r1",
+  "stage": 2,
+  "name": "GAT @ R=1 (16 UAV)",
+  "run_name": "smoke_gat_r1",
+  "seed": 42,
+  "started_at": "2026-07-13T20:20:45",
+  "config_path": "F:\\UAM\\configs\\communication\\generated\\smoke_gat_r1.yaml",
+  "guidance_mode": "gat",
+  "extra": {}
+}

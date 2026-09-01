@@ -1,0 +1,46 @@
+{
+  "all_pass": true,
+  "recoverability": true,
+  "cases": [
+    {
+      "case": 1,
+      "name": "full_equals_full",
+      "epsilon_G": 0.0,
+      "delta_a": 0.0,
+      "pass": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate2_case1_20260718_215244",
+      "state_id": "bfe5d096656b5ede"
+    },
+    {
+      "case": 2,
+      "name": "empty_graph",
+      "epsilon_G": 2.472431182861328,
+      "delta_a": 0.02874668873846531,
+      "pass": true,
+      "delta_a_positive": true,
+      "run_dir": "F:\\UAM\\runs\\tro_gate2_case2_20260718_215244",
+      "state_id": "621c1d196493f272"
+    },
+    {
+      "case": 3,
+      "name": "K_increase_epsilon_decrease",
+      "by_K": {
+        "2": {
+          "mean_epsilon_G": 3.747179627418518,
+          "mean_delta_a": 0.15698281954973936
+        },
+        "4": {
+          "mean_epsilon_G": 2.353218227624893,
+          "mean_delta_a": 0.11616694740951061
+        },
+        "8": {
+          "mean_epsilon_G": 1.2745724469423294,
+          "mean_delta_a": 0.0496663514059037
+        }
+      },
+      "pass": true,
+      "note": "sanity trend only; not Lemma 2 proof",
+      "run_dir": "F:\\UAM\\runs\\tro_gate2_case3_20260718_215244"
+    }
+  ]
+}

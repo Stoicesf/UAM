@@ -1,0 +1,11 @@
+{
+  "experiment_id": "gen_dsgf_obs4",
+  "stage": 4,
+  "name": "DSGF v2 Generalization Train obs=4",
+  "run_name": "dsgf_obs4",
+  "seed": 42,
+  "started_at": "2026-07-13T11:29:57",
+  "config_path": "F:\\UAM\\configs\\generalization\\methods\\dsgf_obs4.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

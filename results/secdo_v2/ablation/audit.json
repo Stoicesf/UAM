@@ -1,0 +1,55 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "SECDOOptimizer.step: y \u2192 PI \u2192 \u03b1 \u2192 c_mix \u2192 \u03a0",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\optimizer\\secdo_optimizer.py"
+    },
+    {
+      "name": "fixed_alpha path (A3 / Cor4)",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\optimizer\\secdo_optimizer.py"
+    },
+    {
+      "name": "logs \u03b4, \u03c7, PI, \u03b1",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\baselines\\secdo_solver.py"
+    },
+    {
+      "name": "SECDO does not call _peek_c_next (no future leak)",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\baselines\\secdo_solver.py"
+    },
+    {
+      "name": "Oracle alone peeks c_{t+1}",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\baselines\\oracle.py"
+    },
+    {
+      "name": "Reactive path exists (A1)",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\baselines\\reactive.py"
+    },
+    {
+      "name": "A2 via SECDOSolver(fixed_alpha=0)",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\baselines\\secdo_solver.py"
+    },
+    {
+      "name": "constraint_loss (L_c) present",
+      "ok": true,
+      "note": "F:\\UAM\\secdo\\training\\losses.py"
+    },
+    {
+      "name": "sections/drafts: no forbidden absolute claims",
+      "ok": true,
+      "note": "ok"
+    },
+    {
+      "name": "runtime import PI/\u03b1/mix",
+      "ok": true,
+      "note": "secdo.optimizer.secdo_optimizer"
+    }
+  ]
+}

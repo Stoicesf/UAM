@@ -1,0 +1,28 @@
+# Paper-level Demo — MAPPO @ 4 UAV (for side-by-side comparison)
+experiment:
+  id: demo_mappo_4uav
+  stage: 0
+  name: "Demo MAPPO 4 UAV"
+
+train:
+  seed: 42
+  total_frames: 2048
+  frames_per_batch: 2048
+  algorithm: mappo
+  eval_episodes: 5
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 1
+  device: cpu
+  max_steps: 128
+  comm_radius: 0.5
+
+guidance:
+  mode: none
+  use_guidance_reward: false
+
+output:
+  category: demo
+  results_dir: demo

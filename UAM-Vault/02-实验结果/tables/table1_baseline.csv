@@ -1,0 +1,5 @@
+Method,Success,Collision,Reward,Episode,Communication_Cost
+MAPPO,0.0186,0.3137,-25.5661,128.0,0.0
+GAT,0.0128,0.2870,-26.0082,128.0,40.22
+Transformer,0.0041,0.3120,-37.7319,128.0,240.0
+DSGF,0.0347,0.3016,-22.5455,128.0,39.69

@@ -1,0 +1,40 @@
+{
+  "experiment_id": "ablation_c",
+  "stage": 1,
+  "name": "Ablation C: lambda=0.05 + warmup",
+  "run_name": "ablation_c_warmup",
+  "seed": 42,
+  "started_at": "2026-07-09T16:40:52",
+  "config_path": "F:\\UAM\\configs\\experiments\\ablation_c_warmup.yaml",
+  "guidance_mode": "mlp",
+  "extra": {},
+  "category": "guide",
+  "finished_at": "2026-07-09T16:42:06",
+  "num_iterations": 5,
+  "final_reward": -0.03344538062810898,
+  "max_reward": -0.0334,
+  "reward_curve": [
+    -0.617798388004303,
+    -0.7340156435966492,
+    -0.5418970584869385,
+    -1.870681881904602,
+    -0.03344538062810898
+  ],
+  "paper_metrics": {
+    "reward": -6.9883,
+    "success": 0.0254,
+    "collision": 0.1255,
+    "path_length": 42.6158,
+    "alignment": 0.8095,
+    "max_reward": -0.0334,
+    "num_iterations": 5
+  },
+  "reward": -6.9883,
+  "success": 0.0254,
+  "collision": 0.1255,
+  "path_length": 42.6158,
+  "alignment": 0.8095,
+  "max_guide_coef": 0.05,
+  "guidance_warmup": true,
+  "tag": null
+}

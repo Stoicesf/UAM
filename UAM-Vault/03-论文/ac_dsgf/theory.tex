@@ -1,0 +1,108 @@
+% =============================================================================
+% IV-E. Theoretical Analysis — density scaling, sparsity, residual, deployment
+% Careful wording: density O(K/N); do NOT claim overall complexity is strictly linear
+% =============================================================================
+
+\subsection{Theoretical Analysis}
+\label{sec:theory}
+
+We do not claim global optimality of the joint objective.
+We record structural properties that bind the method to the
+scalability and deployment experiments in Sec.~\ref{sec:scale-deploy}.
+
+\subsubsection{Adaptive Communication Optimization}
+\label{sec:theory-obj}
+
+With team return $\mathbb{E}[R]$ and soft activation mass $\mathbb{E}[C]$,
+\begin{equation}
+J(\theta)=\mathbb{E}[R]-\lambda\,\mathbb{E}[C],
+\qquad
+C=\sum_{i\neq j}g_{ij},
+\label{eq:J}
+\end{equation}
+matches Eq.~\eqref{eq:joint-max}.
+The decision variables include continuous gates $\{g_{ij}^{t}\}$ and the
+budgeted topology $A_t^{\mathrm{AC}}$, co-optimized with $\pi_\theta$.
+This differs from two-stage pruning:
+$\theta^\star=\arg\max\mathbb{E}[R]$ followed by a separate reduction of $C$.
+
+\subsubsection{Sparse Topology Complexity Bound}
+\label{sec:theory-sparse}
+
+\paragraph{Lemma~1 (Communication sparsification).}
+Under a per-agent Top-$K$ budget with average degree $K$, the
+\emph{attended} support has size $\mathcal{O}(NK)$ and message aggregation
+costs $\mathcal{O}(NKd+Nd)$ (Sec.~\ref{sec:complexity}).
+Relative to dense attention $\mathcal{O}(N^{2}d)$, the advantage widens when
+$K$ remains bounded as $N$ grows.
+Gate scoring on the radius-feasible set remains $\mathcal{O}(Nkd)$ and is
+shared in spirit with geometric graph methods; the claimed gain concerns
+\emph{activated} interaction density after gating/budgeting, not the elimination
+of all candidate-edge construction.
+
+\subsubsection{Communication Density Scaling}
+\label{sec:theory-density}
+
+\paragraph{Proposition~2 (Communication density scaling).}
+\label{prop:density}
+Define the normalized communication density
+\begin{equation}
+\eta_N
+=
+\frac{\sum_{i,j}g_{ij}}{N(N-1)}
+=
+\frac{C_N}{N(N-1)}.
+\label{eq:eta}
+\end{equation}
+For a dense graph with $|E|=N(N-1)$ and $g_{ij}\equiv 1$,
+$\eta_{\mathrm{dense}}=\mathcal{O}(1)$.
+Under bounded effective activation degree $K\ll N$,
+$C_N=\sum g_{ij}=\mathcal{O}(NK)$, hence
+\begin{equation}
+\eta_{\mathrm{AC}}
+=
+\mathcal{O}\!\left(\frac{K}{N}\right),
+\qquad
+\lim_{N\to\infty}\eta_{\mathrm{AC}}=0
+\quad\text{($K$ bounded)}.
+\label{eq:eta-limit}
+\end{equation}
+\begin{quote}
+Under bounded neighborhood size $K$, the activated communication density
+decreases inversely with swarm size.
+\end{quote}
+This theoretical trend is empirically verified in Fig.~\ref{fig:density-scale}
+($N\in\{8,16,32\}$), where AC-DSGF maintains a near-constant sparse
+activation density while DSGF exhibits substantially higher $\eta_N$.
+
+\subsubsection{Residual Stability}
+\label{sec:theory-residual}
+
+\paragraph{Lemma~2 (Residual stability).}
+If $\|\Delta(\Phi_i^{t})\|\le M$, then from Eq.~\eqref{eq:residual},
+\begin{equation}
+\bigl\|a_i^{t}-\pi_{\theta}(\cdot\mid o_i^{t})\bigr\|
+\;\le\;
+\beta(t)\,M.
+\label{eq:residual-bound}
+\end{equation}
+As $\beta(t)\!\to\!0$, $a_i^{t}\!\to\!\pi_{\theta}(\cdot\mid o_i^{t})$.
+Budgeted topology control cannot erase the base controller, explaining
+graceful degradation under tight budgets (Sec.~\ref{sec:budget-res}).
+
+\subsubsection{Deployment Approximation}
+\label{sec:theory-deploy}
+
+Training retains continuous $g_{ij}$ for differentiable exploration;
+deployment requires discrete transmit decisions.
+Per-agent Top-$K$ on the radius support,
+\begin{equation}
+A_{ij}^{\mathrm{deploy}}
+=
+\mathbf{1}\bigl[j\in\mathrm{Top}\text{-}K_i(g_{i\cdot})\bigr],
+\label{eq:deploy}
+\end{equation}
+is an engineering discretization of the learned soft topology---not a
+replacement of the training objective.
+Sec.~\ref{sec:topk-deploy} shows that discrete links preserve task
+effectiveness relative to soft inference.

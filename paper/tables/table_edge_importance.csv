@@ -1,0 +1,5 @@
+cohort,success,delta_success_pp,n_edges_removed
+baseline,0.2734,0.0,0
+drop_top_g,0.2396,3.39,24
+drop_bottom_g,0.2760,-0.26,24
+drop_random,0.3099,-3.65,24

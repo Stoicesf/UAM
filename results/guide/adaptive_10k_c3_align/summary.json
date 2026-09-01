@@ -1,0 +1,43 @@
+{
+  "experiment_id": "ablation_c3_align",
+  "stage": 1,
+  "name": "C3+: adaptive decay + alignment scaling",
+  "run_name": "adaptive_10k_c3_align",
+  "seed": 42,
+  "started_at": "2026-07-09T17:00:10",
+  "config_path": "F:\\UAM\\configs\\experiments\\ablation_c3_adaptive_align.yaml",
+  "guidance_mode": "mlp",
+  "extra": {},
+  "category": "guide",
+  "finished_at": "2026-07-09T17:01:27",
+  "num_iterations": 5,
+  "final_reward": -0.24987801909446716,
+  "max_reward": -0.2499,
+  "reward_curve": [
+    -0.617798388004303,
+    -0.7340156435966492,
+    -0.738277792930603,
+    -2.4285943508148193,
+    -0.24987801909446716
+  ],
+  "paper_metrics": {
+    "reward": -6.116,
+    "success": 0.0439,
+    "collision": 0.1348,
+    "path_length": 35.1718,
+    "alignment": 0.6951,
+    "max_reward": -0.2499,
+    "num_iterations": 5
+  },
+  "reward": -6.116,
+  "success": 0.0439,
+  "collision": 0.1348,
+  "path_length": 35.1718,
+  "alignment": 0.6951,
+  "max_guide_coef": 0.05,
+  "guidance_warmup": true,
+  "guidance_schedule": "adaptive_align",
+  "guidance_coef_min": 0.02,
+  "guidance_decay_k": 3.0,
+  "tag": null
+}

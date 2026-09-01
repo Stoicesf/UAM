@@ -1,0 +1,271 @@
+{
+  "rows": [
+    {
+      "method": "gat",
+      "seed": 42,
+      "success": 0.0128,
+      "comm": 40.224,
+      "cei": 0.00031821797140468453,
+      "collision": 0.287,
+      "reward": -26.0082,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "gat",
+      "seed": 3407,
+      "success": 0.0347,
+      "comm": 39.0882,
+      "cei": 0.0008877359180587514,
+      "collision": 0.302,
+      "reward": -22.9401,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "gat",
+      "seed": 2026,
+      "success": 0.0236,
+      "comm": 35.6727,
+      "cei": 0.0006615703139495942,
+      "collision": 0.2963,
+      "reward": -24.448,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "gat",
+      "seed": 1234,
+      "success": 0.0149,
+      "comm": 38.2861,
+      "cei": 0.00038917517351793024,
+      "collision": 0.3084,
+      "reward": -28.1124,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "gat",
+      "seed": 8888,
+      "success": 0.0158,
+      "comm": 40.7229,
+      "cei": 0.0003879880758003955,
+      "collision": 0.2841,
+      "reward": -27.3677,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "dsgf",
+      "seed": 42,
+      "success": 0.0347,
+      "comm": 39.6916,
+      "cei": 0.0008742403714075429,
+      "collision": 0.3016,
+      "reward": -22.5455,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "dsgf",
+      "seed": 3407,
+      "success": 0.0484,
+      "comm": 40.7872,
+      "cei": 0.001186646762056558,
+      "collision": 0.2996,
+      "reward": -20.4283,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "dsgf",
+      "seed": 2026,
+      "success": 0.0653,
+      "comm": 37.1966,
+      "cei": 0.0017555367491777006,
+      "collision": 0.2739,
+      "reward": -18.0401,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "dsgf",
+      "seed": 1234,
+      "success": 0.0275,
+      "comm": 37.3531,
+      "cei": 0.0007362173223583231,
+      "collision": 0.3497,
+      "reward": -28.2616,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "dsgf",
+      "seed": 8888,
+      "success": 0.0247,
+      "comm": 41.341,
+      "cei": 0.0005974698096932873,
+      "collision": 0.3488,
+      "reward": -26.8187,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "ac_dsgf",
+      "seed": 42,
+      "success": 0.0449,
+      "comm": 0.579,
+      "cei": 0.07754736174894344,
+      "collision": 0.3001,
+      "reward": -20.9386,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "ac_dsgf",
+      "seed": 3407,
+      "success": 0.0384,
+      "comm": 0.3831,
+      "cei": 0.10023466396589933,
+      "collision": 0.305,
+      "reward": -22.2827,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "ac_dsgf",
+      "seed": 2026,
+      "success": 0.0466,
+      "comm": 0.4702,
+      "cei": 0.09910655230422735,
+      "collision": 0.2912,
+      "reward": -21.4005,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "ac_dsgf",
+      "seed": 1234,
+      "success": 0.0257,
+      "comm": 0.3719,
+      "cei": 0.06910441219571876,
+      "collision": 0.326,
+      "reward": -26.1114,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "ac_dsgf",
+      "seed": 8888,
+      "success": 0.042,
+      "comm": 0.3594,
+      "cei": 0.11686111057008747,
+      "collision": 0.3191,
+      "reward": -23.4096,
+      "utility_corr": null,
+      "comm_precision": null
+    },
+    {
+      "method": "ac_dsgf_pp",
+      "seed": 42,
+      "success": 0.0419921875,
+      "comm": 0.7082695108838379,
+      "cei": 0.05928834654939778,
+      "collision": 0.50390625,
+      "reward": -23.918042191275163,
+      "utility_corr": 0.5109716000000001,
+      "comm_precision": 0.0
+    },
+    {
+      "method": "ac_dsgf_pp",
+      "seed": 3407,
+      "success": 0.0241,
+      "comm": 2.8442,
+      "cei": 0.00847338145229539,
+      "collision": 0.3287,
+      "reward": -26.0276,
+      "utility_corr": 0.2294188,
+      "comm_precision": 0.0
+    },
+    {
+      "method": "ac_dsgf_pp",
+      "seed": 2026,
+      "success": 0.0326,
+      "comm": 3.2465,
+      "cei": 0.010041580150445047,
+      "collision": 0.328,
+      "reward": -23.8649,
+      "utility_corr": 0.3340396,
+      "comm_precision": 0.0
+    },
+    {
+      "method": "ac_dsgf_pp",
+      "seed": 1234,
+      "success": 0.0272,
+      "comm": 2.8452,
+      "cei": 0.009559957275426233,
+      "collision": 0.3477,
+      "reward": -29.1094,
+      "utility_corr": 0.5072932,
+      "comm_precision": 0.0
+    },
+    {
+      "method": "ac_dsgf_pp",
+      "seed": 8888,
+      "success": 0.043,
+      "comm": 3.1742,
+      "cei": 0.013546716165737455,
+      "collision": 0.3066,
+      "reward": -21.6938,
+      "utility_corr": 0.1338604,
+      "comm_precision": 0.0
+    }
+  ],
+  "summary": [
+    {
+      "method": "gat",
+      "n_seeds": 5,
+      "success_mean": 0.02036,
+      "success_std": 0.008998499874979164,
+      "comm_mean": 38.79878,
+      "comm_std": 1.9907580659135862,
+      "cei_mean": 0.0005289374905462712,
+      "cei_std": 0.00023985971731147482
+    },
+    {
+      "method": "dsgf",
+      "n_seeds": 5,
+      "success_mean": 0.04012,
+      "success_std": 0.01680035713906106,
+      "comm_mean": 39.273900000000005,
+      "comm_std": 1.9197721557518241,
+      "cei_mean": 0.0010300222029386821,
+      "cei_std": 0.0004605956657182175
+    },
+    {
+      "method": "ac_dsgf",
+      "n_seeds": 5,
+      "success_mean": 0.039520000000000007,
+      "success_std": 0.00832868537045313,
+      "comm_mean": 0.43271999999999994,
+      "comm_std": 0.09265477321757362,
+      "cei_mean": 0.09257082015697528,
+      "cei_std": 0.019156233385790665
+    },
+    {
+      "method": "ac_dsgf_pp",
+      "n_seeds": 5,
+      "success_mean": 0.0337784375,
+      "success_std": 0.008527010193029632,
+      "comm_mean": 2.5636739021767676,
+      "comm_std": 1.0535025968805627,
+      "cei_mean": 0.020181996318660377,
+      "cei_std": 0.021943569597186807,
+      "utility_corr_mean": 0.34311672,
+      "utility_corr_std": 0.16727746105256383,
+      "comm_precision_mean": 0.0,
+      "comm_precision_std": 0.0
+    }
+  ],
+  "case": "C"
+}

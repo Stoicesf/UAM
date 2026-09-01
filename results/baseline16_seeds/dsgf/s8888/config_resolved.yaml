@@ -1,0 +1,59 @@
+experiment:
+  id: baseline16_dsgf_v2
+  stage: 4
+  name: DSGF v2 16 UAV
+train:
+  seed: 8888
+  algorithm: guided_mappo
+  total_frames: 102400
+  frames_per_batch: 2048
+  num_epochs: 5
+  minibatch_size: 512
+  learning_rate: 0.0003
+  max_grad_norm: 0.5
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  entropy_coef: 0.01
+  critic_coef: 1.0
+  hidden_dim: 128
+  share_params_policy: true
+  share_params_critic: true
+  use_guidance: false
+  use_guidance_reward: false
+  log_dir: logs
+  checkpoint_dir: checkpoints
+  save_interval: 10000
+  log_interval: 1
+  eval_episodes: 200
+  lock_total_frames: true
+  lock_eval_episodes: true
+env:
+  scenario: navigation
+  num_envs: 8
+  num_agents: 16
+  device: cuda
+  continuous_actions: true
+  max_steps: 128
+  comm_radius: 0.5
+  obs_dim: 18
+  action_dim: 2
+  guidance_dim: 4
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_dynamic_quality: true
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+output:
+  category: baseline16
+  results_dir: results

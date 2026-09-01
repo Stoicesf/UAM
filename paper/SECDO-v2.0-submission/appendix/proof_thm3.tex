@@ -1,0 +1,10 @@
+\section{Proof of Theorem~\ref{thm:3}}
+\label{app:thm3}
+
+For reactive $x_{t+1}^{R}=\Pi_{\mathcal{B}_t}(y_t)$,
+$\mathrm{dist}(x_{t+1}^{R},\mathcal{B}_{t+1})\le d_H(\mathcal{B}_t,\mathcal{B}_{t+1})=\chi_t$,
+so $V_R(t)\le\chi_t$.
+For anticipatory $x_{t+1}^{A}=\Pi_{\hat{\mathcal{B}}_{t+1}}(y_t)\in\hat{\mathcal{B}}_{t+1}$,
+$\mathrm{dist}(x_{t+1}^{A},\mathcal{B}_{t+1})\le\delta_t$, so $V_A(t)\le\delta_t$.
+If $\delta_t<\chi_t$, the anticipatory \emph{feasibility} upper-bound certificate is strictly tighter.
+This compares constraint-violation certificates, not objective superiority, and not pathwise distances on every sample.

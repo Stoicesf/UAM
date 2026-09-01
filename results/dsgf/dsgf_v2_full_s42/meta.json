@@ -1,0 +1,11 @@
+{
+  "experiment_id": "exp4_dsfg_v2",
+  "stage": 4,
+  "name": "DSGF v2 FROZEN",
+  "run_name": "dsgf_v2_full_s42",
+  "seed": 42,
+  "started_at": "2026-07-10T12:34:14",
+  "config_path": "F:\\UAM\\configs\\dsgf\\dsgf_v2_frozen.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

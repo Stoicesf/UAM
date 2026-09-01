@@ -1,0 +1,63 @@
+% SECDO-v2.0-submission (Submission Freeze)
+% Track: paper/ac_dsgf_v2 — do NOT edit paper/ac_dsgf_tro/
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[hidelinks]{hyperref}
+% IEEEtran + hyperref may already define \theHalgorithm
+\providecommand{\theHalgorithm}{\arabic{algorithm}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\title{Self-Evolving Constrained Distributed Optimization:\\
+Predictive Constraint Evolution under Dynamic Feasible Regions}
+\author{
+  % Authors omitted in working draft
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We propose SECDO, a predictive optimization framework for evolving constraints.
+SECDO (i)~learns future constraint dynamics, (ii)~performs predictability-conditioned anticipatory / mixed projection,
+and (iii)~provides a dynamic regret upper bound with graceful degradation under prediction failures.
+Rather than claiming universal superiority, SECDO exhibits a favorable optimality--safety trade-off
+under evaluated dynamic-constraint scenarios and remains robust when forecasts become unreliable.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Online optimization, dynamic constraints, anticipatory projection, dynamic regret,
+learning-augmented optimization, UAV networks
+\end{IEEEkeywords}
+
+\input{sections/intro}
+\input{sections/problem}
+\input{sections/theory}
+\input{sections/algorithm}
+\input{sections/experiments}
+\input{sections/conclusion}
+
+\appendices
+\input{appendix/proof_thm1}
+\input{appendix/proof_surrogate}
+\input{appendix/proof_lemma2}
+\input{appendix/proof_thm2}
+\input{appendix/proof_thm3}
+\input{appendix/proof_cor4}
+\input{appendix/additional_exp}
+\input{appendix/complexity}
+\input{appendix/implementation}
+
+\bibliographystyle{IEEEtran}
+% \bibliography{refs}
+
+\end{document}

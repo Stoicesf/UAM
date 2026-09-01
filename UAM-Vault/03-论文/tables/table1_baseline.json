@@ -1,0 +1,50 @@
+[
+  {
+    "method": "mappo",
+    "reward": -25.5661,
+    "success": 0.0186,
+    "collision": 0.3137,
+    "path_length": 73.1353,
+    "episode_length": 128.0,
+    "alignment": 0.0,
+    "communication_cost": 0.0,
+    "max_reward": 9.7551,
+    "num_iterations": 50
+  },
+  {
+    "method": "gat",
+    "reward": -26.0082,
+    "success": 0.0128,
+    "collision": 0.287,
+    "path_length": 69.6259,
+    "episode_length": 128.0,
+    "alignment": 0.5996,
+    "communication_cost": 40.224,
+    "max_reward": 7.7832,
+    "num_iterations": 50
+  },
+  {
+    "method": "transformer",
+    "reward": -37.7319,
+    "success": 0.0041,
+    "collision": 0.312,
+    "path_length": 86.1846,
+    "episode_length": 128.0,
+    "alignment": 0.468,
+    "communication_cost": 240.0,
+    "max_reward": 9.4964,
+    "num_iterations": 50
+  },
+  {
+    "method": "dsgf",
+    "reward": -22.5455,
+    "success": 0.0347,
+    "collision": 0.3016,
+    "path_length": 62.2609,
+    "episode_length": 128.0,
+    "alignment": -0.3755,
+    "communication_cost": 39.6916,
+    "max_reward": 8.6171,
+    "num_iterations": 50
+  }
+]

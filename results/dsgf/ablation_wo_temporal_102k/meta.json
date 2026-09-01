@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ablation_wo_temporal",
+  "stage": 4,
+  "name": "DSGF v2 w/o Temporal",
+  "run_name": "ablation_wo_temporal_102k",
+  "seed": 42,
+  "started_at": "2026-07-10T13:19:35",
+  "config_path": "F:\\UAM\\configs\\dsgf\\ablation_wo_temporal.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

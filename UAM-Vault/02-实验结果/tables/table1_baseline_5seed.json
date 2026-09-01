@@ -1,0 +1,402 @@
+{
+  "methods": [
+    {
+      "method": "mappo",
+      "n_seeds": 5,
+      "seeds": [
+        42,
+        3407,
+        2026,
+        1234,
+        8888
+      ],
+      "success": {
+        "mean": 0.024,
+        "std": 0.009,
+        "ci95_lo": 0.0161,
+        "ci95_hi": 0.0319
+      },
+      "collision": {
+        "mean": 0.3231,
+        "std": 0.0189,
+        "ci95_lo": 0.3065,
+        "ci95_hi": 0.3397
+      },
+      "reward": {
+        "mean": -26.2838,
+        "std": 3.2363,
+        "ci95_lo": -29.1206,
+        "ci95_hi": -23.4471
+      },
+      "aulc": {
+        "mean": 4.9995,
+        "std": 0.2206,
+        "ci95_lo": 4.8061,
+        "ci95_hi": 5.1928
+      },
+      "per_seed": [
+        {
+          "seed": 42,
+          "reward": -25.5661,
+          "success": 0.0186,
+          "collision": 0.3137,
+          "path_length": 73.1353,
+          "episode_length": 128.0,
+          "alignment": 0.0,
+          "communication_cost": 0.0,
+          "max_reward": 9.7551,
+          "num_iterations": 50
+        },
+        {
+          "seed": 3407,
+          "reward": -22.6538,
+          "success": 0.0384,
+          "collision": 0.3132,
+          "path_length": 61.1882,
+          "episode_length": 128.0,
+          "alignment": 0.0,
+          "communication_cost": 0.0,
+          "max_reward": 8.4663,
+          "num_iterations": 50
+        },
+        {
+          "seed": 2026,
+          "reward": -25.6722,
+          "success": 0.0271,
+          "collision": 0.3175,
+          "path_length": 68.371,
+          "episode_length": 128.0,
+          "alignment": 0.0,
+          "communication_cost": 0.0,
+          "max_reward": 9.0932,
+          "num_iterations": 50
+        },
+        {
+          "seed": 1234,
+          "reward": -31.5502,
+          "success": 0.0161,
+          "collision": 0.3568,
+          "path_length": 79.5838,
+          "episode_length": 128.0,
+          "alignment": 0.0,
+          "communication_cost": 0.0,
+          "max_reward": 9.2935,
+          "num_iterations": 50
+        },
+        {
+          "seed": 8888,
+          "reward": -25.9769,
+          "success": 0.0199,
+          "collision": 0.3141,
+          "path_length": 72.9422,
+          "episode_length": 128.0,
+          "alignment": 0.0,
+          "communication_cost": 0.0,
+          "max_reward": 9.239,
+          "num_iterations": 50
+        }
+      ]
+    },
+    {
+      "method": "gat",
+      "n_seeds": 5,
+      "seeds": [
+        42,
+        3407,
+        2026,
+        1234,
+        8888
+      ],
+      "success": {
+        "mean": 0.0204,
+        "std": 0.009,
+        "ci95_lo": 0.0125,
+        "ci95_hi": 0.0282
+      },
+      "collision": {
+        "mean": 0.2956,
+        "std": 0.0101,
+        "ci95_lo": 0.2867,
+        "ci95_hi": 0.3045
+      },
+      "reward": {
+        "mean": -25.7753,
+        "std": 2.1126,
+        "ci95_lo": -27.627,
+        "ci95_hi": -23.9235
+      },
+      "aulc": {
+        "mean": 4.4421,
+        "std": 0.2935,
+        "ci95_lo": 4.1848,
+        "ci95_hi": 4.6994
+      },
+      "per_seed": [
+        {
+          "seed": 42,
+          "reward": -26.0082,
+          "success": 0.0128,
+          "collision": 0.287,
+          "path_length": 69.6259,
+          "episode_length": 128.0,
+          "alignment": 0.5996,
+          "communication_cost": 40.224,
+          "max_reward": 7.7832,
+          "num_iterations": 50
+        },
+        {
+          "seed": 3407,
+          "reward": -22.9401,
+          "success": 0.0347,
+          "collision": 0.302,
+          "path_length": 62.0949,
+          "episode_length": 128.0,
+          "alignment": -0.0544,
+          "communication_cost": 39.0882,
+          "max_reward": 7.567,
+          "num_iterations": 50
+        },
+        {
+          "seed": 2026,
+          "reward": -24.448,
+          "success": 0.0236,
+          "collision": 0.2963,
+          "path_length": 68.4457,
+          "episode_length": 128.0,
+          "alignment": -0.397,
+          "communication_cost": 35.6727,
+          "max_reward": 8.4523,
+          "num_iterations": 50
+        },
+        {
+          "seed": 1234,
+          "reward": -28.1124,
+          "success": 0.0149,
+          "collision": 0.3084,
+          "path_length": 75.5494,
+          "episode_length": 128.0,
+          "alignment": 0.0931,
+          "communication_cost": 38.2861,
+          "max_reward": 8.9354,
+          "num_iterations": 50
+        },
+        {
+          "seed": 8888,
+          "reward": -27.3677,
+          "success": 0.0158,
+          "collision": 0.2841,
+          "path_length": 73.967,
+          "episode_length": 128.0,
+          "alignment": 0.0858,
+          "communication_cost": 40.7229,
+          "max_reward": 7.8752,
+          "num_iterations": 50
+        }
+      ]
+    },
+    {
+      "method": "transformer",
+      "n_seeds": 5,
+      "seeds": [
+        42,
+        3407,
+        2026,
+        1234,
+        8888
+      ],
+      "success": {
+        "mean": 0.007,
+        "std": 0.0016,
+        "ci95_lo": 0.0056,
+        "ci95_hi": 0.0085
+      },
+      "collision": {
+        "mean": 0.3076,
+        "std": 0.0302,
+        "ci95_lo": 0.2812,
+        "ci95_hi": 0.3341
+      },
+      "reward": {
+        "mean": -36.1533,
+        "std": 2.6393,
+        "ci95_lo": -38.4667,
+        "ci95_hi": -33.8399
+      },
+      "aulc": {
+        "mean": 4.7599,
+        "std": 0.2866,
+        "ci95_lo": 4.5087,
+        "ci95_hi": 5.0111
+      },
+      "per_seed": [
+        {
+          "seed": 42,
+          "reward": -37.7319,
+          "success": 0.0041,
+          "collision": 0.312,
+          "path_length": 86.1846,
+          "episode_length": 128.0,
+          "alignment": 0.468,
+          "communication_cost": 240.0,
+          "max_reward": 9.4964,
+          "num_iterations": 50
+        },
+        {
+          "seed": 3407,
+          "reward": -34.9372,
+          "success": 0.0075,
+          "collision": 0.2832,
+          "path_length": 75.6476,
+          "episode_length": 128.0,
+          "alignment": 0.5423,
+          "communication_cost": 240.0,
+          "max_reward": 8.146,
+          "num_iterations": 50
+        },
+        {
+          "seed": 2026,
+          "reward": -34.5949,
+          "success": 0.0076,
+          "collision": 0.303,
+          "path_length": 75.5363,
+          "episode_length": 128.0,
+          "alignment": 0.5219,
+          "communication_cost": 240.0,
+          "max_reward": 9.0239,
+          "num_iterations": 50
+        },
+        {
+          "seed": 1234,
+          "reward": -39.9722,
+          "success": 0.0079,
+          "collision": 0.3567,
+          "path_length": 80.2081,
+          "episode_length": 128.0,
+          "alignment": -0.4607,
+          "communication_cost": 240.0,
+          "max_reward": 8.2418,
+          "num_iterations": 50
+        },
+        {
+          "seed": 8888,
+          "reward": -33.5304,
+          "success": 0.008,
+          "collision": 0.2833,
+          "path_length": 86.3099,
+          "episode_length": 128.0,
+          "alignment": -0.2039,
+          "communication_cost": 240.0,
+          "max_reward": 9.889,
+          "num_iterations": 50
+        }
+      ]
+    },
+    {
+      "method": "dsgf",
+      "n_seeds": 5,
+      "seeds": [
+        42,
+        3407,
+        2026,
+        1234,
+        8888
+      ],
+      "success": {
+        "mean": 0.0401,
+        "std": 0.0168,
+        "ci95_lo": 0.0254,
+        "ci95_hi": 0.0548
+      },
+      "collision": {
+        "mean": 0.3147,
+        "std": 0.0334,
+        "ci95_lo": 0.2855,
+        "ci95_hi": 0.344
+      },
+      "reward": {
+        "mean": -23.2188,
+        "std": 4.2851,
+        "ci95_lo": -26.9749,
+        "ci95_hi": -19.4628
+      },
+      "aulc": {
+        "mean": 4.0307,
+        "std": 0.9969,
+        "ci95_lo": 3.1568,
+        "ci95_hi": 4.9046
+      },
+      "per_seed": [
+        {
+          "seed": 42,
+          "reward": -22.5455,
+          "success": 0.0347,
+          "collision": 0.3016,
+          "path_length": 62.2609,
+          "episode_length": 128.0,
+          "alignment": -0.3755,
+          "communication_cost": 39.6916,
+          "max_reward": 8.6171,
+          "num_iterations": 50
+        },
+        {
+          "seed": 3407,
+          "reward": -20.4283,
+          "success": 0.0484,
+          "collision": 0.2996,
+          "path_length": 56.3004,
+          "episode_length": 128.0,
+          "alignment": 0.0548,
+          "communication_cost": 40.7872,
+          "max_reward": 8.1301,
+          "num_iterations": 50
+        },
+        {
+          "seed": 2026,
+          "reward": -18.0401,
+          "success": 0.0653,
+          "collision": 0.2739,
+          "path_length": 51.3325,
+          "episode_length": 128.0,
+          "alignment": 0.1178,
+          "communication_cost": 37.1966,
+          "max_reward": 8.7561,
+          "num_iterations": 50
+        },
+        {
+          "seed": 1234,
+          "reward": -28.2616,
+          "success": 0.0275,
+          "collision": 0.3497,
+          "path_length": 70.4303,
+          "episode_length": 128.0,
+          "alignment": -0.219,
+          "communication_cost": 37.3531,
+          "max_reward": 8.357,
+          "num_iterations": 50
+        },
+        {
+          "seed": 8888,
+          "reward": -26.8187,
+          "success": 0.0247,
+          "collision": 0.3488,
+          "path_length": 68.808,
+          "episode_length": 128.0,
+          "alignment": 0.1998,
+          "communication_cost": 41.341,
+          "max_reward": 8.9335,
+          "num_iterations": 50
+        }
+      ]
+    }
+  ],
+  "significance": {
+    "dsgf_vs_mappo_ttest": {
+      "t_stat": 1.8880153043296735,
+      "p_value": 0.10692550946484518
+    },
+    "dsgf_vs_mappo_wilcoxon_paired": {
+      "statistic": 0.0,
+      "p_value": 0.0625
+    }
+  }
+}

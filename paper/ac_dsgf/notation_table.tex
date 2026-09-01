@@ -1,0 +1,33 @@
+% Notation table — include after Problem Formulation or at start of Method
+\section*{Notation}
+\label{sec:notation}
+\begin{table}[h]
+\centering
+\caption{Summary of key symbols.
+Soft gates $g_{ij}^{t}\!\in\![0,1]$ are continuous (probability-like intensities),
+not hard binary edges; binary decisions appear only after Top-$K$ when a hard
+budget is enforced.}
+\label{tab:notation}
+\begin{tabular}{cl}
+\toprule
+Symbol & Meaning \\
+\midrule
+$N$ & Number of UAVs (agents) \\
+$o_i^{t}$ & Local observation of agent $i$ at time $t$ \\
+$h_i^{t}$ & Latent embedding of $o_i^{t}$ \\
+$A^{t}$ / $A_{ij}^{t}$ & Feasible radius topology (binary mask) \\
+$q_{ij}^{t}$ & Communication quality score \\
+$g_{ij}^{t}$ & \textbf{Soft} communication gate in $[0,1]$ (not binary) \\
+$K$ / $K_i$ & (Per-agent) communication budget / Top-$K$ width \\
+$A_t^{\mathrm{AC}}$ & Budgeted adjacency $A^{t}\odot E_t^{K}$ \\
+$e_{ij}^{t}$ & Effective edge weight for attention \\
+$G_t=(V,E_t)$ & Communication graph at time $t$ \\
+$\alpha_{ij}^{t}$ & Attention weight on edge $(i,j)$ \\
+$C_t$ / $C$ & Instantaneous / time-averaged soft communication cost \\
+$\lambda_c$ & Communication cost weight in the joint objective \\
+$\Phi_i^{t}$ & Residual guidance feature \\
+$\beta(t)$ & Residual mixing schedule \\
+$a_i^{t}$ & Action: $\pi(o_i)+\beta\Delta(\Phi_i)$ \\
+\bottomrule
+\end{tabular}
+\end{table}

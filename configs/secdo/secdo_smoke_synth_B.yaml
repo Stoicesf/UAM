@@ -1,0 +1,22 @@
+# SECDO smoke — synthetic drifting bandwidth (Phase 1b gate)
+
+# Validates S1–S3 in phase1a_formal_spec.md (not paper metrics).
+experiment:
+  id: secdo_smoke_synth_B
+  name: "SECDO smoke: learn c_{t+1} + anticipatory vs reactive"
+
+smoke:
+  T: 64
+  batch: 32
+  dim_x: 8
+  feat_dim: 6
+  latent_dim: 16
+  steps: 200
+  lr: 0.001
+  drift: 0.15          # bandwidth random-walk scale
+  seed: 0
+
+model:
+  c_dim: 1
+  feasible_kind: sum_budget
+  horizon_k: 1

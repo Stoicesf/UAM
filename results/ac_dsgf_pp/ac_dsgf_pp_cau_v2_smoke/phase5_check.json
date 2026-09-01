@@ -1,0 +1,19 @@
+{
+  "passed": false,
+  "criteria": "v2d",
+  "metrics": {
+    "success": 0.0596,
+    "comm": 0.8311286666666667,
+    "utility_mean": 0.4939036666666667,
+    "gate_mass_early": 0.8955890000000001,
+    "gate_mass_late": 0.8311286666666667,
+    "utility_corr": -0.087122
+  },
+  "checks": {
+    "utility_in_band": false,
+    "gate_not_zero": true,
+    "corr_u_ustar": false,
+    "comm_in_band": false,
+    "success_floor": false
+  }
+}

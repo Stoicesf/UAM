@@ -1,0 +1,64 @@
+{
+  "method": "gat",
+  "checkpoint": "results\\graph\\gat_a_lambda003\\checkpoints\\checkpoint_20k.pt",
+  "seed": 42,
+  "best_episode": 0,
+  "final_success": 0.5,
+  "mean_edges": 1.5503876209259033,
+  "steps": 129,
+  "comm_radius": 0.5,
+  "success_threshold": 0.3,
+  "history": [
+    {
+      "episode": 0,
+      "final_success": 0.5,
+      "mean_edges": 1.5503876209259033,
+      "steps": 129
+    },
+    {
+      "episode": 1,
+      "final_success": 0.5,
+      "mean_edges": 1.3488372564315796,
+      "steps": 129
+    },
+    {
+      "episode": 2,
+      "final_success": 0.0,
+      "mean_edges": 3.922480583190918,
+      "steps": 129
+    },
+    {
+      "episode": 3,
+      "final_success": 0.0,
+      "mean_edges": 1.4883720874786377,
+      "steps": 129
+    },
+    {
+      "episode": 4,
+      "final_success": 0.0,
+      "mean_edges": 0.3255814015865326,
+      "steps": 129
+    },
+    {
+      "episode": 5,
+      "final_success": 0.5,
+      "mean_edges": 1.8449612855911255,
+      "steps": 129
+    },
+    {
+      "episode": 6,
+      "final_success": 0.25,
+      "mean_edges": 3.612403154373169,
+      "steps": 129
+    },
+    {
+      "episode": 7,
+      "final_success": 0.0,
+      "mean_edges": 3.7829456329345703,
+      "steps": 129
+    }
+  ],
+  "trajectory": "F:\\UAM\\demo\\figures\\trajectory_gat.png",
+  "graph": "F:\\UAM\\demo\\figures\\graph_attention_gat.png",
+  "video": "F:\\UAM\\demo\\videos\\gat_4uav.mp4"
+}

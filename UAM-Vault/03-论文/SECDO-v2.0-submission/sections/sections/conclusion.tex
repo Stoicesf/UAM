@@ -1,0 +1,11 @@
+\section{Conclusion}
+\label{sec:concl}
+
+SECDO is a predictive constraint-evolution framework for dynamic feasible optimization:
+it learns $\hat{\mathcal{B}}_{t+1}$, applies predictability-conditioned mixed projection, and admits a dynamic regret guarantee with graceful degradation under prediction failure.
+Theory (Theorems~\ref{thm:1}--\ref{thm:3}, Corollary~\ref{cor:4}), Algorithm~\ref{alg:secdo}, and experiments form a single chain---constraint evolution, anticipatory / mixed projection, adaptive robustness, and regret analysis---rather than a stack of unrelated heuristics.
+
+\paragraph{Limitations.}
+SECDO currently assumes that evolving feasible regions admit bounded projection sensitivity and focuses on online optimization with predictable constraint evolution under polyhedral (scalar-budget) geometry.
+Extending the framework to highly nonconvex feasible manifolds, stronger partial observability, and fully coupled classical topology solvers remains an interesting direction.
+UAV baselines for DSGF/AC-DSGF are evaluated as myopic adapters under a shared capacity teacher and should not be read as exhaustive reproductions of every historical variant.

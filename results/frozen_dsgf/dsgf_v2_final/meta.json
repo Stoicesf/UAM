@@ -1,0 +1,11 @@
+{
+  "experiment_id": "exp4_dsfg_v2",
+  "stage": 4,
+  "name": "DSGF v2: Residual Guidance 102k",
+  "run_name": "dsfg_v2_102k",
+  "seed": 42,
+  "started_at": "2026-07-10T12:17:59",
+  "config_path": "configs/experiments/exp4_dsfg_v2_102k.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

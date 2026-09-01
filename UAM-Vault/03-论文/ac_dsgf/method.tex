@@ -1,0 +1,229 @@
+% =============================================================================
+% IV. Method — topology learning (not post-hoc pruning)
+% Structure: A Formulation → B Gate → C Budget → D Residual → E Theory
+% =============================================================================
+
+\section{Method: AC-DSGF}
+\label{sec:method}
+
+We propose \emph{Adaptive Communication-Constrained Dynamic Sparse Graph Fusion}
+(AC-DSGF), a communication-aware graph coordination framework that treats
+interaction topology as a \textbf{learnable decision variable}.
+Unlike post-hoc message pruning, AC-DSGF jointly learns the control policy and
+a task-dependent sparse communication structure under an explicit soft
+activation cost.
+Fig.~\ref{fig:framework} shows three layers:
+(i)~observation embedding,
+(ii)~adaptive topology learning (gate + budget),
+(iii)~residual-guided coordination.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.98\linewidth]{figures/framework.png}
+  \caption{Framework of AC-DSGF: adaptive topology learning (gate + budget)
+  defines the interaction graph consumed by residual DSGF guidance, rather
+  than post-hoc pruning of a fixed graph.}
+  \label{fig:framework}
+\end{figure}
+
+\subsection{Problem Formulation}
+\label{sec:joint}
+
+Let $r_t=\sum_i r_i^{t}$ denote the team reward at time $t$ and
+\begin{equation}
+C_t
+=
+\sum_{i\neq j}
+g_{ij}^{t}
+\label{eq:Ct}
+\end{equation}
+the Soft Communication Activation Mass (soft intensity proxy; not a physical
+packet count).
+AC-DSGF optimizes
+\begin{equation}
+\max_{\theta}
+\;
+\mathbb{E}\!\Biggl[
+\sum_{t=0}^{H}
+r_t
+\Biggr]
+-
+\lambda_c\,
+\mathbb{E}\!\Biggl[
+\sum_{t=0}^{H}
+C_t
+\Biggr],
+\label{eq:joint-max}
+\end{equation}
+i.e., topology intensity is optimized \emph{together with} policy learning.
+This differs from training a dense communicator and then pruning messages at
+deployment time.
+
+\subsection{Adaptive Communication Topology Learning}
+\label{sec:ac-graph}
+
+\paragraph{Feasible mask and quality.}
+The radius mask $A_{ij}^{t}=\mathbb{1}[\|p_i^{t}-p_j^{t}\|<R_c]$ and quality
+$q_{ij}^{t}\in(0,1)$ restrict candidate edges to the geometric support.
+
+\paragraph{Gate (learned selectivity).}
+Let $h_i^{t}=\psi(o_i^{t})$ and $d_{ij}^{t}$ the pairwise distance.
+The communication gate is
+\begin{equation}
+g_{ij}^{t}
+=
+\sigma\!\Bigl(
+W_g
+\bigl[
+h_i^{t};\,
+h_j^{t};\,
+d_{ij}^{t};\,
+q_{ij}^{t}
+\bigr]
+\Bigr)
+\cdot
+A_{ij}^{t}
+\in[0,1],
+\label{eq:gate}
+\end{equation}
+where $W_g$ denotes a lightweight MLP.
+Task conditioning enters primarily through node embeddings $h_i$ (goal and
+state information); unlike random dropout, $g_{ij}^{t}$ is a learned function
+of agent states on the radius support
+(Sec.~\ref{sec:trigger}, Sec.~\ref{sec:gate-dist}).
+
+\paragraph{Difference from pruning.}
+Post-hoc pruning removes links after (or independently of) policy learning.
+AC-DSGF changes the \emph{information topology} inside the forward pass:
+setting $g{=}A$ (``no-budget'') restores near-full local broadcast and
+inflates Soft Comm.\ Mass by over three orders of magnitude with only a small
+Success change (Sec.~\ref{sec:silence}).
+Hence AC-DSGF performs \textbf{topology optimization}, not merely message
+pruning.
+
+\subsection{Communication Budget Optimization}
+\label{sec:budget}
+
+Given budget ratio $\rho\in(0,1]$,
+\begin{equation}
+K_i=\lceil\rho\,|\mathcal{N}_i|\rceil,
+\qquad
+E_t^{K}
+=
+\mathrm{TopK}_{K_i}\!\bigl(\{g_{ij}^{t}\}_{j\in\mathcal{N}_i}\bigr),
+\label{eq:topk}
+\end{equation}
+and the adaptive communication adjacency
+\begin{equation}
+A_t^{\mathrm{AC}}
+=
+A^{t}
+\odot
+E_t^{K},
+\qquad
+e_{ij}^{t}
+=
+A_{ij}^{\mathrm{AC}}\,
+q_{ij}^{t}\,
+g_{ij}^{t}.
+\label{eq:Aac}
+\end{equation}
+Training may use soft $g$ with the cost in Eq.~\eqref{eq:joint-max};
+deployment can enforce hard Top-$K$ without retraining
+(Sec.~\ref{sec:topk-deploy}).
+
+\subsection{Residual-Guided Coordination}
+\label{sec:residual}
+
+Sparse attention aggregates neighbors under $e^{t}$:
+\begin{equation}
+\alpha_{ij}^{t}
+\propto
+\exp\!\bigl(f(h_i^{t},h_j^{t})\bigr)\,e_{ij}^{t},
+\qquad
+h_i^{\prime\,t}
+=
+\sigma\!\Bigl(
+\sum_{j}
+\alpha_{ij}^{t} W h_j^{t}
+\Bigr),
+\label{eq:attn}
+\end{equation}
+followed by $z_i^{t}=\mathrm{GRU}(h_i^{\prime\,t},z_i^{t-1})$ and guidance
+$\Phi_i^{t}$.
+Actions use residual decoupling
+\begin{equation}
+a_i^{t}
+\sim
+\pi_{\theta}\!\bigl(\cdot\mid o_i^{t}\bigr)
+\;+\;
+\beta(t)\,
+\Delta\!\bigl(\Phi_i^{t}\bigr),
+\label{eq:residual}
+\end{equation}
+so coordination \emph{assists} rather than dominates execution
+(Table~\ref{tab:ablation}: $9.27\%\!\rightarrow\!0.22\%$ without residual).
+
+\subsection{Difference from Conventional Communication Learning}
+\label{sec:diff-comm}
+
+Table~\ref{tab:comm-diff} contrasts AC-DSGF with common alternatives.
+\begin{table}[t]
+\centering
+\caption{How communication is treated during learning.}
+\label{tab:comm-diff}
+\begin{tabular}{ll}
+\toprule
+Method & Communication mechanism \\
+\midrule
+Dropout / random pruning & Stochastic deletion of messages \\
+Post-hoc / penalty-only & Constraint applied after a fixed policy graph \\
+GAT / radius graphs & Attention on a \emph{fixed} geometric adjacency \\
+\textbf{AC-DSGF} & \textbf{Learned} selective topology + budget; co-optimized \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent
+Key distinction: the communication topology is optimized as a
+\textbf{decision variable} rather than treated as a fixed network structure.
+
+\subsection{Gate Stability (non-random switching)}
+\label{sec:gate-stable}
+
+A potential concern is that sparse gates might chatter and destabilize training.
+Using frozen AC-DSGF rollouts, we measure soft-mass variance $\mathrm{Var}(C_t)$ and
+the edge-change rate
+\begin{equation}
+\Delta E_t
+=
+\bigl|\,|E_t|-|E_{t-1}|\,\bigr|.
+\label{eq:deltaE}
+\end{equation}
+Empirically (Fig.~\ref{fig:gate-stable}; 12 episodes),
+$\mathrm{Var}(C_t){\approx}3\times10^{-3}$ and
+${>}99\%$ of steps have $\Delta E_t{=}0$: $C_t$ varies smoothly with the
+task phase while edges rarely chatter.
+Communication adapts when proximity risk changes (Sec.~\ref{sec:trigger}),
+rather than randomly toggling.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/fig_gate_stability.png}
+  \caption{Gate stability: mean$\pm$std Soft Comm.\ Mass $C_t$ and mean
+  $|\Delta E_t|$ over episodes. Sparse AC graphs are dynamic yet non-chattering.}
+  \label{fig:gate-stable}
+\end{figure}
+
+\input{theory}
+
+\subsection{Optimization}
+\label{sec:opt}
+
+Actors use clipped PPO + GAE with the AC cost term for
+$\lambda_c{=}10^{-3}$ (frozen).
+Algorithm~\ref{alg:ac-dsgf} makes the Gate$\rightarrow$Budget$\rightarrow$Policy
+order explicit.
+Computational analysis is given in Sec.~\ref{sec:complexity}.
+
+\input{algorithm}
+\input{complexity}

@@ -1,0 +1,29 @@
+{
+  "train_obstacles": 4,
+  "train_env_config": "configs/generalization/train_env.yaml",
+  "methods": {
+    "mappo": {
+      "exp_config": "configs/generalization/methods/mappo_obs4.yaml",
+      "checkpoint": "results/generalization/mappo_obs4/checkpoints/final.pt",
+      "fallback_checkpoint": null
+    },
+    "gat": {
+      "exp_config": "configs/generalization/methods/gat_obs4.yaml",
+      "checkpoint": "results/generalization/gat_obs4/checkpoints/final.pt",
+      "fallback_checkpoint": "results/graph/gat_a_lambda003/checkpoints/final.pt"
+    },
+    "dsgf": {
+      "exp_config": "configs/generalization/methods/dsgf_obs4.yaml",
+      "checkpoint": "results/generalization/dsgf_obs4/checkpoints/final.pt",
+      "fallback_checkpoint": "results/dsgf/dsfg_v2_102k/checkpoints/final.pt"
+    }
+  },
+  "test_configs": {
+    "0": "configs/generalization/test_obs0.yaml",
+    "2": "configs/generalization/test_obs2.yaml",
+    "4": "configs/generalization/test_obs4.yaml",
+    "6": "configs/generalization/test_obs6.yaml",
+    "8": "configs/generalization/test_obs8.yaml"
+  },
+  "note": "Train on obs=4 first. fallback_checkpoint is plain-navigation 4UAV (no obstacles) for dry-run only."
+}

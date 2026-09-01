@@ -1,0 +1,11 @@
+{
+  "experiment_id": "exp4_dsfg_v2",
+  "stage": 4,
+  "name": "DSGF v2: Residual Guidance Policy",
+  "run_name": "dsfg_v2_smoke",
+  "seed": 42,
+  "started_at": "2026-07-10T12:08:56",
+  "config_path": "configs/experiments/exp4_dsfg_v2.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

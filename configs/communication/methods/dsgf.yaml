@@ -1,0 +1,39 @@
+# P1-3 — DSGF v2 @ 16 UAV (frozen baseline16 hyperparams)
+experiment:
+  id: comm_dsgf
+  stage: 4
+  name: "DSGF Communication Sweep 16 UAV"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 200
+
+env:
+  scenario: navigation
+  num_agents: 16
+  num_envs: 8
+  comm_radius: 0.5
+
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_dynamic_quality: true
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+
+output:
+  category: communication
+  results_dir: results

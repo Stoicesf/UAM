@@ -1,0 +1,62 @@
+# AC-DSGF++ Utility–Policy detach ablation (vs v2e-B Full)
+#
+# Architecture note: U was already stop-grad into the gate.
+# Remaining coupling: CausalUtility(h) shares node_embed with Φ/policy,
+# so L_u and L_PPO fight over the same backbone (corr oscillation).
+#
+# Detach: U = CausalUtility(h.detach())
+#   - Gate still sees U.detach() values (use_utility_in_gate: true)
+#   - L_u only trains the utility head, not the policy backbone
+#
+# Hyperparams identical to v2e-B (only the detach flag differs).
+experiment:
+  id: ac_dsgf_pp_ablation_detach_utility
+  stage: 6
+  name: "AC-DSGF++ Ablation Detach Utility Backbone 4UAV 20k"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 32
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+  utility_warmup_steps: 5000
+  lambda_comm: 0.0
+  lambda_budget: 0.02
+  target_comm: 1.0
+  lambda_u: 0.5
+  lambda_rank: 0.1
+  ranking_mode: hinge
+  # --- detach ablation ---
+  use_utility_in_gate: true
+  use_utility_in_policy: false
+  gate_residual: true
+  gate_residual_alpha: 0.5
+  gate_residual_alpha_after: 0.8
+
+output:
+  category: ac_dsgf_pp
+  results_dir: results
+  tag: AC_DSGF_PP_ABLATION_DETACH_U

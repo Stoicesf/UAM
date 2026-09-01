@@ -1,0 +1,11 @@
+{
+  "experiment_id": "baseline16_gat",
+  "stage": 2,
+  "name": "GAT-MAPPO 16 UAV",
+  "run_name": "s1234",
+  "seed": 1234,
+  "started_at": "2026-07-12T23:19:40",
+  "config_path": "F:\\UAM\\configs\\baseline16\\gat_mappo.yaml",
+  "guidance_mode": "gat",
+  "extra": {}
+}

@@ -1,0 +1,32 @@
+# GAT lambda search base — 20k, warmup30%, adaptive_align
+experiment:
+  id: exp2_gat
+  stage: 2
+  name: "MAPPO + GAT Guide (lambda search)"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  lock_total_frames: true
+  eval_episodes: 32
+  algorithm: guided_mappo
+
+env:
+  comm_radius: 0.5
+
+guidance:
+  mode: gat
+  guidance_dim: 4
+  hidden_dim: 128
+  comm_radius: 0.5
+  num_gat_layers: 1
+  use_guidance_reward: true
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.3
+  guidance_schedule: adaptive_align
+  guidance_coef_min: 0.005
+  guidance_decay_k: 3.0
+
+output:
+  category: graph
+  results_dir: results

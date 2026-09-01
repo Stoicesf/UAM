@@ -1,0 +1,15 @@
+# secdo_uav_e1_slow
+regime: slow
+horizon: 96
+vel_scale: 0.4
+
+# secdo_uav_e2_fast  
+regime: fast
+horizon: 96
+vel_scale: 0.4
+
+# secdo_uav_e3_stress
+regime: stress
+horizon: 96
+stress_eps: 0.35
+stress_delta: 0.25

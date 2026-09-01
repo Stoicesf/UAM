@@ -1,0 +1,70 @@
+﻿device=cuda | run=F:\UAM\runs\tro_evidence_6_6_baselines_20260720_184912
+=== unified reeval ===
+[reeval] mappo seed=1234
+  MAPPO: J=9.477 succ=0.2500 C=0.000
+[reeval] mappo seed=2026
+  MAPPO: J=9.236 succ=0.2598 C=0.000
+[reeval] mappo seed=3407
+  MAPPO: J=8.735 succ=0.2383 C=0.000
+[reeval] mappo seed=42
+  MAPPO: J=10.545 succ=0.3262 C=0.000
+[reeval] mappo seed=8888
+  MAPPO: J=10.090 succ=0.2852 C=0.000
+[reeval] gat seed=1234
+  GAT-MAPPO: J=9.700 succ=0.2715 C=46.867
+[reeval] gat seed=2026
+  GAT-MAPPO: J=8.776 succ=0.2129 C=39.867
+[reeval] gat seed=3407
+  GAT-MAPPO: J=8.356 succ=0.2129 C=44.164
+[reeval] gat seed=42
+  GAT-MAPPO: J=8.214 succ=0.2148 C=45.244
+[reeval] gat seed=8888
+  GAT-MAPPO: J=8.877 succ=0.1934 C=45.868
+[reeval] dsgf seed=1234
+  DSGF: J=8.794 succ=0.2188 C=47.227
+[reeval] dsgf seed=2026
+  DSGF: J=8.765 succ=0.2246 C=38.074
+[reeval] dsgf seed=3407
+  DSGF: J=8.597 succ=0.2246 C=43.770
+[reeval] dsgf seed=42
+  DSGF: J=9.092 succ=0.2266 C=41.762
+[reeval] dsgf seed=8888
+  DSGF: J=9.787 succ=0.2637 C=47.879
+[reeval] full_attn seed=1234
+  Full-Attention: J=9.167 succ=0.2480 C=240.000
+[reeval] full_attn seed=2026
+  Full-Attention: J=8.472 succ=0.2109 C=240.000
+[reeval] full_attn seed=3407
+  Full-Attention: J=9.475 succ=0.2793 C=240.000
+[reeval] full_attn seed=42
+  Full-Attention: J=9.678 succ=0.2832 C=240.000
+[reeval] full_attn seed=8888
+  Full-Attention: J=11.217 succ=0.4160 C=240.000
+[reeval] ac_dsgf seed=1234
+  AC-DSGF: J=9.643 succ=0.2539 C=44.822
+  AC-DSGF (K=2): J=9.794 succ=0.2988 C=27.701
+  AC-DSGF (K=4): J=9.950 succ=0.3164 C=41.020
+  AC-DSGF (K=6): J=9.680 succ=0.3281 C=42.985
+[reeval] ac_dsgf seed=2026
+  AC-DSGF: J=7.921 succ=0.1973 C=42.167
+  AC-DSGF (K=2): J=7.919 succ=0.1836 C=26.962
+  AC-DSGF (K=4): J=7.965 succ=0.1758 C=41.218
+  AC-DSGF (K=6): J=8.408 succ=0.1816 C=42.496
+[reeval] ac_dsgf seed=3407
+  AC-DSGF: J=8.588 succ=0.2246 C=44.501
+  AC-DSGF (K=2): J=9.347 succ=0.2344 C=27.799
+  AC-DSGF (K=4): J=8.827 succ=0.2363 C=40.829
+  AC-DSGF (K=6): J=8.741 succ=0.1836 C=44.326
+[reeval] ac_dsgf seed=42
+  AC-DSGF: J=9.636 succ=0.2480 C=41.613
+  AC-DSGF (K=2): J=9.743 succ=0.2559 C=26.927
+  AC-DSGF (K=4): J=9.844 succ=0.2910 C=39.106
+  AC-DSGF (K=6): J=9.935 succ=0.2734 C=41.240
+[reeval] ac_dsgf seed=8888
+  AC-DSGF: J=9.035 succ=0.2129 C=44.398
+  AC-DSGF (K=2): J=9.398 succ=0.2227 C=28.243
+  AC-DSGF (K=4): J=9.114 succ=0.2500 C=42.514
+  AC-DSGF (K=6): J=9.531 succ=0.2051 C=47.030
+Wrote F:\UAM\paper\ac_dsgf_tro\experiments\evidence_6_6_baselines\baseline_comparison.csv
+Wrote F:\UAM\paper\ac_dsgf_tro\experiments\evidence_6_6_baselines\evidence_6_6_report.json
+Wrote F:\UAM\paper\ac_dsgf_tro\figures\Fig5_baseline_pareto.png

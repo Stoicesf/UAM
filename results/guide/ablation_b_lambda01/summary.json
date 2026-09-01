@@ -1,0 +1,40 @@
+{
+  "experiment_id": "ablation_b",
+  "stage": 1,
+  "name": "Ablation B: lambda=0.1",
+  "run_name": "ablation_b_lambda01",
+  "seed": 42,
+  "started_at": "2026-07-09T16:39:37",
+  "config_path": "F:\\UAM\\configs\\experiments\\ablation_b_lambda01.yaml",
+  "guidance_mode": "mlp",
+  "extra": {},
+  "category": "guide",
+  "finished_at": "2026-07-09T16:40:49",
+  "num_iterations": 5,
+  "final_reward": -3.7320380210876465,
+  "max_reward": -0.6178,
+  "reward_curve": [
+    -0.617798388004303,
+    -1.943358063697815,
+    -3.101907730102539,
+    -4.297557830810547,
+    -3.7320380210876465
+  ],
+  "paper_metrics": {
+    "reward": -9.1923,
+    "success": 0.0,
+    "collision": 0.1006,
+    "path_length": 73.0337,
+    "alignment": 0.9917,
+    "max_reward": -0.6178,
+    "num_iterations": 5
+  },
+  "reward": -9.1923,
+  "success": 0.0,
+  "collision": 0.1006,
+  "path_length": 73.0337,
+  "alignment": 0.9917,
+  "max_guide_coef": 0.1,
+  "guidance_warmup": false,
+  "tag": null
+}

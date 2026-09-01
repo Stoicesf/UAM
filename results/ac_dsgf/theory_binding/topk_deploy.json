@@ -1,0 +1,22 @@
+[
+  {
+    "mode": "soft_gate",
+    "K": "soft",
+    "success": 0.2578
+  },
+  {
+    "mode": "top1",
+    "K": 1,
+    "success": 0.2448
+  },
+  {
+    "mode": "top2",
+    "K": 2,
+    "success": 0.2812
+  },
+  {
+    "mode": "top3",
+    "K": 3,
+    "success": 0.2943
+  }
+]

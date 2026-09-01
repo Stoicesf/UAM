@@ -1,0 +1,32 @@
+# Stage 2 — GAT Guide over dynamic communication graph
+experiment:
+  id: exp2_gat
+  stage: 2
+  name: "MAPPO + GAT Guide"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+env:
+  comm_radius: 0.5
+
+guidance:
+  mode: gat
+  guidance_dim: 4
+  hidden_dim: 128
+  comm_radius: 0.5
+  num_gat_layers: 1
+  use_guidance_reward: true
+  guidance_reward_coef: 0.05
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.2
+  guidance_schedule: adaptive_decay
+  guidance_coef_min: 0.02
+  guidance_decay_k: 3.0
+
+output:
+  category: graph
+  results_dir: results
+  figures_dir: figures

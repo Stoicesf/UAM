@@ -1,0 +1,58 @@
+{
+  "note": "Narrative throughput/regret scalars (e.g. 28.65 / 95.2 / +64%) are NOT in MASTER_SUMMARY; figures use landed UAV gap-series Reg_T and Cor.4 crash protocol.",
+  "uav_secdo": {
+    "slow_drift": {
+      "n_seeds": 5,
+      "Reg_T_mean": 0.0007692211934091891,
+      "Reg_T_std": 0.00030559418335214436,
+      "violation_mean": 0.0033174974222977952,
+      "violation_std": 0.0004999731749889265,
+      "chi_mean": 0.010125217660485457,
+      "chi_std": 0.0068492965199652735,
+      "PI_mean": 0.5942237266649802,
+      "mean_alpha": 0.748806764309605
+    },
+    "fast_drift": {
+      "n_seeds": 5,
+      "Reg_T_mean": 0.04360271703699255,
+      "Reg_T_std": 0.005566085637389188,
+      "violation_mean": 0.01464744603727013,
+      "violation_std": 0.0011970764196680582,
+      "chi_mean": 0.13139164992996183,
+      "chi_std": 0.01875246235865434,
+      "PI_mean": 0.28237502966076133,
+      "mean_alpha": 0.8972538462529581
+    },
+    "stress_test": {
+      "n_seeds": 5,
+      "Reg_T_mean": 0.06856261035063653,
+      "Reg_T_std": 0.005301581614753545,
+      "violation_mean": 0.018949687601222346,
+      "violation_std": 0.0013599822562797275,
+      "chi_mean": 0.20343916796458267,
+      "chi_std": 0.028461412344132905,
+      "PI_mean": 0.2419722183452298,
+      "mean_alpha": 0.9138789861152571
+    },
+    "slow_to_fast": {
+      "regret_ratio": 56.68423778568199,
+      "regret_rel_increase": 55.68423778568198,
+      "chi_ratio": 12.97667411563202
+    }
+  },
+  "suggested_results_sentence": "As predicted by Theorem 2, SECDO's cumulative dynamic regret rises from 0.0008 (slow drift) to 0.0436 (fast drift) \u2014 a 56.7\u00d7 increase as mean \u03c7 grows 13.0\u00d7 \u2014 while mean violation stays below 1.46% . Under stress, regret reaches 0.0686 with violation 1.89% without collapse; Cor.4 crash tests show PI-adaptive \u03b1 rollback vs fixed \u03b1\u22611.",
+  "figures": {
+    "fig1": [
+      "F:\\UAM\\results\\secdo_v2\\paper_figures\\fig1_thm2_drift_regret.pdf",
+      "F:\\UAM\\results\\secdo_v2\\paper_figures\\fig1_thm2_drift_regret.png"
+    ],
+    "fig2": [
+      "F:\\UAM\\results\\secdo_v2\\paper_figures\\fig2_thm3_pi_alpha.pdf",
+      "F:\\UAM\\results\\secdo_v2\\paper_figures\\fig2_thm3_pi_alpha.png"
+    ],
+    "fig3": [
+      "F:\\UAM\\results\\secdo_v2\\paper_figures\\fig3_cor4_graceful_degradation.pdf",
+      "F:\\UAM\\results\\secdo_v2\\paper_figures\\fig3_cor4_graceful_degradation.png"
+    ]
+  }
+}

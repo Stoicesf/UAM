@@ -1,0 +1,27 @@
+# Train MAPPO @ 4 UAV for paper demo comparison (~20k, align with GAT-A / DSGF-20k)
+experiment:
+  id: demo_mappo_4uav_train
+  stage: 0
+  name: "Demo MAPPO 4 UAV Train"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 32
+  algorithm: mappo
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: none
+  use_guidance_reward: false
+
+output:
+  category: demo
+  results_dir: results

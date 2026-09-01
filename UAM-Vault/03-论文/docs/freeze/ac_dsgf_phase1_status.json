@@ -1,0 +1,11 @@
+{
+  "phase": "submission_sprint_v1",
+  "updated": "2026-07-15",
+  "paper_completion_approx": "88%",
+  "pdf": "paper/ac_dsgf/AC_DSGF_v1.pdf",
+  "pages": 7,
+  "pack": "paper/ac_dsgf_final/",
+  "week1": ["compile", "notation table", "captions", "cover letter", "response_mock"],
+  "week2_optional": "packet_loss via scripts/eval_packet_loss.py",
+  "claim": "maintain task effectiveness under communication constraints"
+}

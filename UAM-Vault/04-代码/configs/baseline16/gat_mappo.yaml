@@ -1,0 +1,37 @@
+# Week 2 — GAT-MAPPO @ 16 UAV (frozen gat_a config)
+experiment:
+  id: baseline16_gat
+  stage: 2
+  name: "GAT-MAPPO 16 UAV"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 200
+
+env:
+  scenario: navigation
+  num_agents: 16
+  num_envs: 8
+  comm_radius: 0.5
+
+guidance:
+  mode: gat
+  guidance_dim: 4
+  hidden_dim: 128
+  comm_radius: 0.5
+  num_gat_layers: 1
+  use_guidance_reward: true
+  guidance_reward_coef: 0.03
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.3
+  guidance_schedule: adaptive_align
+  guidance_coef_min: 0.005
+  guidance_decay_k: 3.0
+
+output:
+  category: baseline16
+  results_dir: results

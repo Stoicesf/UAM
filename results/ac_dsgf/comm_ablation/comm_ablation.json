@@ -1,0 +1,26 @@
+[
+  {
+    "variant": "full",
+    "success": 0.2461,
+    "collision": 0.0098,
+    "reward": 9.6557,
+    "comm_cost": 0.0077,
+    "cei": 32.029349
+  },
+  {
+    "variant": "no_budget",
+    "success": 0.2891,
+    "collision": 0.0039,
+    "reward": 9.6476,
+    "comm_cost": 40.6272,
+    "cei": 0.007115
+  },
+  {
+    "variant": "random",
+    "success": 0.2852,
+    "collision": 0.0117,
+    "reward": 9.6769,
+    "comm_cost": 20.3212,
+    "cei": 0.014032
+  }
+]

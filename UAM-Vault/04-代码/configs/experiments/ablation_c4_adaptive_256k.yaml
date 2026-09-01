@@ -1,0 +1,27 @@
+# C4 — adaptive λ + 256k frames
+experiment:
+  id: ablation_c4
+  stage: 1
+  name: "C4: adaptive decay lambda 256k"
+
+train:
+  seed: 42
+  total_frames: 256_000
+  lock_total_frames: true
+  algorithm: guided_mappo
+
+guidance:
+  mode: mlp
+  guidance_dim: 4
+  hidden_dim: 128
+  use_guidance_reward: true
+  guidance_reward_coef: 0.05
+  guidance_coef_min: 0.02
+  guidance_decay_k: 3.0
+  guidance_warmup: true
+  guidance_warmup_fraction: 0.2
+  guidance_schedule: adaptive_decay
+
+output:
+  category: guide
+  results_dir: results

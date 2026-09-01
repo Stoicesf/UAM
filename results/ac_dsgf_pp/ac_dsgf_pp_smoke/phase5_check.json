@@ -1,0 +1,15 @@
+{
+  "passed": false,
+  "metrics": {
+    "success": 0.0,
+    "comm": 0.1776,
+    "utility_mean": 0.032384,
+    "gate_mass": 0.04447633333333334,
+    "utility_corr": 0.2565806666666667
+  },
+  "checks": {
+    "utility_not_collapsed": false,
+    "gate_not_zero": false,
+    "corr_u_ustar": false
+  }
+}

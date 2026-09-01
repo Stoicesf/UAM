@@ -1,0 +1,22 @@
+# 评估配置 — 对应论文第五章实验
+seed: 42
+num_episodes: 100
+render: false
+checkpoint: checkpoints/best.pt
+exp_config: configs/experiments/exp0_baseline.yaml
+
+# 实验类型: baseline | dsfg | ablation | scalability | communication
+experiment: baseline
+
+# 可扩展性实验（实验4）
+agent_counts: [4, 8, 16, 32]
+
+# 消融实验（实验5）
+ablation:
+  disable_dsfg: false
+  disable_guidance_reward: false
+  disable_sparse_attention: false
+
+# 输出
+results_dir: results
+figures_dir: figures

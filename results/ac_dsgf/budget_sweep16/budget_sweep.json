@@ -1,0 +1,137 @@
+[
+  {
+    "method": "gat",
+    "success": 0.2129,
+    "collision": 0.0215,
+    "reward": 8.6797,
+    "comm_cost": 44.1372,
+    "ce": 0.004823,
+    "budget_ratio": 1.0
+  },
+  {
+    "method": "gat",
+    "success": 0.1914,
+    "collision": 0.0234,
+    "reward": 8.0521,
+    "comm_cost": 39.6465,
+    "ce": 0.004828,
+    "budget_ratio": 0.75
+  },
+  {
+    "method": "gat",
+    "success": 0.1816,
+    "collision": 0.042,
+    "reward": 8.2676,
+    "comm_cost": 26.1694,
+    "ce": 0.006941,
+    "budget_ratio": 0.5
+  },
+  {
+    "method": "gat",
+    "success": 0.168,
+    "collision": 0.0234,
+    "reward": 7.7279,
+    "comm_cost": 17.53,
+    "ce": 0.009582,
+    "budget_ratio": 0.25
+  },
+  {
+    "method": "gat",
+    "success": 0.1689,
+    "collision": 0.0137,
+    "reward": 8.3523,
+    "comm_cost": 14.9445,
+    "ce": 0.011305,
+    "budget_ratio": 0.1
+  },
+  {
+    "method": "dsgf",
+    "success": 0.2168,
+    "collision": 0.0117,
+    "reward": 9.1054,
+    "comm_cost": 40.2852,
+    "ce": 0.005382,
+    "budget_ratio": 1.0
+  },
+  {
+    "method": "dsgf",
+    "success": 0.2109,
+    "collision": 0.0059,
+    "reward": 8.5527,
+    "comm_cost": 37.6168,
+    "ce": 0.005608,
+    "budget_ratio": 0.75
+  },
+  {
+    "method": "dsgf",
+    "success": 0.2158,
+    "collision": 0.0117,
+    "reward": 9.1328,
+    "comm_cost": 24.6298,
+    "ce": 0.008763,
+    "budget_ratio": 0.5
+  },
+  {
+    "method": "dsgf",
+    "success": 0.2031,
+    "collision": 0.0117,
+    "reward": 9.1016,
+    "comm_cost": 17.0391,
+    "ce": 0.011921,
+    "budget_ratio": 0.25
+  },
+  {
+    "method": "dsgf",
+    "success": 0.2168,
+    "collision": 0.0137,
+    "reward": 8.7666,
+    "comm_cost": 14.9783,
+    "ce": 0.014474,
+    "budget_ratio": 0.1
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.2705,
+    "collision": 0.0195,
+    "reward": 9.9576,
+    "comm_cost": 0.0081,
+    "ce": 33.501789,
+    "budget_ratio": 1.0
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.2695,
+    "collision": 0.0098,
+    "reward": 9.7024,
+    "comm_cost": 0.0074,
+    "ce": 36.335652,
+    "budget_ratio": 0.75
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.252,
+    "collision": 0.0059,
+    "reward": 9.6067,
+    "comm_cost": 0.0054,
+    "ce": 46.750733,
+    "budget_ratio": 0.5
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.2725,
+    "collision": 0.0117,
+    "reward": 9.795,
+    "comm_cost": 0.0039,
+    "ce": 69.35243,
+    "budget_ratio": 0.25
+  },
+  {
+    "method": "ac_dsgf",
+    "success": 0.2422,
+    "collision": 0.0156,
+    "reward": 10.0703,
+    "comm_cost": 0.0036,
+    "ce": 67.284686,
+    "budget_ratio": 0.1
+  }
+]

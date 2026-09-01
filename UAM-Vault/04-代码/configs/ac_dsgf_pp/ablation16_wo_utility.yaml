@@ -1,0 +1,36 @@
+# Phase 7 Ablation 1 — AC-DSGF++ without causal utility (gate uses v1 controller)
+# 16 UAV · single seed diagnostic (64-ep eval recommended via override)
+experiment:
+  id: ac_dsgf_pp_abl16_wo_utility
+  stage: 7
+  name: "AC++ Ablation w/o Utility 16UAV"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  lock_total_frames: true
+  eval_episodes: 64
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 16
+  num_envs: 8
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  pp_ablation: wo_utility
+  guidance_dim: 6
+  hidden_dim: 128
+  residual_policy: true
+  use_guidance_reward: false
+  utility_warmup_steps: 20000
+  lambda_comm: 0.00005
+  lambda_u: 0.0
+  lambda_rank: 0.0
+  gate_residual: true
+
+output:
+  category: ac_dsgf_pp
+  tag: AC_PP_ABL_WO_U_16

@@ -1,0 +1,9 @@
+{
+  "ac_dsgf_success": 0.3252,
+  "ac_dsgf_soft_edges_mean": 0.2746,
+  "dsgf_v2_geometric_edges_mean": 6.0,
+  "edge_drop_ratio": 0.9542,
+  "pass_edges_ge_30pct": true,
+  "note": "AC edges are soft \u03a3g; DSGF ref is geometric communication_cost from training log",
+  "warning": "soft edges very low (~0.27); monitor silence collapse; consider smaller lambda_comm next"
+}

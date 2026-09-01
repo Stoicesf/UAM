@@ -1,0 +1,32 @@
+mode: pretrain
+seed: 0
+amp: true
+epochs: 5
+batch: 16
+latent_dim: 32
+
+optimizer:
+  name: AdamW
+  lr: 1.0e-4
+
+scheduler:
+  cosine: true
+
+loss:
+  lambda_state: 0.5
+  lambda_constraint: 1.0
+  lambda_utility: 0.1
+
+data:
+  dir: ""
+  train_trajectories: 64
+  val_trajectories: 16
+  length: 32
+
+env:
+  regime: fast
+  n_agents: 8
+  horizon: 32
+
+ckpt_dir: checkpoints/secdo_platform/pretrain
+log_dir: runs/secdo_platform/pretrain

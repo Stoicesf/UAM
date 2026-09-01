@@ -1,0 +1,11 @@
+{
+  "experiment_id": "gen_gat_obs4",
+  "stage": 2,
+  "name": "GAT Generalization Train obs=4",
+  "run_name": "gat_obs4",
+  "seed": 42,
+  "started_at": "2026-07-13T11:18:47",
+  "config_path": "F:\\UAM\\configs\\generalization\\methods\\gat_obs4.yaml",
+  "guidance_mode": "gat",
+  "extra": {}
+}

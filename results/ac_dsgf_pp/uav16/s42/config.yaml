@@ -1,0 +1,52 @@
+# AC-DSGF++ Phase 6 Formal — 16 UAV · 102k · 5 seeds
+# Frozen from Phase 5 v2c (utility warm-up + ranking + gate residual).
+# Do NOT retune λ / architecture. Compare vs frozen AC-DSGF Table I.
+#
+# Claim: Performance Preservation + Communication Reduction
+#   Success ≈ AC-DSGF, Comm ↓, CEI ↑, corr(U,U*) > 0.5
+experiment:
+  id: ac_dsgf_pp_16uav
+  stage: 6
+  name: "AC-DSGF++ 16 UAV Formal"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 200
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 16
+  num_envs: 8
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+  # Phase 5 v2c → Phase 6 (scaled warm-up for 102k)
+  utility_warmup_steps: 20000
+  lambda_comm: 0.00005
+  lambda_u: 0.5
+  lambda_rank: 0.1
+  gate_residual: true
+  gate_residual_alpha: 0.5
+  gate_residual_alpha_after: 0.8
+
+output:
+  category: ac_dsgf_pp
+  results_dir: results
+  tag: AC_DSGF_PP_16UAV

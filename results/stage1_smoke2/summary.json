@@ -1,0 +1,18 @@
+{
+  "experiment_id": "exp1_guide",
+  "stage": 1,
+  "name": "MAPPO + Guide MLP",
+  "run_name": "stage1_smoke2",
+  "seed": 42,
+  "started_at": "2026-07-09T16:27:13",
+  "config_path": "configs/experiments/exp1_guide.yaml",
+  "guidance_mode": "mlp",
+  "extra": {},
+  "finished_at": "2026-07-09T16:27:17",
+  "num_iterations": 1,
+  "final_reward": -0.617798388004303,
+  "max_reward": -0.617798388004303,
+  "reward_curve": [
+    -0.617798388004303
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ac_dsgf_pp_cau_v2_smoke",
+  "stage": 10,
+  "name": "AC-DSGF++ CAU-v2 U* Repair 4UAV 20k",
+  "run_name": "ac_dsgf_pp_cau_v2_smoke",
+  "seed": 42,
+  "started_at": "2026-07-17T18:36:48",
+  "config_path": "configs/ac_dsgf_pp/ac_dsgf_pp_cau_v2_smoke.yaml",
+  "guidance_mode": "ac_dsgf_pp",
+  "extra": {}
+}

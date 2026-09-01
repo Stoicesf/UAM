@@ -1,0 +1,47 @@
+experiment:
+  id: demo_mappo_4uav_train
+  stage: 0
+  name: Demo MAPPO 4 UAV Train
+train:
+  seed: 42
+  algorithm: mappo
+  total_frames: 20480
+  frames_per_batch: 2048
+  num_epochs: 5
+  minibatch_size: 512
+  learning_rate: 0.0003
+  max_grad_norm: 0.5
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  entropy_coef: 0.01
+  critic_coef: 1.0
+  hidden_dim: 128
+  share_params_policy: true
+  share_params_critic: true
+  use_guidance: false
+  use_guidance_reward: false
+  log_dir: logs
+  checkpoint_dir: checkpoints
+  save_interval: 10000
+  log_interval: 1
+  eval_episodes: 32
+  lock_total_frames: true
+  lock_eval_episodes: true
+env:
+  scenario: navigation
+  num_envs: 16
+  num_agents: 4
+  device: cuda
+  continuous_actions: true
+  max_steps: 128
+  comm_radius: 0.5
+  obs_dim: 18
+  action_dim: 2
+  guidance_dim: 4
+guidance:
+  mode: none
+  use_guidance_reward: false
+output:
+  category: demo
+  results_dir: results

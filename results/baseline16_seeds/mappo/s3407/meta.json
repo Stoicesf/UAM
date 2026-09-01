@@ -1,0 +1,11 @@
+{
+  "experiment_id": "baseline16_mappo",
+  "stage": 0,
+  "name": "MAPPO Baseline 16 UAV",
+  "run_name": "s3407",
+  "seed": 3407,
+  "started_at": "2026-07-12T15:18:12",
+  "config_path": "F:\\UAM\\configs\\baseline16\\mappo.yaml",
+  "guidance_mode": "none",
+  "extra": {}
+}

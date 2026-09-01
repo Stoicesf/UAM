@@ -1,0 +1,11 @@
+{
+  "experiment_id": "comm_mappo_r1",
+  "stage": 0,
+  "name": "MAPPO @ R=1 (16 UAV)",
+  "run_name": "mappo_r1",
+  "seed": 42,
+  "started_at": "2026-07-14T11:43:16",
+  "config_path": "F:\\UAM\\configs\\communication\\generated\\mappo_r1.yaml",
+  "guidance_mode": "none",
+  "extra": {}
+}

@@ -1,0 +1,12 @@
+\section{Proof Sketch of Corollary~\ref{cor:4}}
+\label{app:cor4}
+
+With $c^{\mathrm{mix}}_t=\alpha_t\hat c_{t+1}+(1-\alpha_t)c_t$ and $\alpha_t=1/(1+\mathrm{PI}_t^2)$,
+\begin{equation}
+\lvert c^{\mathrm{mix}}_t-c_{t+1}\rvert
+\;\le\;
+\alpha_t\delta_t^{\mathrm{cap}}+(1-\alpha_t)\chi_t.
+\end{equation}
+As $\mathrm{PI}_t\to\infty$, $\alpha_t\to 0$ and the update degrades to reactive projection onto $\mathcal{B}_t$.
+Comparing per-step regret to a pure reactive baseline, excess cost on failure indicators $I_t^{\mathrm{fail}}$ is absorbed as $O(I_t^{\mathrm{fail}}\delta_t)$, yielding the stated cumulative bound.
+SECDO \emph{gracefully degrades} toward reactive behavior; it does not claim full recovery.

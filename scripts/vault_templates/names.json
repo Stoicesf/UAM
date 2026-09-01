@@ -1,0 +1,12 @@
+{
+  "home": "00-首页.md",
+  "readme": "README.md",
+  "sections": {
+    "project": "01-项目说明",
+    "results": "02-实验结果",
+    "paper": "03-论文",
+    "code": "04-代码"
+  },
+  "overview": "总览.md",
+  "freeze": "冻结与路线图"
+}

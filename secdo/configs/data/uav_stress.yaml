@@ -1,0 +1,12 @@
+version: v1
+trajectories: 1000
+length: 200
+seed: 43
+regime: random_waypoint
+n_agents: 8
+dt: 0.12
+box: 3.0
+vel_scale: 0.5
+stress_eps: 0.35
+stress_delta: 0.25
+out_dir: data/secdo/uav_stress_v1

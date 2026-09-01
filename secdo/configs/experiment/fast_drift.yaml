@@ -1,0 +1,7 @@
+exp: fast_drift
+methods: [secdo, reactive, oracle, dsgf, ac_dsgf]
+seeds: [0, 1, 2]
+horizon: 96
+batch: 8
+ckpt: checkpoints/secdo_platform/pretrain/best.pt
+out_dir: results/secdo/fast_drift

@@ -1,0 +1,118 @@
+{
+  "phase": "A",
+  "class_C": "deferred",
+  "n_rows": 40,
+  "table_II": [
+    {
+      "method": "ac_dsgf",
+      "display": "AC-DSGF (K=2)",
+      "class": "Ours",
+      "budget": "fixed_k_2",
+      "n_seeds": 5,
+      "reward_mean": 9.240241309901467,
+      "reward_std": 0.68416459009946,
+      "success_mean": 0.2390625,
+      "success_std": 0.03800522296548528,
+      "C_mean": 27.526513671875,
+      "C_std": 0.5091284875036161
+    },
+    {
+      "method": "ac_dsgf",
+      "display": "AC-DSGF (K=4)",
+      "class": "Ours",
+      "budget": "fixed_k_4",
+      "n_seeds": 5,
+      "reward_mean": 9.139871640619821,
+      "reward_std": 0.7255149297488305,
+      "success_mean": 0.25390625,
+      "success_std": 0.0483965300522026,
+      "C_mean": 40.937451171875,
+      "C_std": 1.089730570942657
+    },
+    {
+      "method": "ac_dsgf",
+      "display": "AC-DSGF (K=6)",
+      "class": "Ours",
+      "budget": "fixed_k_6",
+      "n_seeds": 5,
+      "reward_mean": 9.258846976846689,
+      "reward_std": 0.5832105391353477,
+      "success_mean": 0.234375,
+      "success_std": 0.057502865927219225,
+      "C_mean": 43.615380859375,
+      "C_std": 1.9726952009226888
+    },
+    {
+      "method": "ac_dsgf",
+      "display": "AC-DSGF",
+      "class": "Ours",
+      "budget": "train_default",
+      "n_seeds": 5,
+      "reward_mean": 8.964570058719255,
+      "reward_std": 0.6551625686178949,
+      "success_mean": 0.22734375,
+      "success_std": 0.021237933154794043,
+      "C_mean": 43.5001953125,
+      "C_std": 1.3335651092940002
+    },
+    {
+      "method": "dsgf",
+      "display": "DSGF",
+      "class": "B",
+      "budget": "train_default",
+      "n_seeds": 5,
+      "reward_mean": 9.00696426120121,
+      "reward_std": 0.4212562419464952,
+      "success_mean": 0.231640625,
+      "success_std": 0.016228576623313274,
+      "C_mean": 43.74248046875,
+      "C_std": 3.614228993104838
+    },
+    {
+      "method": "full_attn",
+      "display": "Full-Attention",
+      "class": "G2",
+      "budget": "train_default",
+      "n_seeds": 5,
+      "reward_mean": 9.601599718490615,
+      "reward_std": 0.9049993284673302,
+      "success_mean": 0.2875,
+      "success_std": 0.06931145034146595,
+      "C_mean": 240.0,
+      "C_std": 0.0
+    },
+    {
+      "method": "gat",
+      "display": "GAT-MAPPO",
+      "class": "B",
+      "budget": "train_default",
+      "n_seeds": 5,
+      "reward_mean": 8.784800131441443,
+      "reward_std": 0.5209654273078896,
+      "success_mean": 0.22109375,
+      "success_std": 0.026389602740710214,
+      "C_mean": 44.401953125,
+      "C_std": 2.431533973407871
+    },
+    {
+      "method": "mappo",
+      "display": "MAPPO",
+      "class": "A",
+      "budget": "train_default",
+      "n_seeds": 5,
+      "reward_mean": 9.616713870572857,
+      "reward_std": 0.6368488139792258,
+      "success_mean": 0.271875,
+      "success_std": 0.031235348127662196,
+      "C_mean": 0.0,
+      "C_std": 0.0
+    }
+  ],
+  "fig5": "F:\\UAM\\paper\\ac_dsgf_tro\\figures\\Fig5_baseline_pareto.png",
+  "run_dir": "F:\\UAM\\runs\\tro_evidence_6_6_baselines_20260720_184912",
+  "narrative": [
+    "Class A: communication necessity vs MAPPO",
+    "Class B / G2: dynamic or projected topology vs fixed / dense on (J,C)",
+    "Class C: deferred until TarMAC/IC3Net/ATOC wrappers exist"
+  ]
+}

@@ -1,0 +1,23 @@
+% Algorithm 1 — Gate → Budget → Policy (IEEE-style)
+\begin{algorithm}[t]
+\caption{AC-DSGF Training}
+\label{alg:ac-dsgf}
+\begin{algorithmic}[1]
+\REQUIRE Observations $\{o_i^{t}\}$, radius $R_c$, budget ratio $\rho$ (or $K$), weight $\lambda_c$
+\REQUIRE Policy parameters $\theta$, gate parameters $\phi$ (collectively $\theta$ in text)
+\ENSURE Updated $\theta,\phi$
+\FOR{each training iteration}
+  \STATE Collect rollouts with decentralized actors
+  \FOR{each timestep $t$ in batch}
+    \STATE Embed $h_i^{t}\leftarrow\psi(o_i^{t})$; build candidate mask $A^{t}$ and quality $q^{t}$
+    \STATE \textbf{Gate:} $g_{ij}^{t}\leftarrow\sigma\!\big(W_g[h_i;h_j;d_{ij};\rho_{ij}]\big)\cdot A_{ij}^{t}$
+    \STATE \textbf{Budget:} $E_t^{K}\leftarrow\mathrm{TopK}_{K_i}(\{g_{ij}^{t}\})$;\;
+          $A_t^{\mathrm{AC}}\leftarrow A^{t}\odot E_t^{K}$
+    \STATE Build $e_{ij}^{t}\leftarrow A_{ij}^{\mathrm{AC}}\,q_{ij}^{t}\,g_{ij}^{t}$;\; $C_t\leftarrow\sum_{ij}g_{ij}^{t}$
+    \STATE Aggregate neighbors with sparse attention on $e^{t}$; GRU $\rightarrow\Phi_i^{t}$
+    \STATE \textbf{Policy:} sample $a_i^{t}\sim\pi_\theta(\cdot\mid o_i^{t})+\beta(t)\Delta(\Phi_i^{t})$
+  \ENDFOR
+  \STATE Update $\theta,\phi$ by PPO/GAE loss plus $\lambda_c\mathbb{E}[\sum_t C_t]$
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}

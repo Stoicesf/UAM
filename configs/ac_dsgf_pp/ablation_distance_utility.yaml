@@ -1,0 +1,30 @@
+experiment:
+  id: ac_dsgf_pp_ablation_distance_utility
+  stage: 6
+  name: "AC-DSGF++ ablation distance_utility"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  eval_episodes: 32
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  pp_ablation: distance_utility
+  guidance_dim: 6
+  hidden_dim: 128
+  residual_policy: true
+  use_guidance_reward: false
+  lambda_comm: 0.0001
+  lambda_u: 0.1
+
+output:
+  category: ac_dsgf_pp
+  tag: AC_DSGF_PP_ABL_DISTANCE_U

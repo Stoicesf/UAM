@@ -1,0 +1,11 @@
+{
+  "experiment_id": "exp1_guide",
+  "stage": 1,
+  "name": "MAPPO + Guide MLP",
+  "run_name": "stage1_smoke",
+  "seed": 42,
+  "started_at": "2026-07-09T16:26:58",
+  "config_path": "configs/experiments/exp1_guide.yaml",
+  "guidance_mode": "mlp",
+  "extra": {}
+}

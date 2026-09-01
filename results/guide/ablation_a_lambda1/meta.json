@@ -1,0 +1,11 @@
+{
+  "experiment_id": "ablation_a",
+  "stage": 1,
+  "name": "Ablation A: lambda=1.0",
+  "run_name": "ablation_a_lambda1",
+  "seed": 42,
+  "started_at": "2026-07-09T16:38:24",
+  "config_path": "F:\\UAM\\configs\\experiments\\ablation_a_lambda1.yaml",
+  "guidance_mode": "mlp",
+  "extra": {}
+}

@@ -1,0 +1,28 @@
+\section{Implementation Consistency}
+\label{app:impl}
+
+\paragraph{Assumptions (summary).}
+Assump.~1: Lipschitz constraint/teacher map ($L_g$).
+Assump.~2: $\mu$-strong convexity and $L_F$-smoothness of $F_t$.
+Assump.~3: bounded projection sensitivity $C_\Pi$ (Remark~\ref{rem:Cpi}).
+Assump.~4: bounded drifts $\chi_t,\omega_t$.
+
+\paragraph{Code map.}
+$\hat c$: capacity head;
+$\mathrm{PI},\alpha,c^{\mathrm{mix}}$: \texttt{secdo.optimizer.secdo\_optimizer};
+$\Pi$: scalar-budget projection;
+$L_c$: constraint regression loss.
+Oracle alone peeks $c_{t+1}$; SECDO never does.
+Version tag: SECDO-v2.0; environment: conda \texttt{pytorch12}, CUDA.
+
+\paragraph{Simplified logical chain.}
+\begin{center}
+\texttt{learned constraint evolution}
+$\;\rightarrow\;$
+\texttt{anticipatory / mixed projection}
+$\;\rightarrow\;$
+\texttt{adaptive robustness}
+$\;\rightarrow\;$
+\texttt{regret analysis}.
+\end{center}
+We intentionally avoid presenting PI, $\alpha$, recovery, etc.\ as independent stacked heuristics.

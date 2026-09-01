@@ -1,0 +1,29 @@
+# Ablation: w/o Residual — concat obs+Phi policy (v1-style injection)
+experiment:
+  id: ablation_wo_residual
+  stage: 4
+  name: "DSGF v2 w/o Residual"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+env:
+  comm_radius: 0.5
+
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_dynamic_quality: true
+  use_temporal: true
+  residual_policy: false
+  use_guidance_reward: false
+
+output:
+  category: dsgf
+  results_dir: results

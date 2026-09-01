@@ -1,0 +1,47 @@
+{
+  "status": "FROZEN",
+  "frozen_at": "2026-07-14",
+  "note": "No further algorithm changes. P2 writing only.",
+  "tables": {
+    "table1_main": {
+      "file": "paper/tables/table1_main.csv",
+      "source": "results/baseline16_seeds (5-seed @ 16 UAV)",
+      "claim": "Main comparison: DSGF 4.01±1.68% vs MAPPO 2.40±0.90%"
+    },
+    "table2_ablation": {
+      "file": "paper/tables/table2_ablation.csv",
+      "source": "results/dsgf/ablation_* (4 UAV, seed=42)",
+      "claim": "Residual critical: Full 9.27% vs w/o Residual 0.22%"
+    },
+    "table3_generalization": {
+      "file": "paper/tables/table3_generalization.csv",
+      "source": "results/generalization/*_obs4 zero-shot",
+      "claim": "Obstacle density transfer after train@obs=4"
+    },
+    "table4_communication": {
+      "file": "paper/tables/table4_communication.csv",
+      "source": "results/communication fast profile",
+      "claim": "Constrained radius R=1/2: DSGF > GAT"
+    },
+    "table5_complexity": {
+      "file": "paper/tables/table5_complexity.tex",
+      "claim": "DSGF O(Nkd+NdT) vs dense O(N^2 d)"
+    }
+  },
+  "figures": {
+    "fig2_learning_curve": "paper/figures/fig2_learning_curve_5seed.png",
+    "fig3_scalability": "paper/figures/fig3_scalability.png",
+    "fig4_ablation": "paper/figures/fig4_ablation.png",
+    "fig5_generalization": "paper/figures/fig5_generalization.png",
+    "fig6_communication": "paper/figures/fig6_communication.png"
+  },
+  "settings_do_not_mix": {
+    "table1": "16 UAV, 5 seeds, 102k",
+    "table2": "4 UAV, seed=42, 102k",
+    "table3": "4 UAV obstacle train/eval",
+    "table4": "16 UAV, R in {1,2,full}",
+    "scalability": "DSGF only, N in {4,8,16,32}"
+  },
+  "aulc_available": true,
+  "aulc_source": "table1_main.csv columns AULC_mean/AULC_std"
+}

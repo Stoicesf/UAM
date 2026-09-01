@@ -1,0 +1,32 @@
+# DSGF v2 — 102k long-horizon validation (residual guidance, no guide reward)
+experiment:
+  id: exp4_dsfg_v2
+  stage: 4
+  name: "DSGF v2: Residual Guidance 102k"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: guided_mappo
+
+env:
+  comm_radius: 0.5
+
+guidance:
+  mode: dsfg
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+
+output:
+  category: dsgf
+  results_dir: results
+  figures_dir: figures

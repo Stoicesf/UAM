@@ -1,0 +1,91 @@
+% =============================================================================
+% II. Related Work — three gaps → AC-DSGF positioning
+% Style: critique toward contribution, NOT a survey dump.
+% =============================================================================
+
+\section{Related Work}
+\label{sec:related}
+
+We structure prior work around three gaps.
+The unifying distinction is:
+\emph{previous methods largely treat communication as given;
+AC-DSGF treats communication as learned}.
+
+\subsection{Multi-Agent RL for UAV Swarms}
+Centralized Training with Decentralized Execution (CTDE) methods such as MAPPO,
+MADDPG, and value-factorization approaches (e.g., QMIX) stabilize cooperative
+control by sharing critics or mixing networks in training while keeping
+actors local at execution~\cite{yu2022mappo,lowe2017maddpg,rashid2018qmix}.
+Aerial applications demonstrate navigation and collision handling under partial
+observability~\cite{chung2018uav,bettini2022vmas}.
+These pipelines, however, typically optimize task return under an implicit
+assumption of \textbf{full or sufficient communication}: either agents act
+independently given a shared training signal, or coordination depends on
+centralized features that do not survive bandwidth, energy, and latency limits
+of large UAV swarms.
+\begin{quote}
+\emph{Gap~1.}
+Existing MARL methods for UAV cooperation mainly optimize policy performance
+while overlooking communication constraints in large-scale swarms.
+\end{quote}
+
+\subsection{Graph-based Communication and Interaction Modeling}
+Graph neural networks and attention inject relational inductive bias into
+MARL~\cite{jiang2018graphcomm,iqbal2019actorattention,jiang2020graph,velickovic2018gat}.
+GAT-style guides and graph Transformers adaptively weight neighbors and capture
+time-varying spatial relations.
+Critically, \textbf{attention is not a communication decision}: it aggregates
+features under a \emph{predefined} support---a radius mask, a dense graph, or a
+hand schedule.
+Dense message passing costs $\mathcal{O}(N^{2})$; binary radius graphs still
+exchange on \emph{all} in-range edges regardless of task urgency.
+Our prior DSGF improves quality weighting and residual guidance, yet still
+activates the full geometric support whenever $A_{ij}{=}1$.
+\begin{quote}
+\emph{Gap~2.}
+Existing graph attention mechanisms mainly aggregate information assuming
+predefined communication structures; they do not equate topology adaptation
+with bandwidth-aware economy.
+\end{quote}
+
+\subsection{Communication-Efficient MARL}
+A parallel literature studies message pruning, gated talk/silence decisions,
+dropout, and bandwidth-aware objectives~\cite{singh2019learning,
+wang2020learning,foerster2016learning,sukhbaatar2016commnet,das2019tarmac,
+kim2019learning,mordatch2018emergent}.
+Many approaches rely on \textbf{stochastic deletion}
+$P(\mathrm{drop})$ or heuristic schedules weakly coupled to continuous
+control.
+Random pruning can discard coordination-critical links under tight budgets;
+over-aggressive silence collapses information flow.
+In contrast, AC-DSGF learns a continuous gate
+$g_{ij}^{t}=\sigma(W[h_i,h_j,d_{ij},q_{ij}])$ jointly with the policy under
+an explicit Soft Comm.\ Mass $C=\sum g_{ij}$ and Top-$K$ budgeting---i.e.,
+\textbf{topology optimization} with selective interaction, not random dropout
+or post-hoc pruning.
+\begin{quote}
+\emph{Gap~3.}
+Prior communication-efficient MARL often \textbf{prunes messages} on a fixed
+graph rather than \emph{learning the interaction topology} jointly with
+cooperative control under a quantified activation budget.
+\end{quote}
+
+\paragraph{Positioning.}
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Previous & Communication is \emph{given} (radius / dense / random drop) \\
+\textbf{Ours} & Communication is \emph{learned} (task-aware gate + budget) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}
+\noindent
+AC-DSGF jointly addresses
+(i)~task performance,
+(ii)~learned topology via $g_{ij}^{t}$, and
+(iii)~explicit budgets $C=\sum g_{ij}$ with Top-$K$, while residual DSGF
+guidance keeps sparse messaging assistive
+(Secs.~\ref{sec:silence}--\ref{sec:trigger}).
+It is therefore not ``DSGF + $\ell_2$ pruning,'' but a
+communication-constrained coordination stack.

@@ -1,0 +1,43 @@
+{
+  "experiment_id": "ablation_c3",
+  "stage": 1,
+  "name": "C3: adaptive decay lambda 102k",
+  "run_name": "adaptive_10k_c3_decay",
+  "seed": 42,
+  "started_at": "2026-07-09T16:58:43",
+  "config_path": "F:\\UAM\\configs\\experiments\\ablation_c3_adaptive.yaml",
+  "guidance_mode": "mlp",
+  "extra": {},
+  "category": "guide",
+  "finished_at": "2026-07-09T17:00:07",
+  "num_iterations": 5,
+  "final_reward": -0.028461292386054993,
+  "max_reward": -0.0285,
+  "reward_curve": [
+    -0.617798388004303,
+    -0.7340156435966492,
+    -0.738277792930603,
+    -2.2152597904205322,
+    -0.028461292386054993
+  ],
+  "paper_metrics": {
+    "reward": -6.3036,
+    "success": 0.0435,
+    "collision": 0.1274,
+    "path_length": 37.0029,
+    "alignment": 0.6546,
+    "max_reward": -0.0285,
+    "num_iterations": 5
+  },
+  "reward": -6.3036,
+  "success": 0.0435,
+  "collision": 0.1274,
+  "path_length": 37.0029,
+  "alignment": 0.6546,
+  "max_guide_coef": 0.05,
+  "guidance_warmup": true,
+  "guidance_schedule": "adaptive_decay",
+  "guidance_coef_min": 0.02,
+  "guidance_decay_k": 3.0,
+  "tag": null
+}

@@ -1,0 +1,20 @@
+experiment:
+  id: gen_test_obs8
+  stage: 6
+  name: "Generalization Test obs=8"
+
+train:
+  eval_episodes: 200
+
+env:
+  scenario: navigation_obstacle
+  num_agents: 4
+  num_envs: 1
+  num_obstacles: 8
+  comm_radius: 0.5
+  world_spawning_x: 2.0
+  world_spawning_y: 2.0
+
+output:
+  category: generalization
+  results_dir: results

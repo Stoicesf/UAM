@@ -1,0 +1,34 @@
+[
+  {
+    "method": "gat",
+    "num_agents": 16,
+    "inference_ms_per_step": 1.66,
+    "soft_edges_last": null,
+    "device": "cpu",
+    "iters": 50
+  },
+  {
+    "method": "transformer",
+    "num_agents": 16,
+    "inference_ms_per_step": 1.686,
+    "soft_edges_last": null,
+    "device": "cpu",
+    "iters": 50
+  },
+  {
+    "method": "dsgf",
+    "num_agents": 16,
+    "inference_ms_per_step": 3.352,
+    "soft_edges_last": null,
+    "device": "cpu",
+    "iters": 50
+  },
+  {
+    "method": "ac_dsgf",
+    "num_agents": 16,
+    "inference_ms_per_step": 3.937,
+    "soft_edges_last": 0.005708509124815464,
+    "device": "cpu",
+    "iters": 50
+  }
+]

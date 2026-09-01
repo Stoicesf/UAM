@@ -1,0 +1,52 @@
+# AC-DSGF++ Phase 5 v2 — Utility warm-up + ranking + gate residual
+# Fixes causal utility cold-start (silence collapse in v1 smoke).
+#
+# Schedule:
+#   frames 0–5k:   λ_comm=0  (let U* form under rich communication)
+#   frames 5k–20k: λ_comm=1e-5
+experiment:
+  id: ac_dsgf_pp_smoke_v2
+  stage: 6
+  name: "AC-DSGF++ Smoke v2 Utility Warm-up 4UAV 20k"
+
+train:
+  seed: 42
+  total_frames: 20_480
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 32
+  algorithm: guided_mappo
+
+env:
+  scenario: navigation
+  num_agents: 4
+  num_envs: 16
+  comm_radius: 0.5
+
+guidance:
+  mode: ac_dsgf_pp
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  num_spatial_layers: 2
+  comm_radius: 0.5
+  use_temporal: true
+  residual_policy: true
+  use_guidance_reward: false
+  beta_max: 1.0
+  beta_min: 0.0
+  beta_warmup_fraction: 0.2
+  beta_decay_k: 3.0
+  # --- Phase 5 v2: causal utility warm-up ---
+  utility_warmup_steps: 5000
+  lambda_comm: 0.00005      # applied AFTER warmup only
+  lambda_u: 0.5
+  lambda_rank: 0.1
+  gate_residual: true
+  gate_residual_alpha: 0.5
+  gate_residual_alpha_after: 0.8
+
+output:
+  category: ac_dsgf_pp
+  results_dir: results
+  tag: AC_DSGF_PP_SMOKE_V2

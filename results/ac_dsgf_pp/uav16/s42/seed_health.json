@@ -1,0 +1,19 @@
+{
+  "case": "B-weak",
+  "success": 0.0419921875,
+  "comm": 0.7082695108838379,
+  "corr_late": 0.5109716000000001,
+  "corr_last": 0.377675,
+  "comm_precision": 0.0,
+  "cei": 0.05928834654939778,
+  "gate_early": 7.9206959,
+  "gate_late": 0.44919739999999997,
+  "notes": [
+    "Success OK but Comm not yet <0.25 \u2014 check 5-seed mean"
+  ],
+  "ref_ac_dsgf": {
+    "success": 0.0395,
+    "comm": 0.4327,
+    "cei": 0.0913
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "experiment_id": "exp2_gat",
+  "stage": 2,
+  "name": "MAPPO + GAT Guide",
+  "run_name": "gat_gate2_v1",
+  "seed": 42,
+  "started_at": "2026-07-09T17:29:12",
+  "config_path": "configs/experiments/exp2_gat.yaml",
+  "guidance_mode": "gat",
+  "extra": {},
+  "category": "graph",
+  "finished_at": "2026-07-09T17:30:19",
+  "num_iterations": 5,
+  "final_reward": 1.051617980003357,
+  "max_reward": 1.0516,
+  "reward_curve": [
+    -0.309203565120697,
+    -0.8798384666442871,
+    -0.6033293008804321,
+    -0.08245965838432312,
+    1.051617980003357
+  ],
+  "paper_metrics": {
+    "reward": -5.6374,
+    "success": 0.0029,
+    "collision": 0.1411,
+    "path_length": 57.3664,
+    "alignment": 0.9157,
+    "max_reward": 1.0516,
+    "num_iterations": 5
+  },
+  "reward": -5.6374,
+  "success": 0.0029,
+  "collision": 0.1411,
+  "path_length": 57.3664,
+  "alignment": 0.9157,
+  "max_guide_coef": 0.05,
+  "guidance_warmup": true,
+  "guidance_schedule": "adaptive_decay",
+  "guidance_coef_min": 0.02,
+  "guidance_decay_k": 3.0,
+  "tag": null
+}

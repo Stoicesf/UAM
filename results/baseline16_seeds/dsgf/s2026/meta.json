@@ -1,0 +1,11 @@
+{
+  "experiment_id": "baseline16_dsgf_v2",
+  "stage": 4,
+  "name": "DSGF v2 16 UAV",
+  "run_name": "s2026",
+  "seed": 2026,
+  "started_at": "2026-07-12T21:37:30",
+  "config_path": "F:\\UAM\\configs\\baseline16\\dsgf_v2.yaml",
+  "guidance_mode": "dsfg",
+  "extra": {}
+}

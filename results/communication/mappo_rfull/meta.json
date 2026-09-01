@@ -1,0 +1,11 @@
+{
+  "experiment_id": "comm_mappo_rfull",
+  "stage": 0,
+  "name": "MAPPO @ R=full (16 UAV)",
+  "run_name": "mappo_rfull",
+  "seed": 42,
+  "started_at": "2026-07-14T13:35:21",
+  "config_path": "F:\\UAM\\configs\\communication\\generated\\mappo_rfull.yaml",
+  "guidance_mode": "none",
+  "extra": {}
+}

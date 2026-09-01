@@ -1,0 +1,51 @@
+experiment:
+  id: baseline16_full_attn
+  stage: 2
+  name: Full Attention MAPPO 16 UAV
+train:
+  seed: 2026
+  algorithm: guided_mappo
+  total_frames: 102400
+  frames_per_batch: 2048
+  num_epochs: 5
+  minibatch_size: 512
+  learning_rate: 0.0003
+  max_grad_norm: 0.5
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  entropy_coef: 0.01
+  critic_coef: 1.0
+  hidden_dim: 128
+  share_params_policy: true
+  share_params_critic: true
+  use_guidance: false
+  use_guidance_reward: false
+  log_dir: logs
+  checkpoint_dir: checkpoints
+  save_interval: 10000
+  log_interval: 1
+  eval_episodes: 200
+  lock_total_frames: true
+  lock_eval_episodes: true
+env:
+  scenario: navigation
+  num_envs: 8
+  num_agents: 16
+  device: cuda
+  continuous_actions: true
+  max_steps: 128
+  comm_radius: 0.5
+  obs_dim: 18
+  action_dim: 2
+  guidance_dim: 4
+guidance:
+  mode: sparse
+  guidance_dim: 6
+  hidden_dim: 128
+  num_heads: 4
+  use_guidance_reward: false
+  residual_policy: false
+output:
+  category: baseline16
+  results_dir: results

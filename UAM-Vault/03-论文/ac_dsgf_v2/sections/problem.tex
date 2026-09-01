@@ -1,0 +1,26 @@
+\section{Problem Formulation}
+\label{sec:problem}
+
+\subsection{Static Objective, Dynamic Constraints}
+At each $t$,
+\begin{equation}
+\min_{x\in\mathbb{R}^n} F_t(x)
+\quad\text{s.t.}\quad
+x\in\mathcal{B}_t=\mathcal{B}(c_t)=\{x\ge 0:\mathbf{1}^\top x\le c_t\}.
+\end{equation}
+Let $x_t^\star\in\arg\min_{x\in\mathcal{B}_t}F_t(x)$.
+We do \emph{not} claim convergence to a moving unconstrained optimum.
+
+\subsection{UAV Capacity Teacher}
+\begin{equation}
+c_t=W\log_2\bigl(1+\overline{\mathrm{SINR}}_t\bigr),\qquad
+\chi_t=\lvert c_{t+1}-c_t\rvert=d_H(\mathcal{B}_{t+1},\mathcal{B}_t).
+\end{equation}
+
+\subsection{Learned Constraint Dynamics}
+\begin{equation}
+\hat c_{t+1}=\mathcal{F}_\phi(h_t),\qquad
+\delta_t=d_H\bigl(\hat{\mathcal{B}}_{t+1},\mathcal{B}_{t+1}\bigr)
+\le \lvert\hat c_{t+1}-c_{t+1}\rvert.
+\end{equation}
+SECDO establishes a controllable relationship between capacity residuals and feasible-set mismatch $\delta_t$---it does \emph{not} claim to learn the true future constraint exactly.

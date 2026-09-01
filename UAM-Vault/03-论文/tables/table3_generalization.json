@@ -1,0 +1,167 @@
+[
+  {
+    "method": "mappo",
+    "obstacles": 0,
+    "success": 0.06625,
+    "collision": 0.2525,
+    "reward": 0.5935623919032514,
+    "path_length": 64.80664798736572,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\mappo_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.0
+  },
+  {
+    "method": "mappo",
+    "obstacles": 2,
+    "success": 0.0625,
+    "collision": 0.29625,
+    "reward": -1.6179041435383261,
+    "path_length": 65.12551162719727,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\mappo_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.0566
+  },
+  {
+    "method": "mappo",
+    "obstacles": 4,
+    "success": 0.06625,
+    "collision": 0.25125,
+    "reward": -3.4017114979354663,
+    "path_length": 67.36136568069458,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\mappo_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.0
+  },
+  {
+    "method": "mappo",
+    "obstacles": 6,
+    "success": 0.07375,
+    "collision": 0.2275,
+    "reward": -1.7597534781089053,
+    "path_length": 72.66164878845215,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\mappo_obs4\\checkpoints\\final.pt",
+    "gen_gap": -0.1132
+  },
+  {
+    "method": "mappo",
+    "obstacles": 8,
+    "success": 0.0875,
+    "collision": 0.1925,
+    "reward": 0.5698886446096003,
+    "path_length": 80.44363735198975,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\mappo_obs4\\checkpoints\\final.pt",
+    "gen_gap": -0.3208
+  },
+  {
+    "method": "gat",
+    "obstacles": 0,
+    "success": 0.0425,
+    "collision": 0.26625,
+    "reward": -0.9404855607077479,
+    "path_length": 66.49773507118225,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\gat_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.2917
+  },
+  {
+    "method": "gat",
+    "obstacles": 2,
+    "success": 0.0475,
+    "collision": 0.21875,
+    "reward": -2.4174129842966794,
+    "path_length": 67.57991249084472,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\gat_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.2083
+  },
+  {
+    "method": "gat",
+    "obstacles": 4,
+    "success": 0.06,
+    "collision": 0.22625,
+    "reward": -2.8868199340440333,
+    "path_length": 70.7279727935791,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\gat_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.0
+  },
+  {
+    "method": "gat",
+    "obstacles": 6,
+    "success": 0.0725,
+    "collision": 0.19125,
+    "reward": -2.6659097737260162,
+    "path_length": 75.58746997833252,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\gat_obs4\\checkpoints\\final.pt",
+    "gen_gap": -0.2083
+  },
+  {
+    "method": "gat",
+    "obstacles": 8,
+    "success": 0.09125,
+    "collision": 0.1925,
+    "reward": -1.1669383845035919,
+    "path_length": 80.65146160125732,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\gat_obs4\\checkpoints\\final.pt",
+    "gen_gap": -0.5208
+  },
+  {
+    "method": "dsgf",
+    "obstacles": 0,
+    "success": 0.03125,
+    "collision": 0.28625,
+    "reward": -0.07868074494879693,
+    "path_length": 71.53052299499512,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\dsgf_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.3902
+  },
+  {
+    "method": "dsgf",
+    "obstacles": 2,
+    "success": 0.04,
+    "collision": 0.25375,
+    "reward": -0.9917403956130147,
+    "path_length": 70.25166456222534,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\dsgf_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.2195
+  },
+  {
+    "method": "dsgf",
+    "obstacles": 4,
+    "success": 0.05125,
+    "collision": 0.27375,
+    "reward": -3.330811761170626,
+    "path_length": 73.3928737449646,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\dsgf_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.0
+  },
+  {
+    "method": "dsgf",
+    "obstacles": 6,
+    "success": 0.04625,
+    "collision": 0.24125,
+    "reward": -1.6992136663291604,
+    "path_length": 80.86866189956665,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\dsgf_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.0976
+  },
+  {
+    "method": "dsgf",
+    "obstacles": 8,
+    "success": 0.05125,
+    "collision": 0.2075,
+    "reward": -0.24002624444663526,
+    "path_length": 88.90731399536133,
+    "episode_length": 128.0,
+    "checkpoint": "results\\generalization\\dsgf_obs4\\checkpoints\\final.pt",
+    "gen_gap": 0.0
+  }
+]

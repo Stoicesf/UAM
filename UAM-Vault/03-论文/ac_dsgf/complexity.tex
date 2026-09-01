@@ -1,0 +1,83 @@
+\subsection{Computational and Communication Complexity}
+\label{sec:complexity}
+
+Let $N$ be the number of UAVs, $d$ the hidden width, $\mathcal{N}_i$ the
+feasible neighbors of agent $i$ under radius $R_c$, and
+$k=\tfrac{1}{N}\sum_i|\mathcal{N}_i|$ the average degree ($k\ll N$ in sparse
+swarms).
+Let $K_i=\lceil\rho|\mathcal{N}_i|\rceil$ denote the Top-$K$ budgeted degree
+and $K=\tfrac{1}{N}\sum_i K_i$ the average budgeted degree ($K\le k$).
+
+\paragraph{Dense / GAT baselines.}
+Full pairwise messaging or dense attention costs
+$\mathcal{O}(N^{2}d)$ per layer.
+Even with a binary radius mask, GAT-style aggregation that treats all
+in-radius neighbors equally still processes $\Theta(Nk)$ edges; under moderate
+$R_c$ this rapidly approaches quadratic growth in $N$.
+
+\paragraph{AC-DSGF.}
+Gate evaluation runs on the feasible edge set:
+$\mathcal{O}(|E|d)=\mathcal{O}(Nkd)$.
+Top-$K$ budgeting per agent costs $\mathcal{O}(k\log k)$ (or
+$\mathcal{O}(K\log k)$ with partial selection), totaling
+$\mathcal{O}(Nk\log k)$.
+Sparse attention then operates on the budgeted support of size $\mathcal{O}(NK)$:
+\begin{equation}
+\mathcal{O}\!\bigl(NKd + Nd\bigr)
+\quad\text{(attention + GRU)},
+\label{eq:ac-complexity}
+\end{equation}
+When $K$ is held approximately constant by the budget ratio, attended
+aggregation scales as $\mathcal{O}(NK)$ rather than dense $\mathcal{O}(N^{2})$.
+We do \emph{not} claim that the entire forward pass is strictly linear in $N$:
+radius candidate construction remains $\mathcal{O}(Nkd)$ as in other geometric
+graph methods.
+The practical claim is that \textbf{activated communication density}
+decreases as $\eta_N=\mathcal{O}(K/N)$ under bounded $K$
+(Proposition~\ref{prop:density}; Fig.~\ref{fig:density-scale}).
+
+\begin{table}[t]
+\centering
+\caption{Complexity and typical communication intensity (conceptual).
+$K$ is the average budgeted degree; $k$ is the average radius degree.}
+\label{tab:complexity}
+\begin{tabular}{lccc}
+\toprule
+Method & Communication & Aggregation & Complexity \\
+\midrule
+MAPPO & none & --- & $\mathcal{O}(Nd)$ \\
+GAT / Transformer & high & dense / full & $\mathcal{O}(N^{2}d)$ \\
+DSGF & medium (all radius links) & sparse $k$ & $\mathcal{O}(Nkd+Nd)$ \\
+\textbf{AC-DSGF} & \textbf{low} (Top-$K$ gates) & sparse $K{\le}k$ &
+$\mathcal{O}(NKd+Nd)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Pairwise distance masking remains $\mathcal{O}(N^{2})$ and is shared by all
+geometric graph methods; the practical gain of AC-DSGF is in
+\emph{attended} edges and transmitted soft mass under $K\ll N$.
+Fig.~\ref{fig:density-scale} illustrates communication density versus team size.
+Table~\ref{tab:compute} reports CPU inference at $N{=}16$ alongside
+Table~\ref{tab:main} Comm: the gate adds modest latency while cutting soft
+mass by nearly two orders of magnitude versus radius-support DSGF/GAT.
+
+\begin{table}[t]
+\centering
+\caption{Runtime / scalability (CPU, no retraining).
+Inference ms/step at $N{=}16$ (50 timed steps); Comm from Table~\ref{tab:main}.
+For $N{=}4,8$: attended complexity only ($K{\ll}k$).}
+\label{tab:compute}
+\begin{tabular}{cccc}
+\toprule
+$N$ & GAT & DSGF & AC-DSGF \\
+\midrule
+$4$  & $\mathcal{O}(Nk)$ & $\mathcal{O}(Nk)$ & $\mathcal{O}(NK)$ \\
+$8$  & $\mathcal{O}(Nk)$ & $\mathcal{O}(Nk)$ & $\mathcal{O}(NK)$ \\
+$16$ & $1.66$\,ms / $38.8$ &
+$3.35$\,ms / $39.3$ &
+$\mathbf{3.94}$\,ms / $\mathbf{0.43}$ \\
+\bottomrule
+\end{tabular}
+\end{table}

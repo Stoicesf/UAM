@@ -1,0 +1,27 @@
+# P1-3 — MAPPO @ 16 UAV (no explicit communication)
+experiment:
+  id: comm_mappo
+  stage: 0
+  name: "MAPPO Communication Sweep 16 UAV"
+
+train:
+  seed: 42
+  total_frames: 102_400
+  algorithm: mappo
+  lock_total_frames: true
+  lock_eval_episodes: true
+  eval_episodes: 200
+
+env:
+  scenario: navigation
+  num_agents: 16
+  num_envs: 8
+  comm_radius: 0.5
+
+guidance:
+  mode: none
+  use_guidance_reward: false
+
+output:
+  category: communication
+  results_dir: results
