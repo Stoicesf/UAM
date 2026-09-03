@@ -1,0 +1,8 @@
+n_agents: 16
+n_tasks: 5
+comm_radius: 2.0
+max_steps: 200
+task_type: point_coverage
+n_roles: 3
+boundary: 5.0
+device: cpu

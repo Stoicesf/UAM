@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ac-dsgf-swarm"
+version = "0.3.0"
+description = "ICPS + DICE + SEM multi-UAV swarm stack with interactive demos"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "torch",
+  "numpy",
+  "matplotlib",
+  "pyyaml",
+  "vmas",
+]
+
+[project.scripts]
+ac-dsgf-demo = "demos.interactive_demo:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+  "demos*",
+  "dice*",
+  "environments*",
+  "models*",
+  "visualization*",
+  "utils*",
+  "experiments*",
+  "guidance*",
+]
