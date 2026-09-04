@@ -1,154 +1,108 @@
-# UAV-Swarm: DSGF-HRL
+# AC-DSGF Swarm (ICPS + DICE + SEM)
 
-> **未知环境下基于动态蜂群引导场（DSGF）的层级强化学习无人机蜂群协同导航方法研究**
+Interactive multi-UAV stack: **ICPS** resource/channel layer → **DICE** roles & local rules → **SEM** semantic L1/L2/L3 gating.
 
-论文驱动开发（Paper-driven Development）— 整篇论文只回答一个问题：
-
-**如何利用少量通信实现未知环境下的大规模无人机协同导航？**
-
----
-
-## 算法对比（仅两个）
-
-| 方法 | 角色 | 代码来源 |
-|------|------|----------|
-| **MAPPO** | Baseline | 复用（VMAS 官方 / TorchRL） |
-| **DSGF-HRL** | 创新 | `guidance/` + `reward/guidance_reward.py` |
-
-不要自己写：PPO、Transformer、GNN、LLM 全套框架。
-
----
-
-## 训练数据流
+![Demo](experiment_results/demos/demo_mixed.gif)
 
 ```
-VMAS → 状态 → 构建通信图 → DSGF → Φ → Actor(obs+Φ) → Action
-     → Environment → Reward(Goal+Collision+Guide) → MAPPO Update
+ICPS (bandwidth / SNR / compute)
+        ↓
+DICE  (roles · assignment · safety)
+        ↓
+SEM   (encoder · gate · L1/L2/L3 links)
+        ↓
+VMAS-style DICEVMASEnv  +  demos/visualizer
 ```
 
-MAPPO 更新逻辑**不变**。真正新增的只有：
-
-- `guidance/` — Graph + DSGF + Sparse Attention
-- `reward/guidance_reward.py` — 方向对齐奖励
-
----
-
-## 项目结构 ↔ 论文章节
-
-| 目录 | 论文章节 | 说明 |
-|------|----------|------|
-| `guidance/` | 第三章 | **核心创新**，全部自己写 |
-| `algorithms/` `models/` `reward/` | 第四章 | MAPPO 复用 + DSGF 包装 |
-| `experiments/` | 第五章 | 5 个实验，每个一个脚本 |
-
----
-
-## 环境
+## Quick start (≈5 min)
 
 ```bash
-conda activate dpg_hrl
-cd f:\UAM
-python test_env.py          # 验证 VMAS + GPU
+# 1) env (locked GPU torch stack)
+conda env create -f environment_frozen.yml   # or: conda activate pytorch12
+pip install -e .
+
+# 2) interactive demo
+python demos/interactive_demo.py --scene search --n_agents 16 --speed 1x
+# after install:
+ac-dsgf-demo --scene tracking --n_agents 16
 ```
 
----
+**Windows:** `.\scripts\run_demo.ps1 search 16 1x`  
+**Linux/Mac:** `./scripts/run_demo.sh search 16 1x`
 
-## 开发路线（8 周）
+### Keyboard
 
-| 周 | 目标 | 关键文件 |
-|----|------|----------|
-| **Week 1** | VMAS + MAPPO baseline | `env/`, `algorithms/baseline/` |
-| **Week 2** | DSGFEncoder | `guidance/dsfg_encoder.py` |
-| **Week 3** | Guidance Reward | `reward/guidance_reward.py` |
-| **Week 4** | 实验1 Baseline 对比 | `experiments/baseline.py` |
-| **Week 5** | 实验5 消融 | `experiments/ablation.py` |
-| **Week 6** | 实验4 可扩展性 | `experiments/scalability.py` |
-| **Week 7** | 实验3 通信开销 | `experiments/communication.py` |
-| **Week 8** | Isaac 验证（可选） | — |
+| Key | Action |
+|-----|--------|
+| Space | Pause / resume |
+| R | Reset episode |
+| H | Help overlay |
+| Q | Quit |
 
-### Day-by-Day（第一版 MVP）
+### Scenes
 
-| Day | 任务 |
-|-----|------|
-| Day 1 | 跑通 VMAS → `test_env.py` ✅ |
-| Day 2 | 跑通 MAPPO baseline |
-| Day 3 | 保存 baseline checkpoint |
-| Day 4 | Actor 输入 obs + Φ（+4 维） |
-| Day 5 | 实现 DSGFEncoder |
-| Day 6 | 加入 Guidance Reward |
-| Day 7 | 第一次完整训练 |
+| Scene | What you see |
+|-------|----------------|
+| `search` | Point coverage / disperse to stars |
+| `tracking` | Dynamic targets drift |
+| `adversarial` | Mid-episode node kills + reassignment |
+| `mixed` | Obstacles + light failures |
+| `pursuit` | 12 UAVs encircle a fleeing evader |
 
----
+异构可视化（`--hetero`）由环境初始化时的**先验引导的异构角色分配**驱动（机型比例 + 角色偏置），不加载 `role_policy.pt`。
 
-## 代码量预算
+Sim-to-real knobs: `--sensor_noise 0.05 --drop_rate 0.05 --comm_delay 3 --max_acc 2.0`
 
-| 模块 | 自写？ | 预计行数 |
-|------|--------|----------|
-| VMAS 环境 | 复用 | 0 |
-| MAPPO 框架 | 复用 | 100–300（适配） |
-| Actor/Critic | 复用+改 | ~100 |
-| DSGF 动态图 | ✅ | 200–300 |
-| DSGF 稀疏注意力 | ✅ | 300–500 |
-| Guidance 融合 | ✅ | 150–250 |
-| Guidance 奖励 | ✅ | 100–150 |
-| 实验脚本 | ✅ | 400–600 |
-| **合计自写** | | **~1500–2500** |
+## Layout
 
----
+| Path | Role |
+|------|------|
+| `models/complete_controller.py` | Unified ICPS+DICE+SEM step |
+| `models/communication/` | Semantic gate + delay buffer |
+| `dice/` | Roles, safety, failure injection |
+| `environments/dice_vmas_env.py` | Torch swarm env (+ noise / dynamics / pursuit) |
+| `demos/` | Interactive viz + scene library + recorder |
+| `configs/stable/` | Frozen reproducible experiment configs |
+| `scripts/` | Robustness / FPS / pursuit sweeps |
 
-## 五个实验（第五章）
-
-| 实验 | 脚本 | 指标 |
-|------|------|------|
-| 1 Baseline | `experiments/baseline.py` | Success Rate |
-| 2 碰撞 | 同上 | Collision Rate |
-| 3 通信 | `experiments/communication.py` | Communication Cost |
-| 4 可扩展性 | `experiments/scalability.py` | 4/8/16/32 agents |
-| 5 消融 | `experiments/ablation.py` | 去掉 DSGF / Guide / Sparse Attn |
-
----
-
-## Stage 0 — Baseline (DONE, frozen)
+## Reproduce key experiments
 
 ```bash
-python train.py --exp configs/experiments/exp0_baseline.yaml
+python scripts/diagnose_semantic_gate.py --episodes 5
+python scripts/robustness_sweep.py --episodes 3 --steps 40
+python scripts/pursuit_generalization.py --seeds 10 --steps 100
+python scripts/benchmark_demo_fps.py --steps 30
+python demos/record_video.py --scene mixed --fps 8 --max_frames 40
 ```
 
-## Stage 1 — Guide MLP (CURRENT)
+Outputs land under `experiment_results/`.
+
+## Install (editable)
 
 ```bash
-python train.py --exp configs/experiments/exp1_guide.yaml
-python train.py --exp configs/experiments/exp1_guide.yaml --smoke
+pip install -e .
+ac-dsgf-demo --scene pursuit
 ```
 
-Compare: `exp0_baseline` vs `exp1_guide` -> first thesis figure.
-
-## Experiment management
-
-Each run auto-saves to `results/<run_name>/`:
-- config.yaml, meta.json, metrics.csv, summary.json
-- checkpoints/, tensorboard/
-
-```bash
-python scripts/plot_results.py
-```
-
-## Full stage roadmap
-
-See `configs/experiments/README.md`
-
-
+Requires: Python ≥3.10, `torch`, `numpy`, `matplotlib`, `pyyaml`, `vmas` (see `environment_frozen.yml` for pinned CUDA wheels).
 
 ---
 
-## DSGF 核心概念
+Legacy DSGF-HRL paper-driven notes remain in git history / `paper/`; the live product surface is the demo stack above.
 
-DSGF **不是** Transformer 论文。它就是：
+## Advanced work packages
 
+```bash
+# WP4 zero-shot transfer matrix
+python scripts/transfer_matrix.py --episodes 20
+
+# WP2 adversarial RL evader (smoke steps; bump for real training)
+python scripts/train_adversarial.py --rounds 3 --evader_steps 50000 --hunter_steps 20000
+python demos/interactive_demo.py --scene adversarial_pursuit --evader_policy rl
+
+# WP3 click-to-explain
+python demos/interactive_demo.py --scene adversarial --explain
+
+# WP5 lifelong evolution
+python demos/lifelong_demo.py --steps 5000 --save_plot
 ```
-Swarm State → Sparse Attention → Compressed Guidance → Φ_i = [dx, dy, risk, priority]
-```
-
-Actor 输入：`obs (64维) + Φ (4维) = 68维`。MAPPO 不用改。
-
-Reward：`R = R_goal + R_collision + cos(θ_action - θ_Φ)`
