@@ -88,6 +88,10 @@ Requires: Python ≥3.10, `torch`, `numpy`, `matplotlib`, `pyyaml`, `vmas` (see 
 
 ---
 
+## Archived research
+
+Post-`v2.0-swarm-complete` emergence / hierarchical-PPO experiments are **not merged** into this branch. See the appendix in [`RELEASE_NOTES.md`](RELEASE_NOTES.md) (*已归档研究记录：角色涌现与覆盖-碰撞帕累托平衡*) and tag `archived/emergence-ppo` on `exp/hierarchical-ppo`.
+
 Legacy DSGF-HRL paper-driven notes remain in git history / `paper/`; the live product surface is the demo stack above.
 
 ## Advanced work packages

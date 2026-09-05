@@ -61,3 +61,32 @@ python demos/lifelong_demo.py --steps 5000 --save_plot
 ## 实验备注
 
 - **异构涌现训练**：`scripts/train_role_emergence.py` 在 `match_w=0` 后收敛至随机水平，表明当前任务奖励结构不足以驱动纯涌现角色分化。异构能力匹配在实际使用中依赖 `capability_match_bonus` 先验。
+
+## 已归档研究记录：角色涌现与覆盖-碰撞帕累托平衡（2026-09）
+
+本实验链以 `v2.0-swarm-complete` 为基线，旨在探索异构蜂群中“轻型 UAV 自发成为侦察者”的涌现机制，以及覆盖效率与碰撞安全之间的平衡边界。
+
+### 实验分支
+
+- `exp/emergence-v2`：方向1（安全探索奖励）
+- `exp/hierarchical-rl`：方向2（分层RL + REINFORCE）
+- `exp/hierarchical-ppo`：分层RL + PPO/GAE + 覆盖-碰撞帕累托调参（归档标签 `archived/emergence-ppo`）
+
+### 关键发现
+
+1. **角色分化可解**：PPO + 高层决策架构可实现 `light_scout=1.0`（轻型 UAV 全部成为侦察者）。
+2. **覆盖-碰撞平衡存在结构性帕累托边界**：在 N=16 的 VMAS 环境中，无法同时满足 `coverage ≥ 0.70`、`collision ≤ 0.01`、`light_scout ≥ 0.70` 三项硬门槛。
+3. **最优折衷点**：`coverage ≈ 0.59`、`collision ≈ 0.027`、`light_scout = 1.0`（奖励公式 `1.5*coverage - 0.5*collision`）。
+
+### 归档结论
+
+- 上述实验分支**不合并**至主干。
+- `v2.0-swarm-complete` 保持为当前唯一稳定发布版本。
+- 详细报告见 `experiment_results/ppo_tuning/FINAL_REPORT.md`（位于 `exp/hierarchical-ppo` 分支 / 标签 `archived/emergence-ppo`）。
+
+### 后续建议
+
+若未来继续探索该方向，建议：
+
+- 换用更高保真度环境（Gazebo）重新验证帕累托前沿是否一致；
+- 或在任务定义中放宽碰撞约束（如接受 `coll ≤ 0.03`），以换取更高的覆盖和分化。
