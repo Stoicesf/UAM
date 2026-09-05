@@ -1,0 +1,16 @@
+high_lr: 3.0e-4
+low_lr: 3.0e-4
+gamma: 0.99
+gae_lambda: 0.95
+max_steps: 200
+n_roles: 3
+scout_weight: 0.5
+decision_interval: 50
+role_entropy_bonus: 0.05
+match_weight: 1.0
+coll_coef: 2.0
+clip_epsilon: 0.2
+epochs: 10
+ent_coef: 0.01
+vf_coef: 0.5
+max_grad_norm: 0.5

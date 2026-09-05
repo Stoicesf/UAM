@@ -1,0 +1,9 @@
+{
+  "final_entropy": 0.7437971830368042,
+  "final_coverage": 0.800000011920929,
+  "final_collision_rate": 0.0416666679084301,
+  "final_light_scout_ratio": 0.13333333333333333,
+  "scout_weight": 0.5,
+  "device": "cuda",
+  "steps": 80000
+}

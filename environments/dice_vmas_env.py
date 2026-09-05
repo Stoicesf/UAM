@@ -58,6 +58,8 @@ class DiceEnvConfig:
     capture_radius: float = 2.0
     evader_policy: str = "scripted"  # scripted | rl
     evader_ckpt: str = ""
+    # scout exploration shaping (0 = off)
+    scout_weight: float = 0.0
 
 
 class DICEUAVScenario:
@@ -133,6 +135,8 @@ class DICEVMASEnv:
         self._last_collision_rate: float = 0.0
         self.evader_vel: torch.Tensor
         self._evader_ppo = None
+        self._grid_res = 0.5
+        self._coverage_grid: torch.Tensor | None = None
         if self.cfg.task_type == "pursuit" and self.cfg.evader_policy == "rl":
             from environments.scenarios.adversarial_pursuit import load_evader
 
@@ -179,6 +183,9 @@ class DICEVMASEnv:
         self._last_collision_rate = 0.0
         self.evader_vel = torch.zeros(2, device=self.device)
         self.step_count = 0
+        # coverage grid over [-boundary, boundary]
+        g = max(1, int(torch.ceil(torch.tensor(2.0 * c.boundary / self._grid_res)).item()))
+        self._coverage_grid = torch.zeros(g, g, dtype=torch.bool, device=self.device)
         obs = self._build_obs()
         return obs, self._info()
 
@@ -187,6 +194,52 @@ class DICEVMASEnv:
         mask = (dist < self.cfg.comm_radius) & (dist > 0)
         mask = mask & self.alive.unsqueeze(0) & self.alive.unsqueeze(1)
         return mask
+
+    def _scout_explore_bonus(self) -> torch.Tensor:
+        """Per-agent explore bonus for newly covered cells + soft proximity penalty."""
+        c = self.cfg
+        n = c.n_agents
+        out = torch.zeros(n, device=self.device)
+        w = float(c.scout_weight)
+        if w <= 0 or self._coverage_grid is None:
+            return out
+        grid = self._coverage_grid
+        g = grid.shape[0]
+        origin = -float(c.boundary)
+        res = self._grid_res
+        radius = 3.0
+        r_cells = int(radius / res)
+
+        for i in range(n):
+            if not bool(self.alive[i]):
+                continue
+            gx = int((float(self.pos[i, 0]) - origin) / res)
+            gy = int((float(self.pos[i, 1]) - origin) / res)
+            new_cells = 0
+            for dx in range(-r_cells, r_cells + 1):
+                for dy in range(-r_cells, r_cells + 1):
+                    if dx * dx + dy * dy > r_cells * r_cells:
+                        continue
+                    nx, ny = gx + dx, gy + dy
+                    if 0 <= nx < g and 0 <= ny < g and not bool(grid[nx, ny]):
+                        grid[nx, ny] = True
+                        new_cells += 1
+            if new_cells > 0:
+                out[i] += 0.01 * new_cells * w
+
+        dist = torch.cdist(self.pos, self.pos)
+        for i in range(n):
+            if not bool(self.alive[i]):
+                continue
+            for j in range(i + 1, n):
+                if not bool(self.alive[j]):
+                    continue
+                d = float(dist[i, j])
+                if 0.5 < d < 1.0:
+                    pen = -0.05 * (1.0 - d) * w
+                    out[i] += pen
+                    out[j] += pen
+        return out
 
     def _role_oh(self, roles: torch.Tensor) -> torch.Tensor:
         return torch.nn.functional.one_hot(roles.clamp(0, self.n_roles - 1), self.n_roles).float()
@@ -340,6 +393,7 @@ class DICEVMASEnv:
         rewards = rewards - 0.2 * coll
         n_edges = float(self.neighbor_mask().float().sum())
         rewards = rewards - 0.001 * n_edges / max(c.n_agents, 1)
+        rewards = rewards + self._scout_explore_bonus()
 
         self.step_count += 1
         done = bool(self.step_count >= c.max_steps or bool(self.task_done.all()) or self.captured)
@@ -363,6 +417,16 @@ class DICEVMASEnv:
             "captured": self.captured,
             "uav_types": list(self.uav_type_list),
         }
+
+    def get_global_obs(self) -> torch.Tensor:
+        """Minimal global obs: coverage, collision, role hist, mean battery."""
+        info = self._info()
+        cov = float(info["coverage"])
+        coll = float(info["collision_rate"])
+        hist = torch.bincount(self.roles.detach().cpu(), minlength=self.n_roles).float()
+        hist = hist / max(self.n_agents, 1)
+        batt = self.batt.detach().float().mean().view(1).cpu()
+        return torch.cat([torch.tensor([cov, coll], dtype=torch.float32), hist, batt])
 
     def random_actions(self) -> torch.Tensor:
         a = torch.randn(self.n_agents, self.action_dim, generator=self._gen)
@@ -391,7 +455,13 @@ def self_check() -> None:
     assert info["uav_types"].count(0) == 3
     for _ in range(5):
         obs, r, done, trunc, info = env3.step(env3.random_actions())
-    print(f"dice_vmas_env: OK (vmas={_VMAS_VER}, obs={env.obs_dim}, pursuit_ok, hetero_ok)")
+    env4 = DICEVMASEnv(n_agents=8, n_tasks=3, max_steps=20, scout_weight=1.0)
+    obs, _ = env4.reset(seed=2)
+    for _ in range(5):
+        obs, r, done, trunc, info = env4.step(env4.random_actions())
+        assert r.shape == (8,)
+    assert env4._coverage_grid is not None and bool(env4._coverage_grid.any())
+    print(f"dice_vmas_env: OK (vmas={_VMAS_VER}, obs={env.obs_dim}, pursuit_ok, hetero_ok, scout_ok)")
 
 
 if __name__ == "__main__":

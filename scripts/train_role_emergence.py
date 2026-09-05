@@ -42,7 +42,14 @@ def train(
     max_steps: int = 80,
     save_dir: Path | None = None,
     seed: int = 0,
+    scout_weight: float = 0.0,
+    device: str = "cpu",
 ) -> dict:
+    # env stays CPU (Python scout/knn loops); policy on GPU
+    if device.startswith("cuda") and not torch.cuda.is_available():
+        print("CUDA unavailable, falling back to cpu", flush=True)
+        device = "cpu"
+    dev = torch.device(device)
     env = DICEVMASEnv(
         n_agents=n,
         n_tasks=5,
@@ -53,13 +60,15 @@ def train(
         hetero_ratio=hetero_ratio,
         hetero_role_bias=False,  # emergence: no hard seed
         seed=seed,
+        scout_weight=scout_weight,
     )
-    policy = RolePolicy(env.obs_dim, n_roles=3)
+    policy = RolePolicy(env.obs_dim, n_roles=3).to(dev)
     opt = torch.optim.Adam(policy.parameters(), lr=3e-4)
     rr = RoleReward(3)
     hist: list[dict] = []
     global_step = 0
     ep = 0
+    print(f"train device={dev} n={n} scout_weight={scout_weight}", flush=True)
 
     while global_step < steps:
         obs, info = env.reset(seed=seed + ep)
@@ -67,14 +76,15 @@ def train(
         rewards: list[torch.Tensor] = []
         done = False
         while not done and global_step < steps:
-            actions, _roles = policy(obs)
+            obs_t = obs.to(dev)
+            actions, _roles = policy(obs_t)
             logits = actions[:, 2:]
             dist = torch.distributions.Categorical(logits=logits)
             sampled = dist.sample()
             logp = dist.log_prob(sampled)
             actions = actions.clone()
             actions[:, 2:] = torch.nn.functional.one_hot(sampled, 3).float() * 2
-            obs, r, done, trunc, info = env.step(actions)
+            obs, r, done, trunc, info = env.step(actions.detach().cpu())
             mask = neighbor_mask(env.pos, env.cfg.comm_radius, env.alive)
             # anneal match bonus: full until match_anneal_steps, then → 0
             match_w = max(0.0, 1.0 - global_step / max(match_anneal_steps, 1)) if hetero else 0.0
@@ -86,18 +96,18 @@ def train(
                 match_weight=match_w,
             )
             logps.append(logp)
-            rewards.append(shaped)
+            rewards.append(shaped.to(dev))
             global_step += 1
             if trunc or done:
                 done = True
 
-        G = torch.zeros(n)
+        G = torch.zeros(n, device=dev)
         returns: list[torch.Tensor] = []
         for rw in reversed(rewards):
             G = rw + 0.95 * G
             returns.append(G)
         returns = list(reversed(returns))
-        loss = torch.tensor(0.0)
+        loss = torch.zeros((), device=dev)
         for lp, ret in zip(logps, returns):
             loss = loss - (lp * ret.detach()).mean()
         if logps:
@@ -107,12 +117,14 @@ def train(
 
         ent = role_entropy(info["roles"], 3)
         lsr = light_scout_ratio(info["roles"], env.uav_type_list) if hetero else 0.0
+        coll = float(info.get("collision_rate", 0.0))
         row = {
             "ep": ep,
             "step": global_step,
             "entropy": ent,
             "coverage": info["coverage"],
-            "loss": float(loss),
+            "collision_rate": coll,
+            "loss": float(loss.detach().cpu()),
             "match_w": match_w if hetero else 0.0,
             "light_scout_ratio": lsr,
         }
@@ -120,25 +132,32 @@ def train(
         if ep % 25 == 0 or global_step >= steps:
             print(
                 f"ep={ep} step={global_step}/{steps} entropy={ent:.3f} "
-                f"cov={info['coverage']:.2f} match_w={row['match_w']:.2f} light_scout={lsr:.2f}"
+                f"cov={info['coverage']:.2f} coll={coll:.3f} "
+                f"match_w={row['match_w']:.2f} light_scout={lsr:.2f}",
+                flush=True,
             )
         ep += 1
 
     out = {
         "final_entropy": hist[-1]["entropy"],
         "final_coverage": hist[-1]["coverage"],
+        "final_collision_rate": hist[-1].get("collision_rate", 0.0),
         "final_light_scout_ratio": hist[-1].get("light_scout_ratio", 0.0),
+        "scout_weight": scout_weight,
+        "device": str(dev),
         "steps": global_step,
         "hist": hist,
     }
     if save_dir is not None:
         save_dir.mkdir(parents=True, exist_ok=True)
         ckpt = {
-            "state_dict": policy.state_dict(),
+            "state_dict": {k: v.detach().cpu() for k, v in policy.state_dict().items()},
             "obs_dim": env.obs_dim,
             "n_roles": 3,
             "hetero": hetero,
             "hetero_ratio": list(hetero_ratio),
+            "scout_weight": scout_weight,
+            "device": str(dev),
             "steps": global_step,
         }
         torch.save(ckpt, save_dir / "role_policy.pt")
@@ -147,7 +166,7 @@ def train(
             encoding="utf-8",
         )
         (save_dir / "hist.json").write_text(json.dumps(hist[-500:], indent=2), encoding="utf-8")
-        print(f"saved → {save_dir / 'role_policy.pt'}")
+        print(f"saved → {save_dir / 'role_policy.pt'}", flush=True)
     return out
 
 
@@ -159,6 +178,8 @@ def main() -> int:
     ap.add_argument("--hetero", action="store_true")
     ap.add_argument("--hetero_ratio", type=str, default="0.3,0.4,0.3")
     ap.add_argument("--match_anneal_steps", type=int, default=30_000)
+    ap.add_argument("--scout_weight", type=float, default=0.0, help="safe explore reward scale (0=off)")
+    ap.add_argument("--device", type=str, default="cpu", help="policy device: cpu|cuda|cuda:0")
     ap.add_argument("--save_dir", type=str, default="experiment_results/hetero_training")
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
@@ -178,12 +199,16 @@ def main() -> int:
         hetero=bool(args.hetero),
         hetero_ratio=ratio,
         match_anneal_steps=args.match_anneal_steps,
+        scout_weight=float(args.scout_weight),
+        device=str(args.device),
         save_dir=save,
         seed=args.seed,
     )
     print(
         f"train_role_emergence: PASS (entropy={out['final_entropy']:.3f}, "
-        f"light_scout={out['final_light_scout_ratio']:.2f})"
+        f"cov={out['final_coverage']:.2f}, coll={out['final_collision_rate']:.3f}, "
+        f"light_scout={out['final_light_scout_ratio']:.2f})",
+        flush=True,
     )
     return 0
 
