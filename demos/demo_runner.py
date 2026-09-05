@@ -44,6 +44,9 @@ class DemoFrame:
     done: bool = False
     uav_types: list[int] = field(default_factory=list)
     uav_sizes: list[float] = field(default_factory=list)
+    payload_pos: torch.Tensor | None = None
+    target_pos: torch.Tensor | None = None
+    payload_distance: float = 0.0
 
 
 @dataclass
@@ -70,6 +73,8 @@ class DemoRunner:
     link_topk: int = 0  # 0 → auto
     history_len: int = 50
     history: dict[str, list] = field(default_factory=dict)
+    _transport_ctl: Any = field(init=False, default=None)
+    _transport_mode: bool = field(init=False, default=False)
 
     def __post_init__(self) -> None:
         self.reset(self.seed)
@@ -130,6 +135,50 @@ class DemoRunner:
         if seed is not None:
             self.seed = seed
         torch.manual_seed(self.seed)
+        self._transport_mode = self.scene.name == "transport" or self.scene.task_type == "transport"
+        if self._transport_mode:
+            from environments.scenarios.cooperative_transport import (
+                CooperativeTransportEnv,
+                TransportHeuristicController,
+            )
+
+            self.env = CooperativeTransportEnv(  # type: ignore[assignment]
+                n_agents=self.n_agents,
+                target_pos=(5.0, 5.0),
+                max_steps=self.scene.max_steps,
+                seed=self.seed,
+                hetero_ratio=tuple(
+                    getattr(self.scene, "hetero_ratio", None) or self.hetero_ratio
+                ),
+            )
+            self.obs, info = self.env.reset(self.seed)
+            self._transport_ctl = TransportHeuristicController(self.env)
+            self.ctl = None  # type: ignore[assignment]
+            self.blockers = torch.zeros(0, 2)
+            self.fi = FailureInjector(self.n_agents)
+            self.bytes_cum = 0.0
+            self.level_hist = {0: 0, 1: 0, 2: 0, 3: 0}
+            self.reward_acc = 0.0
+            self.injected = False
+            self._clear_history()
+            fr = self._frame(
+                step=0,
+                send=torch.zeros(self.n_agents, dtype=torch.bool),
+                levels=torch.zeros(self.n_agents, dtype=torch.long),
+                links=[],
+                reward=0.0,
+                bytes_step=0.0,
+                gate_trace=[],
+                done=False,
+                correction=None,
+                coverage=float(info.get("coverage", 0.0)),
+                payload_pos=info.get("payload_pos"),
+                target_pos=info.get("target_pos"),
+                payload_distance=float(info.get("payload_distance", 0.0)),
+            )
+            self._push_history(fr)
+            return fr
+
         kw = env_kwargs(self.scene, self.n_agents)
         kw["heterogeneous"] = self.heterogeneous or bool(getattr(self.scene, "heterogeneous", False))
         ratio = getattr(self.scene, "hetero_ratio", None) or self.hetero_ratio
@@ -234,6 +283,36 @@ class DemoRunner:
 
     def step(self) -> DemoFrame:
         env = self.env
+        if self._transport_mode:
+            act = self._transport_ctl.act(self.obs)
+            self.obs, r, done, trunc, info = env.step(act)
+            reward = float(r.mean()) if torch.is_tensor(r) else float(r)
+            self.reward_acc += reward
+            # visual cables: UAV → payload (encoded as links to self with level 2)
+            links: list[dict[str, Any]] = []
+            for i in range(self.n_agents):
+                dist = float((env.pos[i] - env.payload_pos).norm())
+                links.append(
+                    {"src": i, "dst": i, "level": 2, "bytes": 0, "dist": dist, "to_payload": True}
+                )
+            fr = self._frame(
+                step=env.step_count,
+                send=torch.zeros(self.n_agents, dtype=torch.bool),
+                levels=torch.zeros(self.n_agents, dtype=torch.long),
+                links=links,
+                reward=self.reward_acc,
+                bytes_step=0.0,
+                gate_trace=[],
+                done=bool(done or trunc or env.step_count >= self.scene.max_steps),
+                correction=None,
+                coverage=float(info.get("coverage", 0.0)),
+                payload_pos=info.get("payload_pos"),
+                target_pos=info.get("target_pos"),
+                payload_distance=float(info.get("payload_distance", 0.0)),
+            )
+            self._push_history(fr)
+            return fr
+
         # adversarial / mixed failure injection
         if (
             self.scene.failure_ratio > 0
@@ -353,30 +432,58 @@ class DemoRunner:
         done: bool,
         correction: torch.Tensor | None,
         coverage: float,
+        payload_pos: torch.Tensor | None = None,
+        target_pos: torch.Tensor | None = None,
+        payload_distance: float = 0.0,
     ) -> DemoFrame:
         types = list(getattr(self.env, "uav_type_list", []) or [])
         from environments.dice_vmas_env import UAV_TYPES
 
-        if self.env.cfg.heterogeneous and types:
+        hetero = bool(getattr(getattr(self.env, "cfg", None), "heterogeneous", False)) or self._transport_mode
+        if hetero and types:
             sizes = [float(UAV_TYPES[t]["size"]) * 80 for t in types]
         else:
             types, sizes = [], []
+
+        if self._transport_mode:
+            tgt = getattr(self.env, "target_pos", None)
+            tasks = tgt.detach().clone().view(1, -1) if tgt is not None else torch.zeros(0, 2)
+            task_done = torch.zeros(tasks.shape[0], dtype=torch.bool)
+            roles = self.env.roles.detach().clone()
+            alive = self.env.alive.detach().clone()
+            bw_hz, bw_max = 1.0, 1.0
+            if payload_pos is None:
+                payload_pos = getattr(self.env, "payload_pos", None)
+                if payload_pos is not None:
+                    payload_pos = payload_pos.detach().clone()
+            if target_pos is None and tgt is not None:
+                target_pos = tgt.detach().clone()
+            if payload_distance == 0.0 and payload_pos is not None and target_pos is not None:
+                payload_distance = float((payload_pos - target_pos).norm())
+        else:
+            tasks = self.env.tasks.detach().clone()
+            task_done = self.env.task_done.detach().clone()
+            roles = self.env.roles.detach().clone()
+            alive = self.env.alive.detach().clone()
+            bw_hz = float(self.ctl.resource.bandwidth_hz)
+            bw_max = float(self.ctl.limits.bandwidth_max)
+
         return DemoFrame(
             step=step,
             pos=self.env.pos.detach().clone(),
             vel=self.env.vel.detach().clone(),
-            roles=self.env.roles.detach().clone(),
-            alive=self.env.alive.detach().clone(),
-            tasks=self.env.tasks.detach().clone(),
-            task_done=self.env.task_done.detach().clone(),
+            roles=roles,
+            alive=alive,
+            tasks=tasks,
+            task_done=task_done,
             blockers=self.blockers.detach().clone(),
             send=send.detach().clone(),
             levels=levels.detach().clone(),
             links=links,
             reward=reward,
             coverage=coverage,
-            bandwidth_hz=float(self.ctl.resource.bandwidth_hz),
-            bandwidth_max=float(self.ctl.limits.bandwidth_max),
+            bandwidth_hz=bw_hz,
+            bandwidth_max=bw_max,
             bytes_step=bytes_step,
             bytes_cum=self.bytes_cum,
             level_counts=dict(self.level_hist),
@@ -385,4 +492,7 @@ class DemoRunner:
             done=done,
             uav_types=types,
             uav_sizes=sizes,
+            payload_pos=None if payload_pos is None else payload_pos.detach().clone(),
+            target_pos=None if target_pos is None else target_pos.detach().clone(),
+            payload_distance=payload_distance,
         )

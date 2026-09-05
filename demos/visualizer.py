@@ -46,6 +46,9 @@ class SwarmVisualizer:
         self._scat = self.ax_world.scatter([], [], s=60, zorder=5, picker=bool(explain))
         self._tasks = self.ax_world.scatter([], [], marker="*", s=180, c="#f5c211", zorder=4, label="task")
         self._block = self.ax_world.scatter([], [], marker="s", s=50, c="#5e5c64", zorder=3, label="obstacle")
+        self._payload = self.ax_world.scatter([], [], marker="o", s=220, c="#c64600", zorder=6, label="payload")
+        self._target_cross: list[Any] = []
+        self._cable_artists: list[Line2D] = []
         self._link_artists: list[Line2D] = []
         self._corr_quiver = None
         self._help_on = False
@@ -117,7 +120,24 @@ class SwarmVisualizer:
         for ln in self._link_artists:
             ln.remove()
         self._link_artists.clear()
+        for ln in self._cable_artists:
+            ln.remove()
+        self._cable_artists.clear()
         for L in frame.links:
+            if L.get("to_payload") and frame.payload_pos is not None:
+                pp = frame.payload_pos.cpu().numpy().reshape(-1)
+                i = int(L["src"])
+                (ln,) = self.ax_world.plot(
+                    [pos[i, 0], pp[0]],
+                    [pos[i, 1], pp[1]],
+                    color="#c64600",
+                    linestyle="-",
+                    lw=1.2,
+                    alpha=0.55,
+                    zorder=2,
+                )
+                self._cable_artists.append(ln)
+                continue
             st = LEVEL_STYLE.get(int(L["level"]), LEVEL_STYLE[1])
             i, j = int(L["src"]), int(L["dst"])
             dist = float(L.get("dist", 1.0))
@@ -132,6 +152,24 @@ class SwarmVisualizer:
                 zorder=2,
             )
             self._link_artists.append(ln)
+
+        if frame.payload_pos is not None:
+            pp = frame.payload_pos.cpu().numpy().reshape(1, 2)
+            self._payload.set_offsets(pp)
+        else:
+            self._payload.set_offsets(np.zeros((0, 2)))
+        for art in self._target_cross:
+            art.remove()
+        self._target_cross.clear()
+        if frame.target_pos is not None:
+            tp = frame.target_pos.cpu().numpy().reshape(-1)
+            (h,) = self.ax_world.plot(
+                [tp[0] - 0.4, tp[0] + 0.4], [tp[1], tp[1]], color="#2ec27e", lw=2, zorder=4
+            )
+            (v,) = self.ax_world.plot(
+                [tp[0], tp[0]], [tp[1] - 0.4, tp[1] + 0.4], color="#2ec27e", lw=2, zorder=4
+            )
+            self._target_cross.extend([h, v])
 
         if self._corr_quiver is not None:
             self._corr_quiver.remove()
@@ -240,6 +278,8 @@ class SwarmVisualizer:
             f"Bytes cum: {frame.bytes_cum:.0f}",
             f"Alive: {int(frame.alive.sum())}/{frame.alive.numel()}",
         ]
+        if frame.payload_pos is not None:
+            lines.insert(4, f"Payload dist: {frame.payload_distance:.2f}")
         if self._help_on:
             lines += ["", "Keys:", "Space pause", "R reset", "H help", "Q quit"]
             if self.explain:

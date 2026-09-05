@@ -72,6 +72,14 @@ SCENES: dict[str, DemoScene] = {
         default_n_agents=12,
         evader_policy="rl",
     ),
+    "transport": DemoScene(
+        "transport",
+        n_tasks=1,
+        task_type="transport",
+        max_steps=400,
+        heterogeneous=True,
+        default_n_agents=16,
+    ),
 }
 
 

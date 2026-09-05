@@ -40,3 +40,10 @@ Desktop.ini
 scripts/vault_templates/_*.txt
 scripts/_*.py
 scripts/_*.ps1
+
+# Local experiment dumps / media (tracked hetero_training/ stays in git)
+experiment_results/
+*.log
+*.gif
+*.mp4
+.DS_Store
