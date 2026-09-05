@@ -42,7 +42,7 @@ def main(argv: list[str] | None = None) -> int:
         "--scene",
         type=str,
         default="search",
-        choices=["search", "tracking", "adversarial", "mixed", "pursuit", "adversarial_pursuit"],
+        choices=["search", "tracking", "adversarial", "mixed", "pursuit", "adversarial_pursuit", "transport"],
     )
     ap.add_argument("--n_agents", type=int, default=0, help="0 = scene default")
     ap.add_argument("--speed", type=str, default="1x", help="0.5x / 1x / 2x / max")
@@ -139,11 +139,12 @@ def main(argv: list[str] | None = None) -> int:
             f"coverage={frame.coverage:.2f} links={len(frame.links)} bytes={frame.bytes_cum:.0f} fps={fps:.1f}"
             + (f" hetero={sorted(set(frame.uav_types))}" if frame.uav_types else "")
             + (f" shield={shield_type}" if shield_type else "")
+            + (f" payload_d={frame.payload_distance:.2f}" if frame.payload_pos is not None else "")
         )
         return 0
 
     viz = SwarmVisualizer(
-        boundary=runner.env.cfg.boundary,
+        boundary=float(getattr(getattr(runner.env, "cfg", None), "boundary", None) or getattr(runner.env, "boundary", 5.0)),
         title=f"UAM demo — {args.scene}",
         explain=args.explain,
     )
