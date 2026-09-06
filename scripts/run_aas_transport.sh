@@ -23,6 +23,7 @@ PAYLOAD_MASS_SCALE="${PAYLOAD_MASS_SCALE:-1.0}"
 CABLE_BREAK="${CABLE_BREAK:--1}"
 WIND="${WIND:-0.0}"
 NO_ACCEPT="${NO_ACCEPT:-0}"
+OUTPUT="${OUTPUT:-}"
 
 # docker without sudo if group membership works
 dk() {
@@ -54,6 +55,9 @@ BRIDGE=(
 )
 if [[ "$NO_ACCEPT" == "1" || "$NO_ACCEPT" == "true" ]]; then
   BRIDGE+=(--no_accept)
+fi
+if [[ -n "$OUTPUT" ]]; then
+  BRIDGE+=(--output "$OUTPUT")
 fi
 
 if [[ "$DRY_RUN" == "1" || "$DRY_RUN" == "true" ]]; then

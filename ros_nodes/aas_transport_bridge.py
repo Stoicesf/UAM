@@ -18,6 +18,7 @@ Dry-run (no Docker; validates payload_distance drop):
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import sys
 import time
@@ -134,6 +135,7 @@ def main() -> int:
         action="store_true",
         help="skip distance gate (for stress: cable_break / wind)",
     )
+    ap.add_argument("--output", type=str, default="", help="write result JSON to PATH")
     args = ap.parse_args()
 
     n = args.uav_count
@@ -169,12 +171,15 @@ def main() -> int:
     vel = np.zeros((n, 2), dtype=np.float32)
 
     d0 = float(np.linalg.norm(payload_pos - target))
+    form = 0.0
+    steps_run = 0
     print(
         f"transport start d0={d0:.2f} mass={mass:.1f} wind={args.wind} "
         f"broken={sorted(broken) or 'none'} dry_run={args.dry_run}"
     )
 
     for step in range(args.steps):
+        steps_run = step + 1
         ideal = _ideal_ring_np(n, payload_pos, target, args.L0, args.lead, masses, broken)
         new_pos = pos.copy()
         for i in range(n):
@@ -233,13 +238,34 @@ def main() -> int:
     moved = (d0 - d1) > 1.5 or d1 < args.accept_dist
     print(f"aas_transport_bridge: done d0={d0:.2f} d1={d1:.2f} moved={moved}")
     if args.no_accept:
+        accept = "skip"
         print("ACCEPT SKIP (--no_accept)")
-        return 0
-    if not moved:
+        rc = 0
+    elif not moved:
+        accept = "fail"
         print("ACCEPT FAIL: payload_distance did not drop enough", file=sys.stderr)
-        return 1
-    print("ACCEPT OK")
-    return 0
+        rc = 1
+    else:
+        accept = "ok"
+        print("ACCEPT OK")
+        rc = 0
+    if args.output:
+        out = {
+            "d0": d0,
+            "d1": d1,
+            "moved": moved,
+            "form": form,
+            "uav_count": n,
+            "payload_mass_scale": args.payload_mass_scale,
+            "wind": args.wind,
+            "cable_break": args.cable_break,
+            "steps": steps_run,
+            "accept": accept,
+        }
+        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.output).write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+        print(f"wrote {args.output}")
+    return rc
 
 
 if __name__ == "__main__":
