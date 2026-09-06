@@ -17,6 +17,7 @@
 | **Heterogeneous** | 异构机型（heavy/standard/light）支持，角色-机型匹配通过 **先验奖励引导（match_bonus）** 实现。专项训练实验表明，在纯任务奖励下轻型 UAV 未稳定收敛至侦察角色（终局 light_scout=0.50，处于随机水平），因此保留先验引导作为实际部署的合理方案。 | ✅ |
 | **CBF Shield** | 控制屏障函数投影盾（碰撞率 0.0） | ✅ |
 | **Gazebo Bridge** | ROS2 闭环桥接（真机仿真就绪） | ✅ |
+| **Transport Bridge** | 虚拟绳载 + AAS `set_reposition`（`--dry_run` 可无 Docker） | ✅ |
 | **Scaling** | 抽象仿真 N≤128 无 OOM | ✅ |
 
 ## 快速复现（冒烟验证）
@@ -33,7 +34,15 @@ python demos/interactive_demo.py --scene adversarial --shield cbf --n_agents 16
 
 # Gazebo 闭环（需 AAS/WSL；默认 4 机）
 bash scripts/run_aas_bridge.sh
+
+# 协同运输桥（虚拟绳载 + AAS set_reposition；需 Docker+AAS）
+bash scripts/run_aas_transport.sh
+# 无 AAS 时主机物理冒烟：
+DRY_RUN=1 bash scripts/run_aas_transport.sh
+# 或：python ros_nodes/aas_transport_bridge.py --dry_run --steps 80
 ```
+
+> **运输桥架构边界**：载荷与缆绳在 **UAM 主机** 用 `PayloadDynamics` 虚拟积分；机群经 AAS Docker `docker exec` + `set_reposition` 飞到理想环阵 XY（高度固定）。**不是**主机 MAVROS/`AttitudeTarget`，也**不要**在 `aerial-autonomy-stack/src` 里 `ros2 pkg create`（见 `scripts/run_aas_bridge.sh` 注释）。旧稿 `ac_dsgf_bridge.py` 已废弃。WSL 前置：`bash scripts/wsl_phase0_check.sh`。
 
 > 异构可视化由环境 `reset()` 时的机型分配与角色先验偏置驱动，不依赖 `role_policy.pt`（该权重为实验产物，见 `experiment_results/hetero_training/archive/`）。
 
@@ -90,3 +99,18 @@ python demos/lifelong_demo.py --steps 5000 --save_plot
 
 - 换用更高保真度环境（Gazebo）重新验证帕累托前沿是否一致；
 - 或在任务定义中放宽碰撞约束（如接受 `coll ≤ 0.03`），以换取更高的覆盖和分化。
+
+## v2.1 运输桥（AAS / WSL）
+
+- 标签：`v2.1-transport`（抽象 2D demo）；本桥为 Gazebo 侧扩展。
+- AAS 镜像现为 **ROS2 Jazzy**（`/opt/ros/jazzy`）；桥接已兼容 Humble/Jazzy。
+- 官方镜像：`ghcr.io/jacopopan/{aircraft,ground,simulation}-image:latest`（再 `docker tag` 为 `*-image:latest`）。
+- 启动：`bash scripts/run_aas_transport.sh`（`HEADLESS=false` 需 D3D12；缺 AAS/Docker 用 `DRY_RUN=1`）。
+- Live 一键：`bash scripts/wsl_run_transport_live.sh`（WSL 内；`KEEPALIVE_SEC` 默认 1200，避免 takeoff 中途被关掉）。
+- 鲁棒性短跑示例：
+  ```bash
+  python ros_nodes/aas_transport_bridge.py --dry_run --payload_mass_scale 1.5
+  python ros_nodes/aas_transport_bridge.py --dry_run --cable_break 0 --no_accept
+  python ros_nodes/aas_transport_bridge.py --dry_run --wind 2.0 --no_accept
+  ```
+- WSL 现状备注：Ubuntu-22.04 + 本机 Docker Engine 可用；Ubuntu-24.04 若 VHDX 损坏可继续用 22.04。环境安装脚本：`scripts/wsl_install_docker_*.sh`、`wsl_pull_aas_images.sh`、`wsl_phase0_check.sh`。
