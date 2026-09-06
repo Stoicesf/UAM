@@ -108,6 +108,9 @@ echo "[2/2] Transport bridge"
 "${BRIDGE[@]}" 2>&1 | tee /tmp/aas_transport_bridge.log
 RC="${PIPESTATUS[0]}"
 
-echo "Bridge finished (rc=$RC). Tear down sim when ready."
-wait "$SIM_PID" || true
+echo "Bridge finished (rc=$RC). Tearing down sim…"
+dk ps -aq --filter name=inst0 | xargs -r dk rm -f || true
+dk network rm aas-sim-network-inst0 aas-air-network-inst0 2>/dev/null || true
+kill "$SIM_PID" 2>/dev/null || true
+wait "$SIM_PID" 2>/dev/null || true
 exit "$RC"

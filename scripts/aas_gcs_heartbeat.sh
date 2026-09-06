@@ -3,7 +3,11 @@
 # AAS PX4 instance i listens UDP 14580+i and talks to remote 14540+i (inside sim container).
 set -euo pipefail
 N="${1:-4}"
-docker exec -d simulation-container-inst0 bash -lc "
+DK=(docker)
+if ! docker info >/dev/null 2>&1; then
+  DK=(sudo docker)
+fi
+"${DK[@]}" exec -d simulation-container-inst0 bash -lc "
 python3 - <<'PY'
 import time
 from pymavlink import mavutil
