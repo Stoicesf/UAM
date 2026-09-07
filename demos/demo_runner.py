@@ -66,6 +66,10 @@ class DemoRunner:
     use_rise: bool = True
     use_traj: bool = False
     use_shield: bool = False
+    use_cscbf: bool = False
+    use_mubf: bool = False
+    use_scrise: bool = False
+    use_atac: bool = False
 
     env: DICEVMASEnv = field(init=False)
     ctl: CompleteController = field(init=False)
@@ -170,6 +174,10 @@ class DemoRunner:
                     use_rise=bool(self.use_rise),
                     use_traj=bool(self.use_traj),
                     use_shield=bool(self.use_shield),
+                    use_cscbf=bool(self.use_cscbf),
+                    use_mubf=bool(self.use_mubf),
+                    use_scrise=bool(self.use_scrise),
+                    use_atac=bool(self.use_atac),
                 )
             else:
                 self._transport_ctl = TransportHeuristicController(self.env)

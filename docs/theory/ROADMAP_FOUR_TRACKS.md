@@ -86,7 +86,7 @@ python ros_nodes/transport_theory_bridge.py --dry_run --steps 40
 
 ## Phase 3+ 状态
 
-见 [PHASE3_TO_PHASE6.md](PHASE3_TO_PHASE6.md)（Phase 3 算法已在各 `feature/theory-*` 分支落地；Phase 4–6 待做）。
+见 [PHASE3_TO_PHASE6.md](PHASE3_TO_PHASE6.md) 与 [PHASE4_ACCEPTANCE.md](PHASE4_ACCEPTANCE.md)：Phase 3 算法与 Phase 4 桥接 CLI / dry-run（8/8）已完成；Phase 5–6（Gazebo SITL / 论文）待做。对外简介见根目录 `README.md`（`v2.6-phase4`）。
 
 ## 风险与应对
 

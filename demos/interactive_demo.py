@@ -108,6 +108,10 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="transport theory: hybrid APF+CBF shield on formation velocity",
     )
+    ap.add_argument("--cscbf", action="store_true", help="transport theory: CSCBF shield")
+    ap.add_argument("--mubf", action="store_true", help="transport theory: M-UBF formation")
+    ap.add_argument("--scrise", action="store_true", help="transport theory: SC-RISE")
+    ap.add_argument("--atac", action="store_true", help="transport theory: ATAC radius opt")
     args = ap.parse_args(argv)
 
     scene = get_scene(args.scene)
@@ -150,6 +154,10 @@ def main(argv: list[str] | None = None) -> int:
         use_rise=not bool(args.no_rise),
         use_traj=bool(args.traj),
         use_shield=bool(args.apf),
+        use_cscbf=bool(args.cscbf),
+        use_mubf=bool(args.mubf),
+        use_scrise=bool(args.scrise),
+        use_atac=bool(args.atac),
     )
     if args.link_topk > 0:
         runner.link_topk = args.link_topk

@@ -6,6 +6,7 @@ torchaudio>=2.0.0
 vmas
 torchrl
 numpy
+scipy
 pandas
 matplotlib
 tensorboard
