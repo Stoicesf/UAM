@@ -27,6 +27,10 @@ HYBRID="${HYBRID:-1}"
 RISE="${RISE:-1}"
 TRAJ="${TRAJ:-0}"
 APF="${APF:-0}"
+USE_CSCBF="${USE_CSCBF:-false}"
+USE_MUBF="${USE_MUBF:-false}"
+USE_SC_RISE="${USE_SC_RISE:-false}"
+USE_ATAC="${USE_ATAC:-false}"
 
 dk() {
   if docker info >/dev/null 2>&1; then
@@ -68,6 +72,19 @@ if [[ "$TRAJ" == "1" || "$TRAJ" == "true" ]]; then
 fi
 if [[ "$APF" == "1" || "$APF" == "true" ]]; then
   BRIDGE+=(--apf)
+fi
+# Theory controllers (Phase 4)
+if [[ "$USE_CSCBF" == "1" || "$USE_CSCBF" == "true" ]]; then
+  BRIDGE+=(--cscbf)
+fi
+if [[ "$USE_MUBF" == "1" || "$USE_MUBF" == "true" ]]; then
+  BRIDGE+=(--mubf)
+fi
+if [[ "$USE_SC_RISE" == "1" || "$USE_SC_RISE" == "true" ]]; then
+  BRIDGE+=(--scrise)
+fi
+if [[ "$USE_ATAC" == "1" || "$USE_ATAC" == "true" ]]; then
+  BRIDGE+=(--atac)
 fi
 if [[ "$NO_ACCEPT" == "1" || "$NO_ACCEPT" == "true" ]]; then
   BRIDGE+=(--no_accept)

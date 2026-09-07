@@ -10,6 +10,8 @@ Usage (WSL, sim up):
 
 Dry-run:
   python3 ros_nodes/transport_theory_bridge.py --dry_run --steps 80 --hybrid
+  python3 ros_nodes/transport_theory_bridge.py --dry_run --steps 40 --cscbf
+  python3 ros_nodes/transport_theory_bridge.py --dry_run --steps 40 --mubf --atac
 """
 
 from __future__ import annotations
@@ -82,6 +84,7 @@ class BridgeEnv:
         self.payload_pos = torch.zeros(2)
         self.payload_vel = torch.zeros(2)
         self.obstacles = torch.zeros(0, 2)
+        self.tensions = torch.zeros(self.n_agents, 1)
         self._rise_payload_assist: torch.Tensor | None = None
 
     def _ideal_ring(self, lead: float = 0.15) -> torch.Tensor:
@@ -123,6 +126,10 @@ def main() -> int:
     ap.add_argument("--no_rise", action="store_true")
     ap.add_argument("--traj", action="store_true")
     ap.add_argument("--apf", action="store_true")
+    ap.add_argument("--cscbf", action="store_true", help="enable CSCBF shield")
+    ap.add_argument("--mubf", action="store_true", help="enable M-UBF formation")
+    ap.add_argument("--scrise", action="store_true", help="enable SC-RISE")
+    ap.add_argument("--atac", action="store_true", help="enable ATAC radius opt")
     ap.add_argument("--wind", type=float, default=0.0)
     ap.add_argument("--accept_dist", type=float, default=1.0)
     ap.add_argument("--no_accept", action="store_true")
@@ -131,6 +138,10 @@ def main() -> int:
 
     use_hybrid = bool(args.hybrid) and not bool(args.no_hybrid)
     use_rise = bool(args.rise) and not bool(args.no_rise)
+    use_cscbf = bool(args.cscbf)
+    use_mubf = bool(args.mubf)
+    use_scrise = bool(args.scrise)
+    use_atac = bool(args.atac)
     n = args.uav_count
     cmd_dt = 1.0 / max(args.rate_hz, 0.1)
     physics_dt = 0.05
@@ -163,7 +174,13 @@ def main() -> int:
         use_rise=use_rise,
         use_traj=bool(args.traj),
         use_shield=bool(args.apf),
+        use_cscbf=use_cscbf,
+        use_mubf=use_mubf,
+        use_scrise=use_scrise,
+        use_atac=use_atac,
     )
+    for name in ctl.active_modules():
+        print(f"{name} active")
 
     if not args.dry_run:
         wait_containers(n, args.instance)
@@ -183,6 +200,7 @@ def main() -> int:
     steps_run = 0
     print(
         f"theory transport start d0={d0:.2f} hybrid={use_hybrid} rise={use_rise} "
+        f"cscbf={use_cscbf} mubf={use_mubf} scrise={use_scrise} atac={use_atac} "
         f"traj={args.traj} apf={args.apf} wind={args.wind} dry_run={args.dry_run}"
     )
 
@@ -205,6 +223,9 @@ def main() -> int:
             )
             env.payload_pos = pr["new_payload_pos"]
             env.payload_vel = pr["new_payload_vel"]
+            if "tensions" in pr:
+                t = pr["tensions"]
+                env.tensions = t.view(-1, 1) if t.ndim == 1 else t
             if "state" in pr:
                 cable_state = pr["state"].detach().cpu().tolist()
 
@@ -240,12 +261,17 @@ def main() -> int:
 
         dist = float((env.payload_pos - env.target_pos).norm())
         form = _formation_error(env)
+        extra = ""
+        if use_scrise or use_rise:
+            extra += f" cbf_res={float(getattr(ctl, '_last_cbf_residual', 0.0)):.3f}"
+        if use_atac:
+            extra += f" atac_margin={float(getattr(ctl, '_last_atac_margin', 0.0)):.3f}"
         cs = ""
         if cable_state is not None:
             cs = f" cable={cable_state}"
         print(
             f"step={step} payload_d={dist:.2f} form={form:.2f} "
-            f"pos0=({float(env.pos[0,0]):.1f},{float(env.pos[0,1]):.1f}){cs}"
+            f"pos0=({float(env.pos[0,0]):.1f},{float(env.pos[0,1]):.1f}){cs}{extra}"
         )
         if dist < 0.3:
             print("reached target")
@@ -281,12 +307,19 @@ def main() -> int:
             "uav_count": n,
             "hybrid": use_hybrid,
             "rise": use_rise,
+            "cscbf": use_cscbf,
+            "mubf": use_mubf,
+            "scrise": use_scrise,
+            "atac": use_atac,
+            "modules": ctl.active_modules(),
             "traj": bool(args.traj),
             "apf": bool(args.apf),
             "wind": args.wind,
             "steps": steps_run,
             "accept": accept,
             "cable_state": cable_state,
+            "cbf_residual": float(getattr(ctl, "_last_cbf_residual", 0.0)),
+            "atac_margin": float(getattr(ctl, "_last_atac_margin", 0.0)),
         }
         Path(args.output).parent.mkdir(parents=True, exist_ok=True)
         Path(args.output).write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")

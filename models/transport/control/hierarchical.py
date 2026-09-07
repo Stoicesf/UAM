@@ -18,7 +18,7 @@ class TransportHierarchicalController:
     """
     3-loop transport controller (2D):
       UBF load → mass-weighted tension → attractive-potential formation → (T, ψ̇)
-      + optional RISE, minimum-snap target, hybrid APF/CBF shield.
+      + optional RISE / SC-RISE, CSCBF, M-UBF, ATAC, min-snap, hybrid shield.
     """
 
     def __init__(
@@ -27,6 +27,10 @@ class TransportHierarchicalController:
         use_rise: bool = True,
         use_traj: bool = False,
         use_shield: bool = False,
+        use_cscbf: bool = False,
+        use_mubf: bool = False,
+        use_scrise: bool = False,
+        use_atac: bool = False,
         traj_time: float | None = None,
     ):
         self.env = env
@@ -38,10 +42,18 @@ class TransportHierarchicalController:
         self.use_rise = bool(use_rise)
         self.use_traj = bool(use_traj)
         self.use_shield = bool(use_shield)
+        self.use_cscbf = bool(use_cscbf)
+        self.use_mubf = bool(use_mubf)
+        self.use_scrise = bool(use_scrise)
+        self.use_atac = bool(use_atac)
         L0 = float(getattr(env, "L0", 3.0))
         self.formation = AttractivePotentialFormation(n, eta=3.0, beta=2.0, radius=L0)
         self._traj = None
         self._t = 0.0
+        self._last_cbf_residual = 0.0
+        self._atac_radius = L0
+        self._last_atac_margin = 0.0
+
         if self.use_traj:
             from models.transport.planning.minimum_snap import MinimumSnapTrajectory
 
@@ -51,6 +63,7 @@ class TransportHierarchicalController:
             T = float(traj_time) if traj_time is not None else max(8.0, 0.05 * env.max_steps)
             self._traj = MinimumSnapTrajectory([start, mid, goal], total_time=T, order=5)
             self._traj.generate()
+
         self._shield = None
         if self.use_shield:
             from models.transport.safety.hybrid_shield import HybridSafetyShield
@@ -61,8 +74,50 @@ class TransportHierarchicalController:
                 boundary=float(getattr(env, "boundary", 12.0)),
             )
 
+        self._cscbf = None
+        if self.use_cscbf:
+            from models.transport.safety.cscbf_shield import CSCBFShield
+
+            self._cscbf = CSCBFShield(n_agents=n, cable_length=L0)
+
+        self._mubf = None
+        if self.use_mubf:
+            from models.transport.control.mubf_controller import MUBFController
+
+            self._mubf = MUBFController(n_agents=n, d_safe=0.5)
+
+        self._scrise = None
+        if self.use_scrise:
+            from models.transport.control.scrise_controller import SCRISEController
+
+            self._scrise = SCRISEController(cbf_gain=1.0, relax=0.05)
+            self.use_rise = True
+
+        self._atac = None
+        if self.use_atac:
+            from models.transport.atac.atac_optimizer import ATACOptimizer
+
+            self._atac = ATACOptimizer(n_agents=n, payload_mass=mass, L0=L0)
+
+    def active_modules(self) -> list[str]:
+        """Human-readable list of enabled theory modules (for bridge logs)."""
+        names = []
+        if self.use_cscbf:
+            names.append("CSCBF")
+        if self.use_mubf:
+            names.append("MUBF")
+        if self.use_scrise:
+            names.append("SC-RISE")
+        elif self.use_rise:
+            names.append("RISE")
+        if self.use_atac:
+            names.append("ATAC")
+        return names
+
     def reset(self) -> None:
         self.rise.reset()
+        if self._scrise is not None:
+            self._scrise.reset()
         self._t = 0.0
         if self.use_traj and self._traj is not None:
             start = self.env.payload_pos.detach().cpu().tolist()
@@ -99,14 +154,20 @@ class TransportHierarchicalController:
         f_mag = torch.norm(F_d).clamp(min=0.0)
         T_share = share * (f_mag + self.mass * 9.81 * 0.15)
 
-        # leader = payload; sync formation ring from env geometry
         leader_pos = e.payload_pos
         leader_vel = e.payload_vel
         ideal = e._ideal_ring(lead=0.18)
         self.formation.set_delta(ideal - leader_pos.view(1, 2))
 
+        if self._atac is not None and int(self._t / max(dt, 1e-6)) % 20 == 0:
+            out = self._atac.optimize(F_d, radius_init=self._atac_radius, n_grid=11)
+            self._atac_radius = float(out["radius"])
+            self._last_atac_margin = float(out["margin"])
+            scale = self._atac_radius / max(float(getattr(e, "L0", 3.0)), 1e-3)
+            self.formation.set_delta(self.formation.delta * scale)
+            ideal = leader_pos.view(1, 2) + self.formation.delta
+
         follower_acc = self.formation(leader_pos, leader_vel, e.pos, e.vel)
-        # position correction from APF acceleration (one-step Euler)
         desired_delta = follower_acc * (dt * dt)
         uav_des_pos = leader_pos.view(1, 2) + self.formation.delta + desired_delta
         to_slot = uav_des_pos - e.pos
@@ -117,28 +178,73 @@ class TransportHierarchicalController:
 
         des_vel = 2.0 * to_slot + 0.4 * unit_t.unsqueeze(0) + 0.5 * follower_acc * dt
 
+        if self._mubf is not None:
+            des_vel, _V = self._mubf.act(e.pos, uav_des_pos, e.payload_pos, target_pos)
+
         if self._shield is not None:
             obstacles = getattr(e, "obstacles", None)
             des_vel = self._shield.apply(
                 des_vel, e.pos, obstacles=obstacles, target=target_pos
             )
 
+        if self._cscbf is not None:
+            tensions = getattr(e, "tensions", torch.zeros(e.n_agents, 1))
+            state = getattr(
+                getattr(e, "payload", None),
+                "state",
+                torch.ones(e.n_agents, dtype=torch.long),
+            )
+            des_vel = self._cscbf.apply(
+                des_vel,
+                e.pos,
+                e.payload_pos,
+                e.payload_vel,
+                tensions,
+                state,
+                dt=dt,
+            )
+
         rise_boost = 0.0
         e._rise_payload_assist = None
-        if self.use_rise:
+        if self._scrise is not None:
+            e_x = target_pos - e.payload_pos
+            e_x_dot = target_vel - e.payload_vel
+            u_nom_p = 0.8 * unit_t
+            u_sc, _ur, _uc, h = self._scrise.act(
+                e_x,
+                e_x_dot,
+                u_nom_p,
+                e.payload_pos,
+                e.payload_vel,
+                safe_radius=float(getattr(e, "boundary", 12.0)),
+                dt=dt,
+            )
+            rise_boost = float(torch.dot(u_sc, unit_t).clamp(-8.0, 8.0))
+            des_vel = des_vel + 0.35 * u_sc.view(1, 2)
+            if float(getattr(e, "wind_force", 0.0)) > 0:
+                e._rise_payload_assist = u_sc.clamp(-2.5, 2.5)
+            Lfh = -2.0 * torch.dot(e.payload_pos, e.payload_vel)
+            Lgh = -2.0 * e.payload_pos
+            self._last_cbf_residual = float(self._scrise.cbf_residual(h, Lfh, Lgh, u_sc))
+        elif self.use_rise:
             e_x = target_pos - e.payload_pos
             e_x_dot = target_vel - e.payload_vel
             tau_hat = self.rise.compute(e_x, e_x_dot, dt)
             lim = 8.0 if float(getattr(e, "wind_force", 0.0)) > 0 else 3.0
             rise_boost = float(torch.dot(tau_hat, unit_t).clamp(-lim, lim))
             des_vel = des_vel + 0.35 * tau_hat.view(1, 2)
-            # direct payload-velocity assist under wind (env consumes _rise_payload_assist)
             if float(getattr(e, "wind_force", 0.0)) > 0:
-                # cancel persistent wind push (~0.35*wind away) and track target
                 e._rise_payload_assist = (
                     1.2 * unit_t * (1.0 + float(getattr(e, "wind_force", 0.0)))
                     + 0.4 * tau_hat.clamp(-2.0, 2.0)
                 )
+                h = e.payload_pos.new_tensor(float(e.boundary) ** 2) - torch.dot(
+                    e.payload_pos, e.payload_pos
+                )
+                Lfh = -2.0 * torch.dot(e.payload_pos, e.payload_vel)
+                Lgh = -2.0 * e.payload_pos
+                u_pre = e._rise_payload_assist
+                self._last_cbf_residual = float(Lfh + torch.dot(Lgh, u_pre) + 1.0 * h)
 
         psi_des = torch.atan2(des_vel[:, 1:2], des_vel[:, 0:1] + 1e-6)
         psi_err = (psi_des - e.psi + math.pi) % (2 * math.pi) - math.pi
@@ -166,13 +272,22 @@ def self_check() -> None:
 
     env = CooperativeTransportEnv(n_agents=8, seed=0, max_steps=30, use_hybrid=True)
     obs, _ = env.reset(seed=0)
-    ctl = TransportHierarchicalController(env, use_rise=True, use_traj=True, use_shield=True)
+    ctl = TransportHierarchicalController(
+        env,
+        use_rise=True,
+        use_traj=False,
+        use_cscbf=True,
+        use_mubf=True,
+        use_scrise=True,
+        use_atac=True,
+    )
+    assert "CSCBF" in ctl.active_modules()
     act = ctl.act(obs)
     assert act.shape == (8, 2)
     obs2, _, _, _, info = env.step(act)
     assert obs2.shape[0] == 8
     assert "payload_distance" in info
-    print("transport_hierarchical: OK")
+    print("transport_hierarchical: OK modules=", ctl.active_modules())
 
 
 if __name__ == "__main__":
