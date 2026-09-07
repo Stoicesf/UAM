@@ -75,6 +75,39 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="hetero dynamics without hard role/capability bias (emergence test)",
     )
+    ap.add_argument(
+        "--ctrl",
+        type=str,
+        default="heuristic",
+        choices=["heuristic", "theory"],
+        help="transport controller: heuristic | theory (TransportHierarchicalController)",
+    )
+    ap.add_argument(
+        "--hybrid",
+        action="store_true",
+        help="transport: use HybridPayloadDynamics (slack/taut)",
+    )
+    ap.add_argument(
+        "--wind",
+        type=float,
+        default=0.0,
+        help="transport: wind force magnitude (N-scale) for RISE tests",
+    )
+    ap.add_argument(
+        "--no_rise",
+        action="store_true",
+        help="transport theory: disable RISE compensator",
+    )
+    ap.add_argument(
+        "--traj",
+        action="store_true",
+        help="transport theory: minimum-snap payload reference",
+    )
+    ap.add_argument(
+        "--apf",
+        action="store_true",
+        help="transport theory: hybrid APF+CBF shield on formation velocity",
+    )
     args = ap.parse_args(argv)
 
     scene = get_scene(args.scene)
@@ -111,6 +144,12 @@ def main(argv: list[str] | None = None) -> int:
         shield_type=shield_type,
         use_projection_shield=(shield_type != "none") if shield_type else True,
         match_bias=not bool(args.no_match_bias),
+        ctrl=args.ctrl,
+        use_hybrid=bool(args.hybrid),
+        wind_force=float(args.wind),
+        use_rise=not bool(args.no_rise),
+        use_traj=bool(args.traj),
+        use_shield=bool(args.apf),
     )
     if args.link_topk > 0:
         runner.link_topk = args.link_topk

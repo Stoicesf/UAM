@@ -60,6 +60,12 @@ class DemoRunner:
     heterogeneous: bool = False
     hetero_ratio: tuple[float, float, float] = (0.3, 0.4, 0.3)
     match_bias: bool = True  # False = --no_match_bias (test pure emergence)
+    ctrl: str = "heuristic"  # transport: heuristic | theory
+    use_hybrid: bool = False  # transport: HybridPayloadDynamics
+    wind_force: float = 0.0  # transport: external wind magnitude
+    use_rise: bool = True
+    use_traj: bool = False
+    use_shield: bool = False
 
     env: DICEVMASEnv = field(init=False)
     ctl: CompleteController = field(init=False)
@@ -150,9 +156,23 @@ class DemoRunner:
                 hetero_ratio=tuple(
                     getattr(self.scene, "hetero_ratio", None) or self.hetero_ratio
                 ),
+                use_hybrid=bool(self.use_hybrid),
+                wind_force=float(self.wind_force),
             )
             self.obs, info = self.env.reset(self.seed)
-            self._transport_ctl = TransportHeuristicController(self.env)
+            if self.ctrl == "theory":
+                from models.transport.control.hierarchical import (
+                    TransportHierarchicalController,
+                )
+
+                self._transport_ctl = TransportHierarchicalController(
+                    self.env,
+                    use_rise=bool(self.use_rise),
+                    use_traj=bool(self.use_traj),
+                    use_shield=bool(self.use_shield),
+                )
+            else:
+                self._transport_ctl = TransportHeuristicController(self.env)
             self.ctl = None  # type: ignore[assignment]
             self.blockers = torch.zeros(0, 2)
             self.fi = FailureInjector(self.n_agents)

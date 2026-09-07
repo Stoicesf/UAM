@@ -4,9 +4,10 @@
 AAS SITL puts each drone on ROS_DOMAIN_ID=DRONE_ID inside docker networks.
 Host ROS2 cannot see those topics; this injects goals with `docker exec`.
 
-Default path is numpy-only (no torch / CompleteController) so WSL works
-without a GPU torch env. Optional --brain loads CompleteController if torch
-is importable.
+Aircraft images (2026+) use ROS2 Jazzy under /opt/ros/jazzy; older Humble
+is still detected. Default path is numpy-only (no torch / CompleteController)
+so WSL works without a GPU torch env. Optional --brain loads CompleteController
+if torch is importable.
 
 Usage (WSL, while sim_run.sh is up):
   python3 ros_nodes/aas_cmd_bridge.py --uav_count 4 --altitude 12
@@ -36,21 +37,41 @@ def _sh(cmd: str, timeout: float = 30.0) -> subprocess.CompletedProcess:
     )
 
 
+def _docker_bin() -> list[str]:
+    """Prefer rootless docker; fall back to sudo docker (WSL fresh install)."""
+    r = subprocess.run(["docker", "info"], capture_output=True, text=True, timeout=15)
+    if r.returncode == 0:
+        return ["docker"]
+    return ["sudo", "docker"]
+
+
+_DOCKER = None
+
+
+def docker_cmd(*args: str, timeout: float = 60.0) -> subprocess.CompletedProcess:
+    global _DOCKER
+    if _DOCKER is None:
+        _DOCKER = _docker_bin()
+    return subprocess.run(
+        [*_DOCKER, *args],
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+    )
+
+
 def docker_exec(container: str, inner: str, timeout: float = 60.0, *, domain_id: int | None = None) -> str:
     # AAS aircraft-image ships ROS2 Humble; each drone uses ROS_DOMAIN_ID=DRONE_ID.
     env_prefix = f"export ROS_DOMAIN_ID={domain_id}; " if domain_id is not None else ""
     wrapped = (
         f"{env_prefix}"
-        "source /opt/ros/humble/setup.bash && "
+        # AAS aircraft-image (2026+) is Ubuntu 24.04 + ROS2 Jazzy; older was Humble.
+        "if [ -f /opt/ros/jazzy/setup.bash ]; then source /opt/ros/jazzy/setup.bash; "
+        "elif [ -f /opt/ros/humble/setup.bash ]; then source /opt/ros/humble/setup.bash; fi && "
         "source /aas/aircraft_ws/install/setup.bash && "
         f"{inner}"
     )
-    r = subprocess.run(
-        ["docker", "exec", container, "bash", "-lc", wrapped],
-        capture_output=True,
-        text=True,
-        timeout=timeout,
-    )
+    r = docker_cmd("exec", container, "bash", "-lc", wrapped, timeout=timeout)
     if r.returncode != 0:
         raise RuntimeError(f"docker exec {container} failed:\n{r.stderr or r.stdout}")
     return r.stdout
@@ -64,7 +85,7 @@ def wait_containers(n: int, instance: int = 0, timeout: float = 120.0) -> None:
     t0 = time.time()
     need = {container_name(i, instance) for i in range(1, n + 1)}
     while time.time() - t0 < timeout:
-        r = _sh("docker ps --format '{{.Names}}'")
+        r = docker_cmd("ps", "--format", "{{.Names}}", timeout=30.0)
         names = set(r.stdout.split())
         if need.issubset(names):
             return

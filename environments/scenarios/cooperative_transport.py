@@ -7,6 +7,7 @@ from typing import Any
 
 import torch
 
+from environments.dynamics.hybrid_payload import HybridPayloadDynamics
 from environments.dynamics.transport_payload import PayloadDynamics
 from environments.dynamics.uav_dynamics import UAV_DYN_BY_TYPE, UAVDynamics
 
@@ -27,6 +28,9 @@ class CooperativeTransportEnv:
         hetero_ratio: tuple[float, float, float] = (0.3, 0.4, 0.3),
         seed: int = 0,
         boundary: float = 12.0,
+        use_hybrid: bool = False,
+        wind_force: float = 0.0,
+        obstacles: list[tuple[float, float]] | None = None,
         **_kwargs: Any,
     ):
         self.n_agents = int(n_agents)
@@ -36,10 +40,21 @@ class CooperativeTransportEnv:
         self.dt = float(dt)
         self.boundary = float(boundary)
         self.L0 = float(L0)
+        self.use_hybrid = bool(use_hybrid)
+        self.wind_force = float(wind_force)
         self.target_pos = torch.tensor(target_pos, dtype=torch.float32)
-        self.payload = PayloadDynamics(
-            mass=payload_mass, spring_k=spring_k, damping_d=damping_d, L0=L0
-        )
+        if obstacles:
+            self.obstacles = torch.tensor(obstacles, dtype=torch.float32).view(-1, 2)
+        else:
+            self.obstacles = torch.zeros(0, 2)
+        if self.use_hybrid:
+            self.payload = HybridPayloadDynamics(
+                mass=payload_mass, spring_k=spring_k, damping_d=damping_d, L0=L0
+            )
+        else:
+            self.payload = PayloadDynamics(
+                mass=payload_mass, spring_k=spring_k, damping_d=damping_d, L0=L0
+            )
         self._dyn: dict[int, UAVDynamics] = {
             t: UAVDynamics(mass=m, T_max=tmax) for t, (m, tmax) in UAV_DYN_BY_TYPE.items()
         }
@@ -88,6 +103,8 @@ class CooperativeTransportEnv:
             [pref[t] for t in self.uav_type_list], dtype=torch.long
         )
         self._last_actions = None
+        if self.use_hybrid and hasattr(self.payload, "reset_state"):
+            self.payload.reset_state(self.n_agents)
         obs = self._get_obs()
         return obs, self._info()
 
@@ -123,7 +140,7 @@ class CooperativeTransportEnv:
 
     def _info(self) -> dict:
         dist = float((self.payload_pos - self.target_pos).norm())
-        return {
+        info = {
             "coverage": 1.0 / (1.0 + dist),
             "collision_rate": self._collision_rate(),
             "payload_distance": dist,
@@ -135,6 +152,9 @@ class CooperativeTransportEnv:
             "target_pos": self.target_pos.clone(),
             "step": self.step_count,
         }
+        if self.use_hybrid and hasattr(self.payload, "state"):
+            info["cable_state"] = self.payload.state.detach().cpu().view(-1).tolist()
+        return info
 
     def step(
         self, actions: torch.Tensor
@@ -158,14 +178,19 @@ class CooperativeTransportEnv:
 
         # ponytail: soft position servo onto ring — underactuated (T,ψ̇) alone drifts at N=16.
         # Upgrade: cascaded position→attitude controller or 3D.
+        # wind>0: disable env cruise so RISE assist (not servo) is the recovery path.
         to_tgt = self.target_pos - self.payload_pos
         dist_t = float(to_tgt.norm().clamp(min=1e-6))
         unit_t = to_tgt / dist_t
         lead = 0.18
         ideal = self._ideal_ring(lead=lead)
-        alpha = 0.4
+        if self.wind_force > 0.0:
+            alpha = 0.0
+            cruise = 0.0
+        else:
+            alpha = 0.4
+            cruise = min(1.0, 0.28 * dist_t)
         self.pos = (1.0 - alpha) * self.pos + alpha * ideal
-        cruise = min(1.0, 0.28 * dist_t)
         self.vel = 0.55 * self.vel + 0.45 * cruise * unit_t.unsqueeze(0)
         self.vel = self.vel.clamp(-2.0, 2.0)
         psi_des = torch.atan2(self.vel[:, 1:2] + 1e-6 * unit_t[1], self.vel[:, 0:1] + 1e-6 * unit_t[0])
@@ -183,10 +208,46 @@ class CooperativeTransportEnv:
         ).unsqueeze(-1)
         self.vel = (self.vel + reaction * self.dt).clamp(-2.0, 2.0)
         # tow payload toward leading ring centroid
-        centroid = self.pos.mean(dim=0)
-        self.payload_vel = 0.85 * self.payload_vel + 0.15 * (centroid - self.payload_pos) / max(self.dt, 1e-3)
-        self.payload_vel = self.payload_vel.clamp(-2.0, 2.0)
-        self.payload_pos = self.payload_pos + self.payload_vel * self.dt
+        # ponytail: engineering tow kept under use_hybrid so demo still moves; ceiling =
+        # pure hybrid dynamics alone. Upgrade: drop blend once cascaded position ctrl exists.
+        # wind>0: drop tow; RISE payload assist (if any) is the recovery path.
+        if self.wind_force <= 0.0:
+            centroid = self.pos.mean(dim=0)
+            self.payload_vel = 0.85 * self.payload_vel + 0.15 * (
+                centroid - self.payload_pos
+            ) / max(self.dt, 1e-3)
+            self.payload_vel = self.payload_vel.clamp(-2.0, 2.0)
+            self.payload_pos = self.payload_pos + self.payload_vel * self.dt
+        else:
+            assist = getattr(self, "_rise_payload_assist", None)
+            if assist is not None:
+                self.payload_vel = self.payload_vel + assist
+            self.payload_vel = self.payload_vel.clamp(-2.5, 2.5)
+            self.payload_pos = self.payload_pos + self.payload_vel * self.dt
+
+        # external wind disturbance (N-scale force → accel via 1/mass); for RISE tests
+        if self.wind_force > 0.0:
+            gust = torch.randn(2, generator=self._gen) * (0.3 * self.wind_force)
+            bias = self.payload_pos.new_tensor([1.0, 0.5]) * self.wind_force
+            f_wind = gust + bias
+            # persistent wind pushes payload; RISE assist must cancel this
+            away = -(self.target_pos - self.payload_pos)
+            away_n = away / away.norm().clamp(min=1e-6)
+            self.payload_vel = (
+                self.payload_vel
+                + f_wind / max(self.payload.mass, 1e-3) * self.dt
+                + away_n * (0.35 * self.wind_force)
+            )
+            masses = torch.tensor(
+                [UAV_DYN_BY_TYPE[t][0] for t in self.uav_type_list],
+                dtype=self.pos.dtype,
+            ).unsqueeze(-1)
+            uav_gust = torch.randn(self.n_agents, 2, generator=self._gen) * self.wind_force
+            self.vel = self.vel + uav_gust / masses * self.dt
+            self.payload_vel = self.payload_vel.clamp(-2.5, 2.5)
+            self.vel = self.vel.clamp(-2.5, 2.5)
+            # ponytail: no ideal-ring soft blend under wind — otherwise env hides RISE A/B.
+
         self._separate(min_sep=0.45)
 
         self.step_count += 1
