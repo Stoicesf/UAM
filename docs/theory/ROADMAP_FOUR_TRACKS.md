@@ -84,6 +84,10 @@ python ros_nodes/transport_theory_bridge.py --dry_run --steps 40
 | SC-RISE | [scrise_survey.md](scrise_survey.md) |
 | ATAC | [atac_survey.md](atac_survey.md) |
 
+## Phase 3+ 状态
+
+见 [PHASE3_TO_PHASE6.md](PHASE3_TO_PHASE6.md)（Phase 3 算法已在各 `feature/theory-*` 分支落地；Phase 4–6 待做）。
+
 ## 风险与应对
 
 | 风险 | 应对 |
